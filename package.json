@@ -3,8 +3,17 @@
   "name": "fluentui-wc",
   "description": "Web components for building experiences for Office and Office 365.",
   "version": "0.0.0",
+  "dependencies": {
+    "lit-element": "^2.3.1",
+    "lit-html": "^1.2.1"
+  },
   "devDependencies": {
     "@babel/core": "^7.10.5",
+    "@storybook/addon-actions": "^5.3.19",
+    "@storybook/addon-docs": "^5.3.19",
+    "@storybook/addon-knobs": "^5.3.19",
+    "@storybook/core": "^5.3.19",
+    "@storybook/web-components": "^5.3.19",
     "babel-loader": "^8.1.0",
     "eslint": "^7.4.0",
     "eslint-config-standard": "^14.1.1",
@@ -18,6 +27,8 @@
   },
   "scripts": {
     "build": "npx webpack",
+    "build:storybook": "npx build-storybook",
+    "storybook": "npx start-storybook -p 8000",
     "lint": "npx eslint ./src/**/*.js",
     "format": "npx prettier --write . && npx eslint --fix ."
   }
