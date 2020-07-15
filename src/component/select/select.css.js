@@ -191,17 +191,26 @@ export default css`
     border-color: ${themeDark};
   }
 
-  ${getFocusStyle('button.highlighted', {
+  ${getFocusStyle('button.marked', {
     color: neutralSecondary,
     radius: css`1px`,
     position: css`0px`,
     width: css`1px`
   })}
 
-  ${getFocusStyle('.checkbox.highlighted', {
+  ${getFocusStyle('.checkbox.marked', {
     color: neutralSecondary,
     radius: css`1px`,
     position: css`-1px`,
     width: css`1px`
   })}
+
+  .option.highlighted {
+    background-color: ${neutralLight};
+  }
+
+  .option.highlighted:hover {
+    color: ${themeDark};
+    background: ${neutralTertiaryAlt};
+  }
 `

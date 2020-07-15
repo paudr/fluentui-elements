@@ -19,12 +19,14 @@ class Select extends StyledElement {
       value: { type: Object, reflect: true },
       multiple: { type: Boolean, reflect: true },
       maxHeight: { type: String, reflect: true },
+      markedIndex: { type: Number, reflect: true },
       highlightedIndex: { type: Number, reflect: true }
     }
   }
 
   constructor () {
     super()
+    this.markedIndex = -1
     this.highlightedIndex = -1
     _optionsManager.set(this, new OptionsManager())
   }
@@ -114,10 +116,10 @@ class Select extends StyledElement {
     this.requestUpdate()
   }
 
-  getNextHighlightedIndex (backward = false) {
+  getNextMarkedIndex (backward = false) {
     const { options, selectedIndices, multiple } = _optionsManager.get(this)
     const increment = backward ? -1 : 1
-    let index = this.highlightedIndex
+    let index = this.markedIndex
     if (!options[index] && !multiple) {
       index = selectedIndices[0] || -1
     }
@@ -134,10 +136,10 @@ class Select extends StyledElement {
     return index
   }
 
-  highlightNextOption (backward) {
-    const oldValue = this.highlightedIndex
-    this.highlightedIndex = this.getNextHighlightedIndex(backward)
-    this.requestUpdate('highlightedIndex', oldValue)
+  markNextOption (backward) {
+    const oldValue = this.markedIndex
+    this.markedIndex = this.getNextMarkedIndex(backward)
+    this.requestUpdate('markedIndex', oldValue)
   }
 
   scrollToElement (index) {
@@ -161,16 +163,16 @@ class Select extends StyledElement {
     event.stopPropagation()
     event.preventDefault()
     if (code === 'ArrowDown') {
-      this.highlightNextOption()
-      setImmediate(() => this.scrollToElement(this.highlightedIndex))
+      this.markNextOption()
+      setImmediate(() => this.scrollToElement(this.markedIndex))
     } else if (code === 'ArrowUp') {
-      this.highlightNextOption(true)
-      setImmediate(() => this.scrollToElement(this.highlightedIndex))
+      this.markNextOption(true)
+      setImmediate(() => this.scrollToElement(this.markedIndex))
     } else if (code === 'Space') {
       if (this.multiple) {
-        this.toggleIndex(this.highlightedIndex, true)
+        this.toggleIndex(this.markedIndex, true)
       } else {
-        this.selectIndex(this.highlightedIndex, true)
+        this.selectIndex(this.markedIndex, true)
       }
     }
   }
@@ -178,12 +180,14 @@ class Select extends StyledElement {
   renderButton (option, index) {
     const selected = this.isIndexSelected(index)
     const { disabled } = option
+    const marked = !disabled && index === this.markedIndex
     const highlighted = !disabled && index === this.highlightedIndex
     return html`
       <button
         class="${classMap({
           option: true,
           selected,
+          marked,
           highlighted,
           disabled
         })}"
@@ -199,6 +203,7 @@ class Select extends StyledElement {
   renderCheckbox (option, index) {
     const selected = this.isIndexSelected(index)
     const { disabled } = option
+    const marked = !disabled && index === this.markedIndex
     const highlighted = !disabled && index === this.highlightedIndex
     return html`
       <div
@@ -206,6 +211,7 @@ class Select extends StyledElement {
           option: true,
           checkbox: true,
           selected,
+          marked,
           highlighted,
           disabled
         })}"

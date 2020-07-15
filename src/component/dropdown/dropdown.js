@@ -122,9 +122,9 @@ class Dropdown extends StyledElement {
         select.handleKeydown(event)
       } else if (code === 'Enter') {
         if (select.multiple) {
-          select.toggleIndex(select.highlightedIndex, true)
+          select.toggleIndex(select.markedIndex, true)
         } else {
-          select.selectIndex(select.highlightedIndex, true)
+          select.selectIndex(select.markedIndex, true)
           this.open = false
         }
       } else if (code.startsWith('Key')) {
@@ -137,7 +137,7 @@ class Dropdown extends StyledElement {
               .toLowerCase() === event.key
         )
         if (index >= 0) {
-          select.highlightedIndex = index
+          select.markedIndex = index
           select.scrollToElement(index)
         }
       }

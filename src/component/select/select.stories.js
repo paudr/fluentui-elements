@@ -14,24 +14,24 @@ function toggleMultiple (id) {
   select.multiple = !select.multiple
 }
 
-function highlightNextOption (id, direction) {
+function markNextOption (id, direction) {
   const select = document.getElementById(id)
   switch (direction) {
     case -1:
-      select.highlightNextOption(true)
+      select.markNextOption(true)
       break
     case 0:
-      select.highlightedIndex = -1
+      select.markedIndex = -1
       break
     case 1:
-      select.highlightNextOption()
+      select.markNextOption()
       break
   }
 }
 
 function scrollToElement (id) {
   const select = document.getElementById(id)
-  select.scrollToElement(select.highlightedIndex)
+  select.scrollToElement(select.markedIndex)
 }
 
 const optionOptions = [
@@ -104,29 +104,29 @@ export const MultipleWithMaxHeight = () => html`
   ></fluent-select>
 `
 
-export const HighlightNextOption = () => html`
+export const MarkNextOption = () => html`
   <p>
     <fluent-button
       text="Toggle multiple"
-      @click="${() => toggleMultiple('highlightNextOption')}"
+      @click="${() => toggleMultiple('markNextOption')}"
     ></fluent-button>
   </p>
   <p>
     <fluent-button
-      text="Highlight previous"
-      @click="${() => highlightNextOption('highlightNextOption', -1)}"
+      text="Mark previous"
+      @click="${() => markNextOption('markNextOption', -1)}"
     ></fluent-button>
     <fluent-button
-      text="Highlight none"
-      @click="${() => highlightNextOption('highlightNextOption', 0)}"
+      text="Mark none"
+      @click="${() => markNextOption('markNextOption', 0)}"
     ></fluent-button>
     <fluent-button
-      text="Highlight next"
-      @click="${() => highlightNextOption('highlightNextOption', 1)}"
+      text="Mark next"
+      @click="${() => markNextOption('markNextOption', 1)}"
     ></fluent-button>
   </p>
   <fluent-select
-    id="highlightNextOption"
+    id="markNextOption"
     multiple
     .options="${fruitOptions}"
     @change="${action('change')}"
@@ -142,21 +142,21 @@ export const ScrollToElement = () => html`
   </p>
   <p>
     <fluent-button
-      text="Highlight previous"
-      @click="${() => highlightNextOption('scrollToElement', -1)}"
+      text="Mark previous"
+      @click="${() => markNextOption('scrollToElement', -1)}"
     ></fluent-button>
     <fluent-button
-      text="Highlight none"
-      @click="${() => highlightNextOption('scrollToElement', 0)}"
+      text="Mark none"
+      @click="${() => markNextOption('scrollToElement', 0)}"
     ></fluent-button>
     <fluent-button
-      text="Highlight next"
-      @click="${() => highlightNextOption('scrollToElement', 1)}"
+      text="Mark next"
+      @click="${() => markNextOption('scrollToElement', 1)}"
     ></fluent-button>
   </p>
   <p>
     <fluent-button
-      text="Scroll to highlighted"
+      text="Scroll to marked"
       @click="${() => scrollToElement('scrollToElement')}"
     ></fluent-button>
   </p>
@@ -180,6 +180,7 @@ export const Sandbox = () => html`
     multiple
     .options="${object('options', fruitOptions)}"
     .value="${object('value', [])}"
+    .markedIndex="${number('markedIndex', -1)}"
     .highlightedIndex="${number('highlightedIndex', -1)}"
     .multiple="${boolean('multiple', false)}"
     @change="${action('change')}"
