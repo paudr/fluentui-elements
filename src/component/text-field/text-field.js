@@ -1,4 +1,4 @@
-import { html } from 'lit-element'
+import { html, nothing } from 'lit-html'
 import { classMap } from 'lit-html/directives/class-map'
 import { live } from 'lit-html/directives/live'
 import StyledElement from '../../utils/styled-element'
@@ -187,18 +187,18 @@ class TextField extends StyledElement {
                     <span style="padding-bottom: 1px;">${this.prefix}</span>
                   </div>
                 `
-              : ''}
+              : nothing}
             ${this.multiline ? this.renderTextarea() : this.renderInput()}
             ${this.icon
               ? html`<i @click="${this.handleClick}">${iconCode[this.icon]}</i>`
-              : ''}
+              : nothing}
             ${this.sufix
               ? html`
                   <div id="sufix">
                     <span style="padding-bottom: 1px;">${this.sufix}</span>
                   </div>
                 `
-              : ''}
+              : nothing}
           </div>
         </div>
         ${this.description || this.errorMessage
@@ -206,17 +206,17 @@ class TextField extends StyledElement {
               <span>
                 ${this.description
                   ? html`<span id="description">${this.description}</span>`
-                  : ''}
+                  : nothing}
                 ${this.errorMessage
                   ? html`
                       <p id="errorMessage" class="slideDownIn20">
                         <span>${this.errorMessage}</span>
                       </p>
                     `
-                  : ''}
+                  : nothing}
               </span>
             `
-          : ''}
+          : nothing}
       </div>
     `
   }

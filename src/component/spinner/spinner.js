@@ -1,4 +1,5 @@
 import { html, css } from 'lit-element'
+import { nothing } from 'lit-html'
 import StyledElement from '../../utils/styled-element'
 import { themeLight, themePrimary } from '../../theme/color.css'
 import { fontStyle } from '../../theme/typografy.css'
@@ -69,7 +70,7 @@ class Spinner extends StyledElement {
   render () {
     return html`
       <div id="circle"></div>
-      ${this.label ? html`<div id="label">${this.label}</div>` : ''}
+      ${this.label ? html`<div id="label">${this.label}</div>` : nothing}
     `
   }
 }

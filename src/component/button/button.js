@@ -1,4 +1,4 @@
-import { html } from 'lit-element'
+import { html, nothing } from 'lit-html'
 import StyledElement from '../../utils/styled-element'
 import styles from './button.css'
 import iconCode from '../icon/code'
@@ -49,17 +49,19 @@ class Button extends StyledElement {
   renderContent () {
     return html`
       <span id="container">
-        ${this.icon ? html`<i>${iconCode[this.icon]}</i>` : ''}
+        ${this.icon ? html`<i>${iconCode[this.icon]}</i>` : nothing}
         ${this.text || this.secondaryText
           ? html`
               <span id="textContainer">
-                ${this.text ? html`<span id="label">${this.text}</span>` : ''}
+                ${this.text
+                  ? html`<span id="label">${this.text}</span>`
+                  : nothing}
                 ${this.secondaryText
                   ? html`<span id="description">${this.secondaryText}</span>`
-                  : ''}
+                  : nothing}
               </span>
             `
-          : ''}
+          : nothing}
       </span>
     `
   }

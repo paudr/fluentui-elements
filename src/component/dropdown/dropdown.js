@@ -1,4 +1,4 @@
-import { html } from 'lit-element'
+import { html, nothing } from 'lit-html'
 import { classMap } from 'lit-html/directives/class-map'
 import StyledElement from '../../utils/styled-element'
 import OptionsManager from '../../utils/options-manager'
@@ -149,7 +149,7 @@ class Dropdown extends StyledElement {
       <div>
         ${this.label
           ? html`<label @click="${this.handleLabelClick}">${this.label}</label>`
-          : ''}
+          : nothing}
         <div
           id="container"
           class="${classMap({
@@ -181,7 +181,7 @@ class Dropdown extends StyledElement {
                   ${this.errorMessage}
                 </div>
               `
-            : ''}
+            : nothing}
         </div>
       </div>
     `
