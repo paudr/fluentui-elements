@@ -117,30 +117,35 @@ class Dropdown extends StyledElement {
     event.stopPropagation()
     event.preventDefault()
     const select = this.shadowRoot.querySelector('fluent-select')
-    if (select) {
-      if (['ArrowDown', 'ArrowUp', 'Space'].includes(code)) {
-        select.handleKeydown(event)
-      } else if (code === 'Enter') {
-        if (select.multiple) {
-          select.toggleIndex(select.markedIndex, true)
-        } else {
-          select.selectIndex(select.markedIndex, true)
-          this.open = false
-        }
-      } else if (code.startsWith('Key')) {
-        const index = select.options.findIndex(
-          option =>
-            option.text &&
-            option.text[0]
-              .normalize('NFD')
-              .replace(/[\u0300-\u036f]/g, '')
-              .toLowerCase() === event.key
-        )
-        if (index >= 0) {
-          select.markedIndex = index
-          select.scrollToElement(index)
+    if (this.open) {
+      if (select) {
+        if (['ArrowDown', 'ArrowUp', 'Space'].includes(code)) {
+          select.handleKeydown(event)
+        } else if (code === 'Enter') {
+          if (select.multiple) {
+            select.toggleIndex(select.markedIndex, true)
+          } else {
+            select.selectIndex(select.markedIndex, true)
+            this.open = false
+          }
+        } else if (code.startsWith('Key')) {
+          const index = select.options.findIndex(
+            option =>
+              option.text &&
+              option.text[0]
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .toLowerCase() === event.key
+          )
+          if (index >= 0) {
+            select.markedIndex = index
+            select.scrollToElement(index)
+          }
         }
       }
+    } else if (code === 'Enter') {
+      this.open = true
+      this.requestUpdate()
     }
   }
 
