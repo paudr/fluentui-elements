@@ -142,6 +142,13 @@ class Select extends StyledElement {
     this.requestUpdate('markedIndex', oldValue)
   }
 
+  scrollToTop () {
+    const parent = this.shadowRoot.getElementById('root')
+    if (parent) {
+      parent.scrollTop = 0
+    }
+  }
+
   scrollToElement (index) {
     const parent = this.shadowRoot.getElementById('root')
     const element = this.shadowRoot.querySelector(`*[data-index="${index}"]`)
