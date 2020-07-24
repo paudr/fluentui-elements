@@ -2,6 +2,7 @@ import { html, nothing } from 'lit-html'
 import { classMap } from 'lit-html/directives/class-map'
 import StyledElement from '../../utils/styled-element'
 import OptionsManager from '../../utils/options-manager'
+import { compareInsensitive } from '../../utils/text'
 import '../select'
 import styles from './dropdown.css'
 import iconCode from '../icon/code'
@@ -131,11 +132,7 @@ class Dropdown extends StyledElement {
         } else if (code.startsWith('Key')) {
           const index = select.options.findIndex(
             option =>
-              option.text &&
-              option.text[0]
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
-                .toLowerCase() === event.key
+              option.text && compareInsensitive(option.text[0], event.key, true)
           )
           if (index >= 0) {
             select.markedIndex = index
