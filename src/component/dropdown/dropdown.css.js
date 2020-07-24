@@ -104,7 +104,7 @@ export default css`
     border-color: ${redDark};
   }
 
-  #container.disabled #title {
+  :host([disabled]) #container #title {
     background: ${neutralLighter};
     border-color: ${neutralLighter};
     cursor: default;

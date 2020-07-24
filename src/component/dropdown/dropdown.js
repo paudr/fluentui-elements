@@ -158,10 +158,8 @@ class Dropdown extends StyledElement {
         <div
           id="container"
           class="${classMap({
-            disabled: this.disabled,
-            multiple: this.multiple,
             invalid: this.errorMessage,
-            open: this.open
+            open: this.open && !this.disabled
           })}"
           tabindex="${this.disabled ? '' : '0'}"
           @click="${this.handleContainerClick}"
