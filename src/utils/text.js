@@ -7,6 +7,6 @@ export function normalize (text, accentInsensitive) {
     : text.toLowerCase()
 }
 
-export function compareInsensitive (a, b, accentInsensitive = false) {
+export function equalInsensitive (a, b, accentInsensitive = false) {
   return normalize(a, accentInsensitive) === normalize(b, accentInsensitive)
 }
