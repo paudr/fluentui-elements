@@ -16,16 +16,10 @@ function toggleMultiple (id) {
 
 function markNextOption (id, direction) {
   const select = document.getElementById(id)
-  switch (direction) {
-    case -1:
-      select.markNextOption(true)
-      break
-    case 0:
-      select.markedIndex = -1
-      break
-    case 1:
-      select.markNextOption()
-      break
+  if (direction !== 0) {
+    select.markNextOption(direction)
+  } else {
+    select.markedIndex = -1
   }
 }
 

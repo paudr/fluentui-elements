@@ -116,13 +116,9 @@ class Select extends StyledElement {
     this.requestUpdate()
   }
 
-  getNextMarkedIndex (backward = false) {
-    const { options, selectedIndices, multiple } = _optionsManager.get(this)
-    const increment = backward ? -1 : 1
-    let index = this.markedIndex
-    if (!options[index] && !multiple) {
-      index = selectedIndices[0] || -1
-    }
+  getNextOptionIndex (position, increment = 1) {
+    const { options } = _optionsManager.get(this)
+    let index = typeof position === 'number' ? position : increment < 0 ? 0 : -1
     do {
       index += increment
       if (index >= options.length) index = 0
@@ -136,9 +132,13 @@ class Select extends StyledElement {
     return index
   }
 
-  markNextOption (backward) {
+  markNextOption (increment) {
     const oldValue = this.markedIndex
-    this.markedIndex = this.getNextMarkedIndex(backward)
+    const current =
+      this.markedIndex > -1
+        ? this.markedIndex
+        : !this.multiple && this.selectedIndices[0]
+    this.markedIndex = this.getNextOptionIndex(current, increment)
     this.requestUpdate('markedIndex', oldValue)
   }
 
@@ -173,7 +173,7 @@ class Select extends StyledElement {
       this.markNextOption()
       setImmediate(() => this.scrollToElement(this.markedIndex))
     } else if (code === 'ArrowUp') {
-      this.markNextOption(true)
+      this.markNextOption(-1)
       setImmediate(() => this.scrollToElement(this.markedIndex))
     } else if (code === 'Space') {
       if (this.multiple) {
