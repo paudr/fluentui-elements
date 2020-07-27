@@ -2,6 +2,7 @@
 
 export const version = VERSION
 
+export { default as Autofill } from './component/autofill'
 export { default as Button } from './component/button'
 export { default as Checkbox } from './component/checkbox'
 export { default as Dropdown } from './component/dropdown'
