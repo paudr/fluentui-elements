@@ -18,6 +18,7 @@ class TagPicker extends StyledElement {
   static get properties () {
     return {
       label: { type: String, reflect: true },
+      placeholder: { type: String, reflect: true },
       required: { type: Boolean, reflect: true },
       disabled: { type: Boolean, reflect: true },
       getItems: { type: Function },
@@ -36,6 +37,7 @@ class TagPicker extends StyledElement {
     super()
 
     this.label = ''
+    this.placeholder = ''
     this.required = false
     this.disabled = false
     this.getItems = null
@@ -164,6 +166,11 @@ class TagPicker extends StyledElement {
 
   render () {
     const { selectedItems, areItemsLoaded } = _privateData.get(this)
+    const maxItemsReached =
+      this.maxSelectedItems > -1 &&
+      selectedItems.length >= this.maxSelectedItems
+    const placeholder =
+      !maxItemsReached || selectedItems.length === 0 ? this.placeholder : ''
     return html`
       <div>
         ${this.label
@@ -201,6 +208,7 @@ class TagPicker extends StyledElement {
               : nothing}
             <fluent-autofill
               autofill
+              .placeholder="${placeholder}"
               .disabled="${this.disabled}"
               .accentInsensitive="${this.accentInsensitive}"
               @input="${debounce(this.handleInput, this.getItemsRate)}"

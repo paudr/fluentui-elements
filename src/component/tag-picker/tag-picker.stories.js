@@ -86,6 +86,16 @@ export const Normal = () => html`
   ></fluent-tag-picker>
 `
 
+export const Placeholder = () => html`
+  <fluent-tag-picker
+    label="Tag Picker"
+    placeholder="Pick an item"
+    .getItems="${getMockRest(iconItems)}"
+    .getItemsRate="250"
+    @change="${action('change')}"
+  ></fluent-tag-picker>
+`
+
 export const Disabled = () => html`
   <fluent-tag-picker
     label="Disabled Tag Picker"
@@ -130,6 +140,17 @@ export const FilterSelectedItems = () => html`
 export const MaxSelectedItems = () => html`
   <fluent-tag-picker
     label="Pick up to three elements"
+    maxSelectedItems="3"
+    .getItems="${getMockRest(iconItems)}"
+    .getItemsRate="250"
+    @change="${action('change')}"
+  ></fluent-tag-picker>
+`
+
+export const MaxSelectedItemsWithPlaceholder = () => html`
+  <fluent-tag-picker
+    label="Pick up to three elements"
+    placeholder="Pick an item"
     maxSelectedItems="3"
     .getItems="${getMockRest(iconItems)}"
     .getItemsRate="250"
