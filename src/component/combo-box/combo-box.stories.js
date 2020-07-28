@@ -25,7 +25,6 @@ const iconOptions = Object.keys(iconCode).map(name => ({
   value: [name]
 }))
 
-/*
 const fruitOptions = [
   { text: 'Apple', value: 'apple' },
   { text: 'Banana', value: 'banana' },
@@ -34,27 +33,219 @@ const fruitOptions = [
   { text: 'Passionfruit', value: 'passionfruit' },
   { text: 'Grape', value: 'grape' }
 ]
-*/
+
+const accentItems = [
+  { text: 'menjàrem', value: 'menjarem' },
+  { text: 'bàscula', value: 'bascula' },
+  { text: 'vàlid', value: 'valid' },
+  { text: 'matalàs', value: 'matalas' },
+  { text: 'pàmfil', value: 'pamfil' },
+  { text: 'interès', value: 'interes' },
+  { text: 'bèstia', value: 'bestia' },
+  { text: 'mèrit', value: 'merit' },
+  { text: 'canapè', value: 'canape' },
+  { text: 'perquè', value: 'perque' },
+  { text: 'cèntim', value: 'centim' },
+  { text: 'mòdul', value: 'modul' },
+  { text: 'allò', value: 'allo' },
+  { text: 'òliba', value: 'oliba' },
+  { text: 'repòs', value: 'repos' },
+  { text: 'Sònia', value: 'Sonia' },
+  { text: 'arròsvindré', value: 'arrosvindre' },
+  { text: 'créixens', value: 'creixens' },
+  { text: 'haguéreu', value: 'haguereu' },
+  { text: 'accés', value: 'acces' },
+  { text: 'també', value: 'tambe' },
+  { text: 'Berlín', value: 'Berlin' },
+  { text: 'pastís', value: 'pastis' },
+  { text: 'legítima', value: 'legitima' },
+  { text: 'veí', value: 'vei' },
+  { text: 'rítmic', value: 'ritmic' },
+  { text: 'tísic', value: 'tisic' },
+  { text: 'pastós', value: 'pastos' },
+  { text: 'furóncol', value: 'furoncol' },
+  { text: 'tórtora', value: 'tortora' },
+  { text: 'cantó', value: 'canto' },
+  { text: 'institució', value: 'institucio' },
+  { text: 'cautxú', value: 'cautxu' },
+  { text: 'múscul', value: 'muscul' },
+  { text: 'fúcsia', value: 'fucsia' },
+  { text: 'brúixola', value: 'bruixola' },
+  { text: 'pallús', value: 'pallus' }
+]
+
+export const Normal = () => html`
+  <fluent-combo-box
+    label="Standard"
+    .options="${fruitOptions}"
+    @focus="${action('focus')}"
+    @blur="${action('blur')}"
+    @input="${action('input')}"
+    @change="${action('change')}"
+  ></fluent-combo-box>
+`
+
+export const Multiple = () => html`
+  <fluent-combo-box
+    multiple
+    label="Multiple"
+    .options="${fruitOptions}"
+    @focus="${action('focus')}"
+    @blur="${action('blur')}"
+    @input="${action('input')}"
+    @change="${action('change')}"
+  ></fluent-combo-box>
+`
+
+export const NormalAllowFreedom = () => html`
+  <fluent-combo-box
+    allowFreeform
+    label="Standar with allow freedon"
+    .options="${fruitOptions}"
+    @focus="${action('focus')}"
+    @blur="${action('blur')}"
+    @input="${action('input')}"
+    @change="${action('change')}"
+  ></fluent-combo-box>
+`
+
+export const MultipleAllowFreedom = () => html`
+  <fluent-combo-box
+    allowFreeform
+    multiple
+    label="Multiple with allow freedon"
+    .options="${fruitOptions}"
+    @focus="${action('focus')}"
+    @blur="${action('blur')}"
+    @input="${action('input')}"
+    @change="${action('change')}"
+  ></fluent-combo-box>
+`
+
+export const NormalAutocomplete = () => html`
+  <fluent-combo-box
+    allowFreeform
+    autoComplete
+    label="Standar with allow freedon"
+    .options="${iconOptions}"
+    @focus="${action('focus')}"
+    @blur="${action('blur')}"
+    @input="${action('input')}"
+    @change="${action('change')}"
+  ></fluent-combo-box>
+`
+
+export const MultipleAutocomplete = () => html`
+  <fluent-combo-box
+    allowFreeform
+    autoComplete
+    multiple
+    label="Multiple with allow freedon"
+    .options="${iconOptions}"
+    @focus="${action('focus')}"
+    @blur="${action('blur')}"
+    @input="${action('input')}"
+    @change="${action('change')}"
+  ></fluent-combo-box>
+`
+
+export const Placeholder = () => html`
+  <fluent-combo-box
+    allowFreeform
+    autoComplete
+    multiple
+    label="Multiple with allow freedon"
+    placeholder="Select an element"
+    .options="${iconOptions}"
+    @focus="${action('focus')}"
+    @blur="${action('blur')}"
+    @input="${action('input')}"
+    @change="${action('change')}"
+  ></fluent-combo-box>
+`
+
+export const AccentInsensitive = () => html`
+  <fluent-combo-box
+    allowFreeform
+    autoComplete
+    multiple
+    accentInsensitive
+    label="Multiple with allow freedon"
+    .options="${accentItems}"
+    @focus="${action('focus')}"
+    @blur="${action('blur')}"
+    @input="${action('input')}"
+    @change="${action('change')}"
+  ></fluent-combo-box>
+`
+
+export const Required = () => html`
+  <fluent-combo-box
+    required
+    label="Required"
+    .options="${fruitOptions}"
+    @focus="${action('focus')}"
+    @blur="${action('blur')}"
+    @input="${action('input')}"
+    @change="${action('change')}"
+  ></fluent-combo-box>
+`
+
+export const Disabled = () => html`
+  <fluent-combo-box
+    disabled
+    label="Required"
+    .options="${fruitOptions}"
+    @focus="${action('focus')}"
+    @blur="${action('blur')}"
+    @input="${action('input')}"
+    @change="${action('change')}"
+  ></fluent-combo-box>
+`
+
+export const ReadOnly = () => html`
+  <fluent-combo-box
+    readOnly
+    label="Required"
+    .options="${fruitOptions}"
+    .value="${'banana'}"
+    @focus="${action('focus')}"
+    @blur="${action('blur')}"
+    @input="${action('input')}"
+    @change="${action('change')}"
+  ></fluent-combo-box>
+`
+
+export const WithErrorMessage = () => html`
+  <fluent-combo-box
+    label="Required"
+    errorMessage="Error message"
+    .options="${fruitOptions}"
+    .value="${'banana'}"
+    @focus="${action('focus')}"
+    @blur="${action('blur')}"
+    @input="${action('input')}"
+    @change="${action('change')}"
+  ></fluent-combo-box>
+`
 
 export const Sandbox = () => html`
   <fluent-combo-box
     .label="${text('label', 'Standard')}"
+    .placeholder="${text('placeholder', '')}"
     .disabled="${boolean('disabled', false)}"
     .required="${boolean('required', false)}"
     .readOnly="${boolean('readOnly', false)}"
     .multiple="${boolean('multiple', false)}"
     .allowFreeform="${boolean('allowFreeform', false)}"
     .autoComplete="${boolean('autoComplete', false)}"
-    .placeholder="${text('placeholder', '')}"
     .errorMessage="${text('errorMessage', '')}"
     .open="${boolean('open', false)}"
     .options="${object('options', iconOptions)}"
-    .selectedIndex="${object('selectedIndex', null)}"
     @focus="${action('focus')}"
     @blur="${action('blur')}"
     @input="${action('input')}"
     @change="${action('change')}"
-    @click:icon="${action('click:icon')}"
   ></fluent-combo-box>
 `
 Sandbox.story = {
@@ -65,16 +256,3 @@ Sandbox.story = {
     }
   }
 }
-
-/*
-    .description="${text('description', '')}"
-    .placeholder="${text('placeholder', 'Please enter text here')}"
-    .prefix="${text('prefix', '')}"
-    .sufix="${text('sufix', '')}"
-    .multiline="${boolean('multiline', false)}"
-    .underlined="${boolean('underlined', false)}"
-    .borderless="${boolean('borderless', false)}"
-    .readonly="${boolean('readonly', false)}"
-    .unresizable="${boolean('unresizable', false)}"
-    .autoAdjustHeight="${boolean('autoAdjustHeight', false)}"
-*/

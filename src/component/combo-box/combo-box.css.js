@@ -37,18 +37,8 @@ export default css`
     ${normalize};
     user-select: none;
     outline: 0px;
-}
-
-  ${getFocusStyle('#container:not(:focus-within) #wrapper', {
-    color: neutralSecondary,
-    width: css`1px`,
-    radius: css`2px`
-  })}
-
-  ${getFocusStyle('#container:focus-within #wrapper', {
-    color: themePrimary,
-    radius: css`2px`
-  })}
+    border: 1px solid ${neutralSecondary};
+  }
 
   ${getFocusStyle('#container:not(.open):focus-within #wrapper', {
     color: themePrimary,
@@ -61,7 +51,7 @@ export default css`
     background-color: ${white};
     cursor: pointer;
     display: block;
-    height: 32px;
+    height: 30px;
     line-height: 30px;
     position: relative;
     white-space: nowrap;
@@ -163,6 +153,11 @@ export default css`
     background: ${neutralLighter};
     border-color: ${neutralLighter};
     cursor: default;
+  }
+
+  :host([disabled]) #container #caret {
+    cursor: default;
+    pointer-events: none;
   }
 
   ${getFocusStyle(':host([disabled]) #container #wrapper', {

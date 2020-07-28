@@ -48,6 +48,9 @@ class ComboBox extends StyledElement {
     this.selectedIndex = null
     this.suggestedIndex = null
     _optionsManager.set(this, new OptionsManager())
+    this.addEventListener('blur', () => {
+      this.closeOptions()
+    })
   }
 
   get options () {
@@ -87,35 +90,182 @@ class ComboBox extends StyledElement {
     return Array.from(_optionsManager.get(this).selectedIndices)
   }
 
-  get selectedText () {
+  closeOptions () {
+    const select = this.shadowRoot.querySelector('fluent-select')
+    const autofill = this.shadowRoot.querySelector('fluent-autofill')
     const optionsManager = _optionsManager.get(this)
-    const selectedIndices = optionsManager.multiple
-      ? optionsManager.selectedIndices
-      : optionsManager.selectedIndices.slice(0, 1)
-    return selectedIndices.length === 0
-      ? this.placeholder
-      : selectedIndices
-        .filter(index => index in this.options)
-        .map(index => this.options[index].text)
-        .join(', ')
+    if (!this.multiple) {
+      if (autofill.value === '') {
+        select.selectIndex(null, true)
+      } else if (
+        select.highlightedIndex > -1 &&
+        select.selectedIndices[0] !== select.highlightedIndex
+      ) {
+        select.selectIndex(select.highlightedIndex, true)
+      }
+    }
+    this.open = false
+    select.markedIndex = -1
+    select.highlightedIndex = -1
+    autofill.value = this.allowFreeform
+      ? this.multiple
+        ? ''
+        : optionsManager.getSelectedText('')
+      : optionsManager.getSelectedText('')
+    this.requestUpdate()
   }
 
   handleLabelClick (event) {
     event.stopPropagation()
-    this.shadowRoot.querySelector('fluent-autofill').focus()
+    if (!this.disabled) {
+      this.shadowRoot.querySelector('fluent-autofill').focus()
+    }
   }
 
-  handleCaretClick () {}
+  handleCaretClick () {
+    if (!this.disabled && !this.readOnly) {
+      const select = this.shadowRoot.querySelector('fluent-select')
+      this.open = !this.open
+      if (this.open) {
+        this.open = true
+        const autofill = this.shadowRoot.querySelector('fluent-autofill')
+        autofill.focus()
+        if (select.markedIndex >= 0) {
+          setImmediate(() => select.scrollToElement(select.markedIndex))
+        }
+      } else {
+        if (select.markedIndex > -1) {
+          if (this.multiple) {
+            if (!select.selectedIndices.includes(select.markedIndex)) {
+              select.toggleIndex(select.markedIndex, true)
+            }
+          } else {
+            select.selectIndex(select.markedIndex, true)
+          }
+        }
+      }
+    }
+  }
 
-  handleSelectChange (event) { }
+  handleSelectChange (event) {
+    const { selectedIndices } = event.detail
+    const select = event.target
+    const autofill = this.shadowRoot.querySelector('fluent-autofill')
+    const optionsManager = _optionsManager.get(this)
+    const oldValue = this.value
+    const oldSelectedIndices = optionsManager.selectedIndices
+    optionsManager.selectedIndices = Array.from(selectedIndices)
+    if (!this.multiple) {
+      autofill.write(this.value || '')
+      this.open = false
+    } else {
+      autofill.write('')
+    }
+    select.markedIndex = -1
+    select.highlightedIndex = -1
+    this.dispatchEvent(
+      new CustomEvent('change', {
+        detail: {
+          value: this.value,
+          oldValue,
+          selectedIndices,
+          oldSelectedIndices
+        }
+      })
+    )
+    this.requestUpdate()
+  }
 
-  handleAutofillInput (event) { }
+  handleAutofillClick (event) {
+    if (!this.disabled && !this.readOnly && !this.allowFreeform) {
+      this.open = !this.open
+    }
+  }
 
-  handleAutofillNavigate (event) {}
+  handleAutofillInput (event) {
+    event.stopPropagation()
+    const select = this.shadowRoot.querySelector('fluent-select')
+    const equalIndex = this.options.findIndex(option =>
+      equalInsensitive(option.text, event.detail, this.accentInsensitive)
+    )
+    select.highlightedIndex = equalIndex
+    if (this.autoComplete) {
+      if (this.multiple) {
+        this.open = true
+      }
+      if (!this.open && !this.multiple && equalIndex > 1) {
+        select.selectIndex(equalIndex, true)
+      } else {
+        const startIndex = this.options.findIndex(option =>
+          startsWith(option.text, event.detail, this.accentInsensitive)
+        )
+        if (startIndex > -1) {
+          const autofill = event.target
+          autofill.suggestedValue = this.options[startIndex].text
+          select.markedIndex = startIndex
+          setImmediate(() => select.scrollToElement(startIndex))
+        } else {
+          select.markedIndex = -1
+        }
+      }
+    } else if (equalIndex > -1) {
+      setImmediate(() => select.scrollToElement(equalIndex))
+    }
+  }
 
-  handleAutofillSelect (event) {}
+  handleAutofillNavigate (event) {
+    const autofill = event.target
+    const select = this.shadowRoot.querySelector('fluent-select')
+    if (!this.multiple && !this.open && !this.autoComplete) {
+      const equalIndex = this.options.findIndex(option =>
+        equalInsensitive(option.text, autofill.value, this.accentInsensitive)
+      )
+      const index = select.getNextOptionIndex(
+        equalIndex > -1 ? equalIndex : select.selectedIndices[0],
+        event.detail
+      )
+      select.selectIndex(index, true)
+      autofill.selectAllText()
+    } else {
+      if (this.autoComplete) {
+        select.markNextOption(event.detail)
+        autofill.suggest(select.options[select.markedIndex].text)
+        setImmediate(() => select.scrollToElement(select.markedIndex))
+      } else {
+        select.highlightedIndex = select.getNextOptionIndex(
+          select.highlightedIndex,
+          event.detail
+        )
+        autofill.suggest(select.options[select.highlightedIndex].text, true)
+        setImmediate(() => select.scrollToElement(select.highlightedIndex))
+      }
+    }
+  }
+
+  handleAutofillSelect (event) {
+    const select = this.shadowRoot.querySelector('fluent-select')
+    const index = this.autoComplete
+      ? select.markedIndex
+      : select.highlightedIndex
+    if (this.multiple) {
+      event.target.value = ''
+      select.toggleIndex(index, true)
+    } else {
+      select.selectIndex(index, true)
+    }
+  }
 
   render () {
+    const optionsManager = _optionsManager.get(this)
+    const autofillValue = this.allowFreeform
+      ? this.multiple
+        ? ''
+        : optionsManager.getSelectedText('')
+      : optionsManager.getSelectedText('')
+    const autofillPlaceholder =
+      this.multiple && optionsManager.selectedIndices.length > 0
+        ? optionsManager.value.join(', ')
+        : this.placeholder
     return html`
       <div>
         ${this.label
@@ -132,16 +282,23 @@ class ComboBox extends StyledElement {
             <div id="title">
               <fluent-autofill
                 autofill
-                .value="${this.multiple ? '' : (this.value || {})[0] || ''}"
+                .value="${autofillValue}"
+                .placeholder="${autofillPlaceholder}"
                 .disabled="${this.disabled}"
-                .readOnly="${this.readOnly}"
+                .readOnly="${!this.allowFreeform}"
                 .accentInsensitive="${this.accentInsensitive}"
+                @click="${this.handleAutofillClick}"
                 @input="${this.handleAutofillInput}"
                 @navigate="${this.handleAutofillNavigate}"
                 @select="${this.handleAutofillSelect}"
+                @escape="${this.closeOptions}"
               ></fluent-autofill>
             </div>
-            <button id="caret" @click="${this.handleCaretClick}">
+            <button
+              id="caret"
+              .disabled="${this.disabled}"
+              @click="${this.handleCaretClick}"
+            >
               <span>
                 <i>${iconCode.ChevronDown}</i>
               </span>

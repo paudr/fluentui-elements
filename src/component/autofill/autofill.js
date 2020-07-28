@@ -197,6 +197,10 @@ class Autofill extends LitElement {
       event.stopPropagation()
       event.preventDefault()
       this.dispatchEvent(new CustomEvent('select'))
+    } else if (code === 'Escape') {
+      event.stopPropagation()
+      event.preventDefault()
+      this.dispatchEvent(new CustomEvent('escape'))
     }
   }
 
