@@ -80,16 +80,7 @@ class Dropdown extends StyledElement {
   }
 
   get selectedText () {
-    const optionsManager = _optionsManager.get(this)
-    const selectedIndices = optionsManager.multiple
-      ? optionsManager.selectedIndices
-      : optionsManager.selectedIndices.slice(0, 1)
-    return selectedIndices.length === 0
-      ? this.placeholder
-      : selectedIndices
-        .filter(index => index in this.options)
-        .map(index => this.options[index].text)
-        .join(', ')
+    return _optionsManager.get(this).getSelectedText(this.placeholder)
   }
 
   handleLabelClick (event) {

@@ -28,6 +28,18 @@ export default class OptionsManager {
     }
   }
 
+  getSelectedText (defaultText = '') {
+    const selectedIndices = this.multiple
+      ? this.selectedIndices
+      : this.selectedIndices.slice(0, 1)
+    return selectedIndices.length === 0
+      ? defaultText
+      : selectedIndices
+        .filter(index => index in this.options)
+        .map(index => this.options[index].text)
+        .join(', ')
+  }
+
   isIndexSelected (index) {
     return this.multiple
       ? this.selectedIndices.includes(index)
