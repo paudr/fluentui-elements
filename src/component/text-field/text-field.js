@@ -179,7 +179,9 @@ class TextField extends StyledElement {
         })}"
       >
         <div id="wrapper">
-          ${this.label ? html`<label for="field">${this.label}</label>` : ''}
+          ${this.label
+            ? html`<label for="field">${this.label}</label>`
+            : nothing}
           <div id="fieldGroup">
             ${this.prefix
               ? html`
