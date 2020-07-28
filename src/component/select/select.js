@@ -76,7 +76,7 @@ class Select extends StyledElement {
     const optionsManager = _optionsManager.get(this)
     const oldValue = optionsManager.value
     const oldSelectedIndices = optionsManager.selectedIndices
-    optionsManager.selectedIndices = [index]
+    optionsManager.selectedIndices = typeof index === 'number' ? [index] : []
     if (emitEvent) {
       const value = optionsManager.value
       const selectedIndices = Array.from(optionsManager.selectedIndices)
