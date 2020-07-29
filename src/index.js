@@ -4,6 +4,7 @@ export const version = VERSION
 
 export { default as Autofill } from './component/autofill'
 export { default as Button } from './component/button'
+export { default as Calendar } from './component/calendar'
 export { default as Checkbox } from './component/checkbox'
 export { default as ChoiceGroup } from './component/choice-group'
 export { default as ComboBox } from './component/combo-box'
