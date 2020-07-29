@@ -113,7 +113,7 @@ export default css`
   /* Normal field -> focused  */
 
   ${getFocusStyle(
-    '#root.focused:not(.underlined):not(.borderless) #fieldGroup',
+    '#root:not(.underlined):not(.borderless):focus-within #fieldGroup',
     {
       color: borderFocusColor,
       radius: css`2px`
@@ -127,7 +127,7 @@ export default css`
   }
 
   ${getFocusStyle(
-    '#root.invalid.focused:not(.underlined):not(.borderless) #fieldGroup',
+    '#root.invalid:not(.underlined):not(.borderless):focus-within #fieldGroup',
     {
       color: borderErrorColor,
       radius: css`2px`
@@ -214,7 +214,7 @@ export default css`
 
   /* Underlined field -> focused */
 
-  ${getFocusStyle('#root.focused.underlined #wrapper', {
+  ${getFocusStyle('#root.underlined:focus-within #wrapper', {
     color: borderFocusColor,
     radius: css`0px`,
     type: 'borderBottom'
@@ -226,7 +226,7 @@ export default css`
     border-bottom: 1px solid ${borderErrorColor};
   }
 
-  ${getFocusStyle('#root.focused.underlined.invalid #wrapper', {
+  ${getFocusStyle('#root.underlined.invalid:focus-within #wrapper', {
     color: borderErrorColor,
     radius: css`0px`,
     type: 'borderBottom'

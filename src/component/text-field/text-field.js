@@ -7,7 +7,6 @@ import iconCode from '../icon/code'
 
 const $value = new WeakMap()
 const $oldValue = new WeakMap()
-const $focus = new WeakMap()
 
 class TextField extends StyledElement {
   static get styles () {
@@ -57,7 +56,6 @@ class TextField extends StyledElement {
 
     $value.set(this, '')
     $oldValue.set(this, '')
-    $focus.set(this, false)
   }
 
   get value () {
@@ -71,20 +69,6 @@ class TextField extends StyledElement {
     if (field) {
       field.value = value
     }
-  }
-
-  get focus () {
-    return !this.disabled && $focus.get(this)
-  }
-
-  handleFocus () {
-    $focus.set(this, true)
-    this.requestUpdate()
-  }
-
-  handleBlur () {
-    $focus.set(this, false)
-    this.requestUpdate()
   }
 
   handleInput (event) {
@@ -137,8 +121,6 @@ class TextField extends StyledElement {
         ?disabled="${this.disabled}"
         ?readonly="${this.readonly}"
         maxlength="${this.maxlength}"
-        @focus="${this.handleFocus}"
-        @blur="${this.handleBlur}"
         @input="${this.handleInput}"
         @change="${this.handleChange}"
       />
@@ -158,8 +140,6 @@ class TextField extends StyledElement {
         ?disabled="${this.disabled}"
         ?readonly="${this.readonly}"
         maxlength="${this.maxlength}"
-        @focus="${this.handleFocus}"
-        @blur="${this.handleBlur}"
         @input="${this.handleInput}"
         @change="${this.handleChange}"
       ></textarea>
@@ -171,7 +151,6 @@ class TextField extends StyledElement {
       <div
         id="root"
         class="${classMap({
-          focused: this.focus,
           underlined: this.underlined,
           borderless: this.borderless,
           requiredPlaceholder: !this.label && this.required,
