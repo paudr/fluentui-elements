@@ -27,10 +27,6 @@ export default css`
     border: 0;
   }
 
-  #container.row {
-    flex-direction: row;
-  }
-
   #container > div {
     margin: 0;
     padding: 0;
@@ -128,13 +124,21 @@ export default css`
     color: ${neutralTertiary};
   }
 
+  .field.disabled label {
+    cursor: default;
+  }
+
   .field.disabled label:before,
   .field.checked.disabled label:before,
   .field.checked.disabled label:after {
     border-color: ${neutralTertiary};
   }
 
-  #container.row > div {
+  :host([inRow]) #container {
+    flex-direction: row;
+  }
+
+  :host([inRow]) #container > div {
     margin: 8px 16px 0 0;
   }
 `

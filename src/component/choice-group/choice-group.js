@@ -45,12 +45,7 @@ class ChoiceGroup extends StyledElement {
   render () {
     return html`
       ${this.label ? html`<label id="label">${this.label}</label>` : nothing}
-      <div
-        id="container"
-        class="${classMap({
-          row: this.inRow
-        })}"
-      >
+      <div id="container">
         ${this.options.map(
           option => html`
             <div>
