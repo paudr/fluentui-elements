@@ -40,6 +40,12 @@ export default css`
     border: 1px solid ${neutralSecondary};
   }
 
+  ${getFocusStyle('#wrapper', {
+    color: neutralSecondary,
+    width: css`1px`,
+    radius: css`2px`
+  })}
+
   ${getFocusStyle('#container:not(.open):focus-within #wrapper', {
     color: themePrimary,
     radius: css`2px`
