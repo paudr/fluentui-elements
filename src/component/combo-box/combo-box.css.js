@@ -102,7 +102,7 @@ export default css`
   }
 
   #caret i {
-    ${iconCss};
+    ${iconCss}
     font-size: 12px;
     margin: 0px 4px;
     height: 16px;
