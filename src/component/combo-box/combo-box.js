@@ -267,60 +267,58 @@ class ComboBox extends StyledElement {
         ? optionsManager.value.join(', ')
         : this.placeholder
     return html`
-      <div>
-        ${this.label
-          ? html`<label @click="${this.handleLabelClick}">${this.label}</label>`
-          : nothing}
-        <div
-          id="container"
-          class="${classMap({
-            invalid: this.errorMessage,
-            open: this.open && !this.disabled
-          })}"
-        >
-          <div id="wrapper">
-            <div id="title">
-              <fluent-autofill
-                autofill
-                .value="${autofillValue}"
-                .placeholder="${autofillPlaceholder}"
-                .disabled="${this.disabled}"
-                .readOnly="${!this.allowFreeform}"
-                .accentInsensitive="${this.accentInsensitive}"
-                @click="${this.handleAutofillClick}"
-                @input="${this.handleAutofillInput}"
-                @navigate="${this.handleAutofillNavigate}"
-                @select="${this.handleAutofillSelect}"
-                @escape="${this.closeOptions}"
-              ></fluent-autofill>
-            </div>
-            <button
-              id="caret"
+      ${this.label
+        ? html`<label @click="${this.handleLabelClick}">${this.label}</label>`
+        : nothing}
+      <div
+        id="container"
+        class="${classMap({
+          invalid: this.errorMessage,
+          open: this.open && !this.disabled
+        })}"
+      >
+        <div id="wrapper">
+          <div id="title">
+            <fluent-autofill
+              autofill
+              .value="${autofillValue}"
+              .placeholder="${autofillPlaceholder}"
               .disabled="${this.disabled}"
-              @click="${this.handleCaretClick}"
-            >
-              <span>
-                <i>${iconCode.ChevronDown}</i>
-              </span>
-            </button>
+              .readOnly="${!this.allowFreeform}"
+              .accentInsensitive="${this.accentInsensitive}"
+              @click="${this.handleAutofillClick}"
+              @input="${this.handleAutofillInput}"
+              @navigate="${this.handleAutofillNavigate}"
+              @select="${this.handleAutofillSelect}"
+              @escape="${this.closeOptions}"
+            ></fluent-autofill>
           </div>
-          <div id="items">
-            <fluent-select
-              .options="${this.options}"
-              .multiple="${this.multiple}"
-              .value="${this.value}"
-              maxHeight="200px"
-              @change="${this.handleSelectChange}"
-            ></fluent-select>
-          </div>
-          ${this.errorMessage
-            ? html`
-                <div id="errorMessage" class="slideDownIn20">
-                  ${this.errorMessage}
-                </div>
-              `
-            : nothing}
+          <button
+            id="caret"
+            .disabled="${this.disabled}"
+            @click="${this.handleCaretClick}"
+          >
+            <span>
+              <i>${iconCode.ChevronDown}</i>
+            </span>
+          </button>
         </div>
+        <div id="items">
+          <fluent-select
+            .options="${this.options}"
+            .multiple="${this.multiple}"
+            .value="${this.value}"
+            maxHeight="200px"
+            @change="${this.handleSelectChange}"
+          ></fluent-select>
+        </div>
+        ${this.errorMessage
+          ? html`
+              <div id="errorMessage" class="slideDownIn20">
+                ${this.errorMessage}
+              </div>
+            `
+          : nothing}
       </div>
     `
   }

@@ -14,17 +14,13 @@ import {
 const choiceFieldSize = 20
 
 export default css`
-  #root {
-    display: block;
-    ${fontStyle.medium};
-  }
-
   ${getLabelStyle('#label')}
 
   #container {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
+    ${fontStyle.medium};
     color: ${neutralPrimary};
     margin: 0;
     padding: 0;

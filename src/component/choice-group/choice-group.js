@@ -44,33 +44,31 @@ class ChoiceGroup extends StyledElement {
 
   render () {
     return html`
-      <div id="root">
-        ${this.label ? html`<label id="label">${this.label}</label>` : nothing}
-        <div
-          id="container"
-          class="${classMap({
-            row: this.inRow
-          })}"
-        >
-          ${this.options.map(
-            option => html`
-              <div>
-                <div
-                  class="${classMap({
-                    field: true,
-                    checked: this.value === option.value,
-                    disabled: this.disabled || option.disabled
-                  })}"
-                  @click="${() => this.setOption(option)}"
-                >
-                  <label>
-                    <span>${option.text}</span>
-                  </label>
-                </div>
+      ${this.label ? html`<label id="label">${this.label}</label>` : nothing}
+      <div
+        id="container"
+        class="${classMap({
+          row: this.inRow
+        })}"
+      >
+        ${this.options.map(
+          option => html`
+            <div>
+              <div
+                class="${classMap({
+                  field: true,
+                  checked: this.value === option.value,
+                  disabled: this.disabled || option.disabled
+                })}"
+                @click="${() => this.setOption(option)}"
+              >
+                <label>
+                  <span>${option.text}</span>
+                </label>
               </div>
-            `
-          )}
-        </div>
+            </div>
+          `
+        )}
       </div>
     `
   }

@@ -172,73 +172,71 @@ class TagPicker extends StyledElement {
     const placeholder =
       !maxItemsReached || selectedItems.length === 0 ? this.placeholder : ''
     return html`
-      <div>
-        ${this.label
-          ? html`<label @click="${this.handleLabelClick}">${this.label}</label>`
-          : nothing}
-        <div
-          id="container"
-          class="${classMap({
-            open: this.open,
-            disabled: this.disabled,
-            invalid: this.errorMessage
-          })}"
-        >
-          <div id="field">
-            ${selectedItems.length > 0
-              ? html`
-                  <span id="itemsWrapper">
-                    ${selectedItems.map(
-                      (item, index) => html`
-                        <div class="item" tabindex="0">
-                          <span>${item.text}</span>
-                          <button
-                            tabindex="-1"
-                            @click="${() => this.handleRemoveItem(index)}"
-                          >
-                            <span>
-                              <i>${iconCode.Cancel}</i>
-                            </span>
-                          </button>
-                        </div>
-                      `
-                    )}
-                  </span>
-                `
-              : nothing}
-            <fluent-autofill
-              autofill
-              .placeholder="${placeholder}"
-              .disabled="${this.disabled}"
-              .accentInsensitive="${this.accentInsensitive}"
-              @input="${debounce(this.handleInput, this.getItemsRate)}"
-              @navigate="${this.handleNavigate}"
-              @select="${this.handleSelect}"
-              @remove="${this.handleRemove}"
-              @blur="${this.handleAutofillBlur}"
-              @focus="${this.handleAutofillFocus}"
-            ></fluent-autofill>
-          </div>
-          <div id="items" class="${classMap({ loading: !areItemsLoaded })}">
-            <div id="spinner">
-              <div id="circle"></div>
-              ${this.loadingText
-                ? html`<div id="loadingText">${this.loadingText}</div>`
-                : nothing}
-            </div>
-            <fluent-select
-              maxHeight="200px"
-              @change="${this.handleSelectChange}"
-            ></fluent-select>
-          </div>
-          ${this.errorMessage
+      ${this.label
+        ? html`<label @click="${this.handleLabelClick}">${this.label}</label>`
+        : nothing}
+      <div
+        id="container"
+        class="${classMap({
+          open: this.open,
+          disabled: this.disabled,
+          invalid: this.errorMessage
+        })}"
+      >
+        <div id="field">
+          ${selectedItems.length > 0
             ? html`
-                <div id="errorMessage" class="slideDownIn20">
-                  ${this.errorMessage}
-                </div>
+                <span id="itemsWrapper">
+                  ${selectedItems.map(
+                    (item, index) => html`
+                      <div class="item" tabindex="0">
+                        <span>${item.text}</span>
+                        <button
+                          tabindex="-1"
+                          @click="${() => this.handleRemoveItem(index)}"
+                        >
+                          <span>
+                            <i>${iconCode.Cancel}</i>
+                          </span>
+                        </button>
+                      </div>
+                    `
+                  )}
+                </span>
               `
             : nothing}
+          <fluent-autofill
+            autofill
+            .placeholder="${placeholder}"
+            .disabled="${this.disabled}"
+            .accentInsensitive="${this.accentInsensitive}"
+            @input="${debounce(this.handleInput, this.getItemsRate)}"
+            @navigate="${this.handleNavigate}"
+            @select="${this.handleSelect}"
+            @remove="${this.handleRemove}"
+            @blur="${this.handleAutofillBlur}"
+            @focus="${this.handleAutofillFocus}"
+          ></fluent-autofill>
         </div>
+        <div id="items" class="${classMap({ loading: !areItemsLoaded })}">
+          <div id="spinner">
+            <div id="circle"></div>
+            ${this.loadingText
+              ? html`<div id="loadingText">${this.loadingText}</div>`
+              : nothing}
+          </div>
+          <fluent-select
+            maxHeight="200px"
+            @change="${this.handleSelectChange}"
+          ></fluent-select>
+        </div>
+        ${this.errorMessage
+          ? html`
+              <div id="errorMessage" class="slideDownIn20">
+                ${this.errorMessage}
+              </div>
+            `
+          : nothing}
       </div>
     `
   }

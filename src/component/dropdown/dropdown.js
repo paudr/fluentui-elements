@@ -139,41 +139,39 @@ class Dropdown extends StyledElement {
 
   render () {
     return html`
-      <div>
-        ${this.label
-          ? html`<label @click="${this.handleLabelClick}">${this.label}</label>`
-          : nothing}
-        <div
-          id="container"
-          class="${classMap({
-            invalid: this.errorMessage,
-            open: this.open && !this.disabled
-          })}"
-          tabindex="${this.disabled ? '' : '0'}"
-          @click="${this.handleContainerClick}"
-          @keydown="${this.handleKeydown}"
-        >
-          <span id="title">${this.selectedText}</span>
-          <span id="caret">
-            <i>${iconCode.ChevronDown}</i>
-          </span>
-          <div id="items">
-            <fluent-select
-              .options="${this.options}"
-              .multiple="${this.multiple}"
-              .value="${this.value}"
-              maxHeight="200px"
-              @change="${this.handleSelectChange}"
-            ></fluent-select>
-          </div>
-          ${this.errorMessage
-            ? html`
-                <div id="errorMessage" class="slideDownIn20">
-                  ${this.errorMessage}
-                </div>
-              `
-            : nothing}
+      ${this.label
+        ? html`<label @click="${this.handleLabelClick}">${this.label}</label>`
+        : nothing}
+      <div
+        id="container"
+        class="${classMap({
+          invalid: this.errorMessage,
+          open: this.open && !this.disabled
+        })}"
+        tabindex="${this.disabled ? '' : '0'}"
+        @click="${this.handleContainerClick}"
+        @keydown="${this.handleKeydown}"
+      >
+        <span id="title">${this.selectedText}</span>
+        <span id="caret">
+          <i>${iconCode.ChevronDown}</i>
+        </span>
+        <div id="items">
+          <fluent-select
+            .options="${this.options}"
+            .multiple="${this.multiple}"
+            .value="${this.value}"
+            maxHeight="200px"
+            @change="${this.handleSelectChange}"
+          ></fluent-select>
         </div>
+        ${this.errorMessage
+          ? html`
+              <div id="errorMessage" class="slideDownIn20">
+                ${this.errorMessage}
+              </div>
+            `
+          : nothing}
       </div>
     `
   }
