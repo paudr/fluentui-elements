@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit-element'
+import { live } from 'lit-html/directives/live'
 import { commonStartLength, startsWith } from '../../utils/text'
 import { normalize } from '../../theme/mixins.css'
 import { fontStyle } from '../../theme/typografy.css'
@@ -210,7 +211,7 @@ class Autofill extends LitElement {
       <input
         type="text"
         tabindex="0"
-        .value="${data.value}"
+        .value="${live(data.value)}"
         .placeholder="${this.placeholder}"
         .readOnly="${this.readOnly}"
         @input="${this.handleInput}"
