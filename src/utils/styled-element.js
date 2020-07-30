@@ -1,15 +1,15 @@
 import { LitElement } from 'lit-element'
 
-const $styleSheet = new WeakMap()
+const _styleSheet = new WeakMap()
 
 export default class StyledElement extends LitElement {
   get styleSheet () {
-    return $styleSheet.get(this)
+    return _styleSheet.get(this)
   }
 
   set styleSheet (value) {
-    const oldStyleSheets = [$styleSheet.get(this)].flat()
-    $styleSheet.set(this, value)
+    const oldStyleSheets = [_styleSheet.get(this)].flat()
+    _styleSheet.set(this, value)
 
     if (this.shadowRoot) {
       const newStylesheets = [
