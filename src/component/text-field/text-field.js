@@ -5,8 +5,7 @@ import StyledElement from '../../utils/styled-element'
 import styles from './text-field.css'
 import iconCode from '../icon/code'
 
-const $value = new WeakMap()
-const $oldValue = new WeakMap()
+const _privateData = new WeakMap()
 
 class TextField extends StyledElement {
   static get styles () {
@@ -54,17 +53,20 @@ class TextField extends StyledElement {
     this.unresizable = false
     this.autoAdjustHeight = false
 
-    $value.set(this, '')
-    $oldValue.set(this, '')
+    _privateData.set(this, {
+      value: '',
+      oldValue: ''
+    })
   }
 
   get value () {
-    return $value.get(this)
+    return _privateData.get(this).value
   }
 
   set value (value) {
-    $value.set(this, value)
-    $oldValue.set(this, value)
+    const data = _privateData.get(this)
+    data.value = value
+    data.oldValue = value
     const field = this.shadowRoot.querySelector('.field')
     if (field) {
       field.value = value
@@ -74,9 +76,10 @@ class TextField extends StyledElement {
   handleInput (event) {
     event.stopPropagation()
     event.preventDefault()
-    const oldValue = $value.get(this)
+    const data = _privateData.get(this)
+    const oldValue = data.value
     const value = event.target.value
-    $value.set(this, value)
+    data.value = value
     this.adjustInputHeight()
     this.dispatchEvent(
       new CustomEvent('input', { detail: { value, oldValue } })
@@ -86,9 +89,10 @@ class TextField extends StyledElement {
   handleChange (event) {
     event.stopPropagation()
     event.preventDefault()
-    const oldValue = $oldValue.get(this)
+    const data = _privateData.get(this)
+    const oldValue = data.oldValue
     const value = event.target.value
-    $oldValue.set(this, value)
+    data.oldValue = value
     this.dispatchEvent(
       new CustomEvent('change', { detail: { value, oldValue } })
     )
