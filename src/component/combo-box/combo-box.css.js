@@ -38,6 +38,7 @@ export default css`
     user-select: none;
     outline: 0px;
     border: 1px solid ${neutralSecondary};
+    border-radius: 2px;
   }
 
   ${getFocusStyle('#wrapper', {
