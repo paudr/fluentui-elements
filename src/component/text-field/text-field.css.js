@@ -113,7 +113,7 @@ export default css`
   /* Normal field -> focused  */
 
   ${getFocusStyle(
-    '#root:not(.underlined):not(.borderless):focus-within #fieldGroup',
+    ':host(:not([underlined]):not([borderless])) #root:focus-within #fieldGroup',
     {
       color: borderFocusColor,
       radius: css`2px`
@@ -127,7 +127,7 @@ export default css`
   }
 
   ${getFocusStyle(
-    '#root.invalid:not(.underlined):not(.borderless):focus-within #fieldGroup',
+    ':host(:not([underlined]):not([borderless])) #root.invalid:focus-within #fieldGroup',
     {
       color: borderErrorColor,
       radius: css`2px`
@@ -180,32 +180,32 @@ export default css`
 
   /* Borderless field */
 
-  #root.borderless #fieldGroup {
+  :host([borderless]) #root #fieldGroup {
     border-color: transparent;
     border-width: 0;
   }
 
   /* Underlined field */
 
-  #root.underlined {
+  :host([underlined]) #root {
     text-overflow: ellipsis;
   }
 
-  #root.underlined #wrapper {
+  :host([underlined]) #root #wrapper {
     position: relative;
     display: flex;
     width: 100%;
     border-bottom: 1px solid ${borderColor};
   }
 
-  #root.underlined label {
+  :host([underlined]) #root label {
     margin-right: 8px;
     padding-left: 12px;
     line-height: 22px;
     height: 32px;
   }
 
-  #root.underlined #fieldGroup {
+  :host([underlined]) #root #fieldGroup {
     flex: 1 1 0px;
     border-width: 0;
 
@@ -214,7 +214,7 @@ export default css`
 
   /* Underlined field -> focused */
 
-  ${getFocusStyle('#root.underlined:focus-within #wrapper', {
+  ${getFocusStyle(':host([underlined]) #root:focus-within #wrapper', {
     color: borderFocusColor,
     radius: css`0px`,
     type: 'borderBottom'
@@ -222,11 +222,11 @@ export default css`
 
   /* Underlined field -> invalid */
 
-  #root.underlined.invalid #wrapper {
+  :host([underlined]) #root.invalid #wrapper {
     border-bottom: 1px solid ${borderErrorColor};
   }
 
-  ${getFocusStyle('#root.underlined.invalid:focus-within #wrapper', {
+  ${getFocusStyle(':host([underlined]) #root.invalid:focus-within #wrapper', {
     color: borderErrorColor,
     radius: css`0px`,
     type: 'borderBottom'
@@ -234,15 +234,15 @@ export default css`
 
   /* Underlined field -> disabled */
 
-  :host([disabled]) #root.underlined #wrapper {
+  :host([disabled][underlined]) #root #wrapper {
     border-color: ${backgroundDisabledColor};
   }
 
-  :host([disabled]) #root.underlined #fieldGroup {
+  :host([disabled][underlined]) #root #fieldGroup {
     background-color: transparent;
   }
 
-  :host([disabled]) #root.underlined #field {
+  :host([disabled][underlined]) #root #field {
     background-color: ${backgroundDisabledColor};
     color: ${textDisabledColor};
   }

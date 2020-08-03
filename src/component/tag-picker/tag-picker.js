@@ -179,7 +179,6 @@ class TagPicker extends StyledElement {
         id="container"
         class="${classMap({
           open: this.open,
-          disabled: this.disabled,
           invalid: this.errorMessage
         })}"
       >

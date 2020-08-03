@@ -36,16 +36,16 @@ export default css`
     align-items: center;
   }
 
-  .start #labelWrapper {
+  :host([labelPosition="start"]) #labelWrapper {
     margin-right: 10px;
   }
 
-  .end #labelWrapper {
+  :host([labelPosition="end"]) #labelWrapper {
     margin-left: 10px;
   }
 
-  .start #labelWrapper,
-  .end #labelWrapper {
+  :host([labelPosition="start"]) #labelWrapper,
+  :host([labelPosition="end"]) #labelWrapper {
     height: ${defaultHeight}px;
   }
 
@@ -54,15 +54,15 @@ export default css`
     font-size: 20px;
   }
 
-  .end #labelWrapper i {
+  :host([labelPosition="end"]) #labelWrapper i {
     padding-left: 0px
   }
 
-  #root.start #labelWrapper {
+  :host([labelPosition="start"]) #labelWrapper {
     float: left;
   }
 
-  #root.end #labelWrapper {
+  :host([labelPosition="end"]) #labelWrapper {
     float: right;
   }
 

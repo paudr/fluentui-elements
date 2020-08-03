@@ -1,5 +1,4 @@
 import { html, nothing } from 'lit-html'
-import { classMap } from 'lit-html/directives/class-map'
 import { live } from 'lit-html/directives/live'
 import StyledElement from '../../utils/styled-element'
 import styles from './spin-button.css'
@@ -116,13 +115,7 @@ class SpinButton extends StyledElement {
 
   render () {
     return html`
-      <div
-        id="root"
-        class="${classMap({
-          start: this.labelPosition === 'start',
-          end: this.labelPosition === 'end'
-        })}"
-      >
+      <div id="root">
         ${this.icon || this.label
           ? html`
               <div id="labelWrapper">

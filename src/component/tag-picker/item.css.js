@@ -103,8 +103,8 @@ export default css`
     background: ${themeDark};
   }
 
-  .disabled .item,
-  .disabled .item > button {
+  :host([disabled]) .item,
+  :host([disabled]) .item > button {
     cursor: default;
     pointer-events: none;
     background: ${neutralLight};

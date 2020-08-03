@@ -71,7 +71,7 @@ export default css`
     display: block;
   }
 
-  .disabled #field {
+  :host([disabled]) #field {
     background: ${neutralLighter};
     border-color: ${neutralLighter};
   }

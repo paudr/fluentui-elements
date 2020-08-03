@@ -155,8 +155,6 @@ class TextField extends StyledElement {
       <div
         id="root"
         class="${classMap({
-          underlined: this.underlined,
-          borderless: this.borderless,
           requiredPlaceholder: !this.label && this.required,
           invalid: this.errorMessage
         })}"

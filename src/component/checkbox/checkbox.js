@@ -64,11 +64,7 @@ class Checkbox extends StyledElement {
   render () {
     return html`
       <label
-        class="${classMap({
-          indeterminate: this.indeterminate,
-          checked: !this.indeterminate && this.checked,
-          disabled: this.disabled
-        })}"
+        class="${classMap({ checked: !this.indeterminate && this.checked })}"
         @click="${this.handleClick}"
       >
         <div>

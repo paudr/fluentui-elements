@@ -65,11 +65,11 @@ export default css`
     opacity: 1;
   }
 
-  label.indeterminate div {
+  :host([indeterminate]) label div {
     border-color: ${themePrimary};
   }
 
-  label.indeterminate div::after {
+  :host([indeterminate]) label div::after {
     content: '';
     position: absolute;
     width: 10px;
@@ -86,40 +86,40 @@ export default css`
     border-color: ${themePrimary};
   }
 
-  label.disabled {
+  :host([disabled]) label {
     cursor: default;
   }
 
-  label.disabled div {
+  :host([disabled]) label div {
     border-color: ${neutralTertiaryAlt};
   }
 
-  label.disabled.checked div {
+  :host([disabled]) label.checked div {
     background: ${neutralTertiaryAlt};
     border-color: ${neutralTertiaryAlt};
   }
 
-  label.disabled span {
+  :host([disabled]) label span {
     color: ${neutralTertiary};
   }
 
-  label.indeterminate.disabled div,
-  label.indeterminate.disabled div::after {
+  :host([indeterminate][disabled]) label div,
+  :host([indeterminate][disabled]) label div::after {
     border-color: ${neutralTertiaryAlt};
   }
 
-  label:not(.checked):not(.disabled):not(.indeterminate):hover i {
+  :host(:not([indeterminate]):not([disabled]) label:not(.checked):hover i {
     color: ${neutralSecondary};
     opacity: 1;
   }
 
-  label.checked:not(.disabled):hover div {
+  :host(:not([disabled]) label.checked:hover div {
     background: ${themeDark};
     border-color: ${themeDark};
   }
 
-  label.indeterminate:not(.disabled):hover div,
-  label.indeterminate:not(.disabled):hover div:after {
+  :host([indeterminate]:not(.disabled)) label:hover div,
+  :host([indeterminate]:not(.disabled)) label:hover div:after {
     border-color: ${themeDark};
   }
 `
