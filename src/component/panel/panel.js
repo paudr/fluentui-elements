@@ -1,4 +1,4 @@
-import { html } from 'lit-element'
+import { html, nothing } from 'lit-html'
 import { styleMap } from 'lit-html/directives/style-map'
 import StyledElement from '../../utils/styled-element'
 import styles from './panel.css'
@@ -86,10 +86,10 @@ class Panel extends StyledElement {
                   </button>
                 </div>
               `
-            : ''}
+            : nothing}
         </div>
         <div id="contentInner">
-          ${this.withoutCloseButton ? this.renderHeader() : ''}
+          ${this.withoutCloseButton ? this.renderHeader() : nothing}
           <div id="scrollableContent">
             <div id="content">
               <slot></slot>
