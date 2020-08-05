@@ -2,7 +2,7 @@
   "private": true,
   "name": "fluentui-wc",
   "description": "Web components for building experiences for Office and Office 365.",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "dependencies": {
     "lit-element": "^2.3.1",
     "lit-html": "^1.2.1"
