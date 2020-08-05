@@ -143,15 +143,15 @@ class Select extends StyledElement {
   }
 
   scrollToTop () {
-    const parent = this.shadowRoot.getElementById('root')
+    const parent = this.renderRoot.getElementById('root')
     if (parent) {
       parent.scrollTop = 0
     }
   }
 
   scrollToElement (index) {
-    const parent = this.shadowRoot.getElementById('root')
-    const element = this.shadowRoot.querySelector(`*[data-index="${index}"]`)
+    const parent = this.renderRoot.getElementById('root')
+    const element = this.renderRoot.querySelector(`*[data-index="${index}"]`)
     if (parent && element) {
       const parentBottom = parent.scrollTop
       const parentTop = parentBottom + parent.getBoundingClientRect().height

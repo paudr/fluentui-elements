@@ -70,7 +70,7 @@ class TagPicker extends StyledElement {
       this.maxSelectedItems < 0 ||
       data.selectedItems.length < this.maxSelectedItems
     ) {
-      const select = this.shadowRoot.querySelector('fluent-select')
+      const select = this.renderRoot.querySelector('fluent-select')
       const item = select.options[index]
       if (item && !this.isItemSelected(item)) {
         data.selectedItems.push(item)
@@ -81,8 +81,8 @@ class TagPicker extends StyledElement {
 
   closeSuggestions () {
     const data = _privateData.get(this)
-    const select = this.shadowRoot.querySelector('fluent-select')
-    const autofill = this.shadowRoot.querySelector('fluent-autofill')
+    const select = this.renderRoot.querySelector('fluent-select')
+    const autofill = this.renderRoot.querySelector('fluent-autofill')
     autofill.value = ''
     autofill.suggestedValue = ''
     select.scrollToTop()
@@ -102,8 +102,8 @@ class TagPicker extends StyledElement {
 
   setSuggestions (items) {
     const data = _privateData.get(this)
-    const select = this.shadowRoot.querySelector('fluent-select')
-    const autofill = this.shadowRoot.querySelector('fluent-autofill')
+    const select = this.renderRoot.querySelector('fluent-select')
+    const autofill = this.renderRoot.querySelector('fluent-autofill')
     select.options = this.filterItems
       ? items.filter(item => !this.isItemSelected(item))
       : items
@@ -117,7 +117,7 @@ class TagPicker extends StyledElement {
 
   handleLabelClick (event) {
     event.stopPropagation()
-    this.shadowRoot.querySelector('fluent-autofill').focus()
+    this.renderRoot.querySelector('fluent-autofill').focus()
   }
 
   handleInput (event) {
@@ -134,8 +134,8 @@ class TagPicker extends StyledElement {
   }
 
   handleNavigate (event) {
-    const select = this.shadowRoot.querySelector('fluent-select')
-    const autofill = this.shadowRoot.querySelector('fluent-autofill')
+    const select = this.renderRoot.querySelector('fluent-select')
+    const autofill = this.renderRoot.querySelector('fluent-autofill')
     select.highlightedIndex =
       (select.options.length + select.highlightedIndex + event.detail) %
       select.options.length
@@ -144,7 +144,7 @@ class TagPicker extends StyledElement {
   }
 
   handleSelect () {
-    const select = this.shadowRoot.querySelector('fluent-select')
+    const select = this.renderRoot.querySelector('fluent-select')
     this.selectItem(select.highlightedIndex)
   }
 
@@ -155,13 +155,13 @@ class TagPicker extends StyledElement {
 
   handleRemoveItem (index) {
     _privateData.get(this).selectedItems.splice(index, 1)
-    this.shadowRoot.querySelector('fluent-autofill').focus()
+    this.renderRoot.querySelector('fluent-autofill').focus()
     this.requestUpdate()
   }
 
   handleSelectChange (event) {
     this.selectItem(event.detail.selectedIndices[0])
-    this.shadowRoot.querySelector('fluent-autofill').focus()
+    this.renderRoot.querySelector('fluent-autofill').focus()
   }
 
   render () {

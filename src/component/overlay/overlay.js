@@ -56,7 +56,7 @@ class Overlay extends StyledElement {
   handleClick (event) {
     event.stopPropagation()
     event.preventDefault()
-    if (event.target === this.shadowRoot.getElementById('root')) {
+    if (event.target === this.renderRoot.getElementById('root')) {
       if (this.autoClose) {
         this.close(true)
       } else {

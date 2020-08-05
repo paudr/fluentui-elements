@@ -103,7 +103,7 @@ class SpinButton extends StyledElement {
   }
 
   handleChange () {
-    const input = this.shadowRoot.querySelector('input')
+    const input = this.renderRoot.querySelector('input')
     const value = this.parse(input.value)
     if (value !== null) {
       this.updateValue(value, true)

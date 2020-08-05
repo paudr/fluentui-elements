@@ -145,7 +145,7 @@ class DatePicker extends StyledElement {
 
   handleCalendarChange (event) {
     const date = event.detail.value
-    const textField = this.shadowRoot.querySelector('fluent-text-field')
+    const textField = this.renderRoot.querySelector('fluent-text-field')
     this.updateValue(date, true)
     this.showCalendar = false
     textField.value = this.textValue

@@ -85,7 +85,7 @@ class Dropdown extends StyledElement {
 
   handleLabelClick (event) {
     event.stopPropagation()
-    this.shadowRoot.getElementById('container').focus()
+    this.renderRoot.getElementById('container').focus()
   }
 
   handleContainerClick (event) {
@@ -108,7 +108,7 @@ class Dropdown extends StyledElement {
     const { code } = event
     event.stopPropagation()
     event.preventDefault()
-    const select = this.shadowRoot.querySelector('fluent-select')
+    const select = this.renderRoot.querySelector('fluent-select')
     if (this.open) {
       if (select) {
         if (['ArrowDown', 'ArrowUp', 'Space'].includes(code)) {

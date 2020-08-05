@@ -67,7 +67,7 @@ class TextField extends StyledElement {
     const data = _privateData.get(this)
     data.value = value
     data.oldValue = value
-    const field = this.shadowRoot.querySelector('.field')
+    const field = this.renderRoot.querySelector('.field')
     if (field) {
       field.value = value
     }
@@ -105,7 +105,7 @@ class TextField extends StyledElement {
 
   adjustInputHeight () {
     if (this.multiline && this.autoAdjustHeight) {
-      const field = this.shadowRoot.querySelector('textarea')
+      const field = this.renderRoot.querySelector('textarea')
       if (field) {
         field.style.height = ''
         const scrollHeight = field.scrollHeight + 2 // +2 to avoid vertical scroll bars

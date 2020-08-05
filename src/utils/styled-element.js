@@ -11,16 +11,16 @@ export default class StyledElement extends LitElement {
     const oldStyleSheets = [_styleSheet.get(this)].flat()
     _styleSheet.set(this, value)
 
-    if (this.shadowRoot) {
+    if (this.renderRoot) {
       const newStylesheets = [
-        ...this.shadowRoot.adoptedStyleSheets.filter(
+        ...this.renderRoot.adoptedStyleSheets.filter(
           styleSheet => !oldStyleSheets.includes(styleSheet)
         ),
         value
       ]
 
       const result = newStylesheets.flat().filter(element => element)
-      this.shadowRoot.adoptedStyleSheets = result
+      this.renderRoot.adoptedStyleSheets = result
     }
   }
 }

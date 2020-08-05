@@ -72,7 +72,7 @@ class Autofill extends LitElement {
 
   set value (value) {
     _privateData.get(this).value = value
-    const input = this.shadowRoot.querySelector('input')
+    const input = this.renderRoot.querySelector('input')
     if (input) input.value = value
     this.writeSuggestion()
   }
@@ -88,12 +88,12 @@ class Autofill extends LitElement {
 
   focus () {
     if (!this.disabled) {
-      this.shadowRoot.querySelector('input').focus()
+      this.renderRoot.querySelector('input').focus()
     }
   }
 
   write (text) {
-    const input = this.shadowRoot.querySelector('input')
+    const input = this.renderRoot.querySelector('input')
     if (input) {
       input.value = text
       input.setSelectionRange(text.length, text.length, 'backward')
@@ -101,7 +101,7 @@ class Autofill extends LitElement {
   }
 
   suggest (text, fullSelection = false) {
-    const input = this.shadowRoot.querySelector('input')
+    const input = this.renderRoot.querySelector('input')
     if (input) {
       const maxselectionStart =
         input.selectionStart !== input.selectionEnd &&
@@ -123,17 +123,17 @@ class Autofill extends LitElement {
   }
 
   selectAllText () {
-    const input = this.shadowRoot.querySelector('input')
+    const input = this.renderRoot.querySelector('input')
     if (input) {
       input.setSelectionRange(0, input.value.length, 'backward')
     }
   }
 
   writeSuggestion () {
-    const input = this.shadowRoot.querySelector('input')
+    const input = this.renderRoot.querySelector('input')
     if (input) {
       const data = _privateData.get(this)
-      if (this.shadowRoot.activeElement === input && this.autofill) {
+      if (this.renderRoot.activeElement === input && this.autofill) {
         if (!data.value) {
           input.value = ''
         } else if (

@@ -32,12 +32,12 @@ class SearchBox extends StyledElement {
   }
 
   get value () {
-    const input = this.shadowRoot.querySelector('input')
+    const input = this.renderRoot.querySelector('input')
     return input ? input.value : ''
   }
 
   set value (value) {
-    const input = this.shadowRoot.querySelector('input')
+    const input = this.renderRoot.querySelector('input')
     if (input) {
       input.value = value
       this.requestUpdate('value', value)
@@ -45,7 +45,7 @@ class SearchBox extends StyledElement {
   }
 
   clear () {
-    const input = this.shadowRoot.querySelector('input')
+    const input = this.renderRoot.querySelector('input')
     input.value = ''
     this.requestUpdate()
     this.dispatchEvent(new CustomEvent('change'), {
@@ -79,7 +79,7 @@ class SearchBox extends StyledElement {
   }
 
   render () {
-    const input = this.shadowRoot.querySelector('input')
+    const input = this.renderRoot.querySelector('input')
     const value = input ? input.value : null
     return html`
       ${this.label ? html`<label for="field">${this.label}</label>` : nothing}

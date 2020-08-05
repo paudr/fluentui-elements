@@ -91,8 +91,8 @@ class ComboBox extends StyledElement {
   }
 
   closeOptions () {
-    const select = this.shadowRoot.querySelector('fluent-select')
-    const autofill = this.shadowRoot.querySelector('fluent-autofill')
+    const select = this.renderRoot.querySelector('fluent-select')
+    const autofill = this.renderRoot.querySelector('fluent-autofill')
     const optionsManager = _optionsManager.get(this)
     if (!this.multiple) {
       if (autofill.value === '') {
@@ -118,17 +118,17 @@ class ComboBox extends StyledElement {
   handleLabelClick (event) {
     event.stopPropagation()
     if (!this.disabled) {
-      this.shadowRoot.querySelector('fluent-autofill').focus()
+      this.renderRoot.querySelector('fluent-autofill').focus()
     }
   }
 
   handleCaretClick () {
     if (!this.disabled && !this.readOnly) {
-      const select = this.shadowRoot.querySelector('fluent-select')
+      const select = this.renderRoot.querySelector('fluent-select')
       this.open = !this.open
       if (this.open) {
         this.open = true
-        const autofill = this.shadowRoot.querySelector('fluent-autofill')
+        const autofill = this.renderRoot.querySelector('fluent-autofill')
         autofill.focus()
         if (select.markedIndex >= 0) {
           setImmediate(() => select.scrollToElement(select.markedIndex))
@@ -150,7 +150,7 @@ class ComboBox extends StyledElement {
   handleSelectChange (event) {
     const { selectedIndices } = event.detail
     const select = event.target
-    const autofill = this.shadowRoot.querySelector('fluent-autofill')
+    const autofill = this.renderRoot.querySelector('fluent-autofill')
     const optionsManager = _optionsManager.get(this)
     const oldValue = this.value
     const oldSelectedIndices = optionsManager.selectedIndices
@@ -184,7 +184,7 @@ class ComboBox extends StyledElement {
 
   handleAutofillInput (event) {
     event.stopPropagation()
-    const select = this.shadowRoot.querySelector('fluent-select')
+    const select = this.renderRoot.querySelector('fluent-select')
     const equalIndex = this.options.findIndex(option =>
       equalInsensitive(option.text, event.detail, this.accentInsensitive)
     )
@@ -215,7 +215,7 @@ class ComboBox extends StyledElement {
 
   handleAutofillNavigate (event) {
     const autofill = event.target
-    const select = this.shadowRoot.querySelector('fluent-select')
+    const select = this.renderRoot.querySelector('fluent-select')
     if (!this.multiple && !this.open && !this.autoComplete) {
       const equalIndex = this.options.findIndex(option =>
         equalInsensitive(option.text, autofill.value, this.accentInsensitive)
@@ -243,7 +243,7 @@ class ComboBox extends StyledElement {
   }
 
   handleAutofillSelect (event) {
-    const select = this.shadowRoot.querySelector('fluent-select')
+    const select = this.renderRoot.querySelector('fluent-select')
     const index = this.autoComplete
       ? select.markedIndex
       : select.highlightedIndex

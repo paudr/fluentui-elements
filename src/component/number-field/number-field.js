@@ -88,7 +88,7 @@ class NumberField extends TextField {
     const data = _privateData.get(this)
     data.value = value
     data.oldValue = value
-    const field = this.shadowRoot.querySelector('.field')
+    const field = this.renderRoot.querySelector('.field')
     if (field) {
       field.value = this.text
     }
