@@ -1,5 +1,5 @@
 import { html } from 'lit-html'
-import { withKnobs, object, number } from '@storybook/addon-knobs'
+import { withKnobs, object, number, boolean } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 import './command-bar'
 
@@ -122,10 +122,54 @@ const farItems = [
   { value: 'info', icon: 'Info' }
 ]
 
-export const Normal = () => html`<fluent-command-bar
+export const Sandbox = () => html`<fluent-command-bar
   .items="${object('items', items)}"
   .overflowItems="${object('overflowItems', overflowItems)}"
   .farItems="${object('farItems', farItems)}"
   .overflowedItemsIndex="${number('overflowedItemsIndex', -1)}"
+  .autoUpdateOverflowedItemsIndex="${boolean(
+    'overflowautoUpdateOverflowedItemsIndexedItemsIndex',
+    false
+  )}"
   @click="${action('click')}"
 ></fluent-command-bar>`
+
+function onContainerWitdhChanged (event) {
+  document.getElementById('container').style.width = event.detail.value
+}
+
+function onCalculateOverflowIndex () {
+  const commandBar = document.querySelector('#container fluent-command-bar')
+  commandBar.updateOverflowItemIndex()
+}
+
+export const CalculateOverflowIndex = () => html`
+  <style>
+    #container {
+      position: relative;
+      border: 1px solid black;
+    }
+  </style>
+  <div id="container">
+    <fluent-command-bar
+      .items="${object('items', items)}"
+      .overflowItems="${object('overflowItems', overflowItems)}"
+      .farItems="${object('farItems', farItems)}"
+      .overflowedItemsIndex="${number('overflowedItemsIndex', -1)}"
+      .autoUpdateOverflowedItemsIndex="${boolean(
+        'overflowautoUpdateOverflowedItemsIndexedItemsIndex',
+        false
+      )}"
+      @click="${action('click')}"
+    ></fluent-command-bar>
+    <fluent-text-field
+      label="Container width"
+      value="100%"
+      @change="${onContainerWitdhChanged}"
+    ></fluent-text-field>
+    <fluent-button
+      text="Calculate overflow index"
+      @click="${onCalculateOverflowIndex}"
+    ></fluent-button>
+  </div>
+`

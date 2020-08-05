@@ -28,6 +28,7 @@ export default css`
     background-color: ${white};
     padding: 0px 14px 0px 24px;
     height: 44px;
+    max-width: 100%;
   }
 
   #root > div {

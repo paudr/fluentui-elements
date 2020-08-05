@@ -11,7 +11,9 @@ function arrayTransfer (source, target, index) {
   }
 }
 
-const $open = new WeakMap()
+const _event = new WeakMap()
+const _open = new WeakMap()
+const more = Symbol('more')
 
 class CommandBar extends StyledElement {
   static get styles () {
@@ -23,7 +25,8 @@ class CommandBar extends StyledElement {
       items: { type: Array },
       overflowItems: { type: Array },
       farItems: { type: Array },
-      overflowedItemsIndex: { type: Number }
+      overflowedItemsIndex: { type: Number },
+      autoUpdateOverflowedItemsIndex: { type: Boolean }
     }
   }
 
@@ -33,11 +36,44 @@ class CommandBar extends StyledElement {
     this.overflowItems = []
     this.farItems = []
     this.overflowedItemsIndex = -1
-    $open.set(this, [])
+    _open.set(this, [])
+  }
+
+  onResize () {
+    if (this.autoUpdateOverflowedItemsIndex) {
+      this.overflowedItemsIndex = -1
+      setImmediate(() => {
+        this.overflowedItemsIndex = this.getOverflowItemIndex()
+      })
+    }
+  }
+
+  getOverflowItemIndex () {
+    const root = this.renderRoot.getElementById('root')
+    const farOptions = this.renderRoot.querySelector('#root > div:last-child')
+    const options = [
+      ...this.renderRoot.querySelectorAll(
+        '#root > div:first-child > div.commandItem'
+      )
+    ].filter(option => option.getAttribute('data-type') !== 'more')
+    const moreButton = this.renderRoot.querySelector(
+      '#root > div:first-child > div[data-type="more"]'
+    )
+    const maxWidth =
+      root.getBoundingClientRect().width -
+      farOptions.getBoundingClientRect().width -
+      moreButton.getBoundingClientRect().width -
+      20
+    let currentWidth = 0
+    for (let index = 0; index < options.length; index += 1) {
+      currentWidth += options[index].getBoundingClientRect().width
+      if (currentWidth > maxWidth) return index
+    }
+    return -1
   }
 
   expandLevel (key, level, noClose) {
-    const open = $open.get(this)
+    const open = _open.get(this)
     if (open[level] === key) {
       if (!noClose) {
         open.splice(level)
@@ -57,13 +93,27 @@ class CommandBar extends StyledElement {
     )
     if (overflowItems.length > 0) {
       items.push({
-        value: 'more',
+        value: more,
         icon: 'More',
         iconColor: '#333333',
         childs: overflowItems
       })
     }
     return items
+  }
+
+  connectedCallback () {
+    super.connectedCallback()
+    const event = () => {
+      this.onResize()
+    }
+    _event.set(this, event)
+    window.addEventListener('resize', event)
+  }
+
+  disconnectedCallback () {
+    super.disconnectedCallback()
+    window.removeEventListener('resize', _event.get(this))
   }
 
   renderCommandButton ({
@@ -166,17 +216,18 @@ class CommandBar extends StyledElement {
     const hasChilds = Array.isArray(item.childs) && item.childs.length > 0
     const hasAction = typeof item.action === 'function'
     const expandIcon = hasChilds ? 'ChevronDown' : null
-    const showChilds = $open.get(this)[0] === item.value
+    const showChilds = _open.get(this)[0] === item.value
     const action = () => {
-      $open.set(this, [])
+      _open.set(this, [])
       this.requestUpdate()
       hasAction && item.action.call(null, item.value)
     }
     const expand = () => this.expandLevel(item.value, 0)
     const mouseTrigger = () => this.expandLevel(item.value, 0, true)
+    const dataType = item.value === more ? 'more' : 'option'
 
     return html`
-      <div class="commandItem">
+      <div class="commandItem" data-type="${dataType}">
         ${hasChilds && hasAction
           ? this.renderSplitButton({
               icon: item.icon,
@@ -207,9 +258,9 @@ class CommandBar extends StyledElement {
     const hasChilds = Array.isArray(item.childs) && item.childs.length > 0
     const hasAction = typeof item.action === 'function'
     const expandIcon = hasChilds ? 'ChevronRight' : null
-    const showChilds = $open.get(this)[level] === item.value
+    const showChilds = _open.get(this)[level] === item.value
     const action = () => {
-      $open.set(this, [])
+      _open.set(this, [])
       this.requestUpdate()
       hasAction && item.action.call(null, item.value)
     }
