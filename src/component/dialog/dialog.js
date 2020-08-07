@@ -1,5 +1,5 @@
 import { html, nothing } from 'lit-html'
-import StyledElement from '../../utils/styled-element'
+import StyledElement from '../../base/styled-element'
 import { styleMap } from 'lit-html/directives/style-map'
 import styles, { overlay } from './dialog.css'
 import iconCode from '../icon/code'

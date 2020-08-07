@@ -1,5 +1,5 @@
 import { html, css } from 'lit-element'
-import StyledElement from '../../utils/styled-element'
+import StyledElement from '../../base/styled-element'
 import { blackTranslucent40, whiteTranslucent40 } from '../../theme/color.css'
 
 class Overlay extends StyledElement {

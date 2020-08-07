@@ -1,5 +1,5 @@
 import { html, nothing } from 'lit-html'
-import StyledElement from '../../utils/styled-element'
+import StyledElement from '../../base/styled-element'
 import styles from './calendar.css'
 import CalendarDay from './calendar-day'
 import CalendarMonth from './calendar-month'

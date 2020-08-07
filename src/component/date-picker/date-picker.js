@@ -1,7 +1,7 @@
 import { html, nothing } from 'lit-html'
 import { classMap } from 'lit-html/directives/class-map'
 import { live } from 'lit-html/directives/live'
-import StyledElement from '../../utils/styled-element'
+import StyledElement from '../../base/styled-element'
 import styles from './date-picker.css'
 import iconCode from '../icon/code'
 import '../calendar'

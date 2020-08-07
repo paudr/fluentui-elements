@@ -1,7 +1,7 @@
 import { html } from 'lit-element'
 import { classMap } from 'lit-html/directives/class-map'
 import { styleMap } from 'lit-html/directives/style-map'
-import StyledElement from '../../utils/styled-element'
+import StyledElement from '../../base/styled-element'
 import styles from './select.css'
 import OptionsManager from '../../utils/options-manager'
 import iconCode from '../icon/code'

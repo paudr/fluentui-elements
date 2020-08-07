@@ -1,5 +1,5 @@
 import { html, nothing } from 'lit-html'
-import StyledElement from '../../utils/styled-element'
+import StyledElement from '../../base/styled-element'
 import styles from './search-box.css'
 import iconCode from '../icon/code'
 

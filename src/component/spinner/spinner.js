@@ -1,6 +1,6 @@
 import { html, css } from 'lit-element'
 import { nothing } from 'lit-html'
-import StyledElement from '../../utils/styled-element'
+import StyledElement from '../../base/styled-element'
 import { themeLight, themePrimary } from '../../theme/color.css'
 import { fontStyle } from '../../theme/typografy.css'
 

@@ -1,6 +1,6 @@
 import { html, nothing } from 'lit-html'
 import { live } from 'lit-html/directives/live'
-import StyledElement from '../../utils/styled-element'
+import StyledElement from '../../base/styled-element'
 import styles from './spin-button.css'
 import iconCode from '../icon/code'
 import '../icon'

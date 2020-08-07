@@ -1,6 +1,6 @@
 import { html, nothing } from 'lit-html'
 import { styleMap } from 'lit-html/directives/style-map'
-import StyledElement from '../../utils/styled-element'
+import StyledElement from '../../base/styled-element'
 import styles from './panel.css'
 import iconCode from '../icon/code'
 import '../overlay'
