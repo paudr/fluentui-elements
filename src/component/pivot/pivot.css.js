@@ -67,7 +67,7 @@ export default css`
     background-color: ${neutralLight};
   }
 
-  button:before {
+  button::before {
     content: '';
     background-color: transparent;
     position: absolute;
@@ -137,11 +137,11 @@ export default css`
     vertical-align: top;
   }
 
-  button.selected:before {
+  button.selected::before {
     background-color: rgb(0, 120, 212);
   }
 
-  button.selected:hover:before {
+  button.selected:hover::before {
     left: 0px;
     right: 0px;
   }
@@ -158,7 +158,7 @@ export default css`
     vertical-align: top;
   }
 
-  :host([tabStyle]) button:before {
+  :host([tabStyle]) button::before {
     background-color: transparent;
     bottom: 0px;
     content: '';

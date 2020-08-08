@@ -119,7 +119,7 @@ export default css`
   }
 
   :host([indeterminate]:not(.disabled)) label:hover div,
-  :host([indeterminate]:not(.disabled)) label:hover div:after {
+  :host([indeterminate]:not(.disabled)) label:hover div::after {
     border-color: ${themeDark};
   }
 `

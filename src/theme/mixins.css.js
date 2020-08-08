@@ -65,7 +65,7 @@ export function getFocusStyle (
       border-color: ${color};
     }
 
-    ${selector}:after {
+    ${selector}::after {
       pointer-events: none;
       content: '';
       position: absolute;

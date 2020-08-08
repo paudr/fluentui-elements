@@ -160,7 +160,7 @@ export default css`
     color: ${neutralTertiary};
   }
 
-  :host([disabled]) #fieldWrapper:after {
+  :host([disabled]) #fieldWrapper::after {
     border-color: ${neutralLighter};
   }
 `

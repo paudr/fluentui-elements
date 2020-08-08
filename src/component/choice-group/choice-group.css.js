@@ -62,7 +62,7 @@ export default css`
     min-height: 20px;
   }
 
-  .field label:before {
+  .field label::before {
     content: '';
     display: inline-block;
     background-color: ${white};
@@ -78,7 +78,7 @@ export default css`
     border-radius: 50%;
   }
 
-  .field label:after {
+  .field label::after {
     content: '';
     width: 0;
     height: 0;
@@ -90,7 +90,7 @@ export default css`
     box-sizing: border-box;
   }
 
-  .field:not(.disabled) label:hover:after {
+  .field:not(.disabled) label:hover::after {
     border: 5px solid ${neutralSecondary};
     left: 5px;
     top: 5px;
@@ -103,11 +103,11 @@ export default css`
     padding-left: 26px;
   }
 
-  .field.checked label:before {
+  .field.checked label::before {
     border-color: ${themePrimary};
   }
 
-  .field.checked label:after {
+  .field.checked label::after {
     border: 5px solid ${themePrimary};
     left: 5px;
     top: 5px;
@@ -115,8 +115,8 @@ export default css`
     height: 10px;
   }
 
-  .field.checked:not(.disabled) label:hover:before,
-  .field.checked:not(.disabled) label:hover:after {
+  .field.checked:not(.disabled) label:hover::before,
+  .field.checked:not(.disabled) label:hover::after {
     border-color: ${themeDark};
   }
 
@@ -128,9 +128,9 @@ export default css`
     cursor: default;
   }
 
-  .field.disabled label:before,
-  .field.checked.disabled label:before,
-  .field.checked.disabled label:after {
+  .field.disabled label::before,
+  .field.checked.disabled label::before,
+  .field.checked.disabled label::after {
     border-color: ${neutralTertiary};
   }
 
