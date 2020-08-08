@@ -180,7 +180,7 @@ ${getFocusStyle(':host([underlined]) #root.invalid #wrapper', {
     type: 'borderBottom'
   })}
 
-  ${getFocusStyle(':host([underlined][disabled]) #root #wrapper', {
+  ${getFocusStyle(':host([underlined][disabled]) #wrapper', {
     color: backgroundDisabledColor,
     width: css`1px`,
     radius: css`0px`,

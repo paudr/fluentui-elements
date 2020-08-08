@@ -1,12 +1,7 @@
 import { css } from 'lit-element'
 
-import {
-  normalize,
-  iconCss,
-  getLabelStyle,
-  getFocusStyle
-} from '../../theme/mixins.css'
-import { fontStyle, iconFontSize } from '../../theme/typografy.css'
+import { iconCss, getFocusStyle } from '../../theme/mixins.css'
+import { iconFontSize } from '../../theme/typografy.css'
 import {
   neutralLighter,
   neutralPrimary,
@@ -17,37 +12,13 @@ import {
 } from '../../theme/color.css'
 
 export default css`
-  :host {
-    display: block;
+  #fieldGroup {
+    padding: 1px 0px 1px 4px;
   }
 
   i {
     ${iconCss}
   }
-
-  ${getLabelStyle('label')}
-
-  #root {
-    ${normalize}
-    ${fontStyle.medium};
-    position: relative;
-    padding: 1px 0px 1px 4px;
-    color: ${neutralPrimary};
-    background-color: ${white};
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: stretch;
-    height: 32px;
-    border-radius: 2px;
-    border: 1px solid ${neutralSecondary};
-    border-image: initial;
-  }
-
-  ${getFocusStyle('#root:not(.underlined):focus-within', {
-    color: themePrimary,
-    radius: css`2px`
-  })}
 
   #icon {
     display: flex;
@@ -65,7 +36,7 @@ export default css`
     transition: width 0.167s ease 0s;
   }
 
-  #root:focus-within #icon {
+  #fieldGroup:focus-within #icon {
     width: 4px;
   }
 
@@ -77,7 +48,7 @@ export default css`
     transition: opacity 0.167s ease 0s;
   }
 
-  #root:focus-within #icon i {
+  #fieldGroup:focus-within #icon i {
     opacity: 0;
   }
 
@@ -135,30 +106,18 @@ export default css`
     color: ${neutralSecondary};
   }
 
-  #root.underlined {
-    padding: 1px 0px 1px 8px;
-    border-radius: 0px;
-    border-style: solid;
-    border-color: ${neutralSecondary};
-    border-width: 0px 0px 1px;
-  }
-
-  ${getFocusStyle(':host([underlined]) #root:focus-within', {
-    color: themePrimary,
-    radius: css`0px`,
-    type: 'borderBottom'
-  })}
-
-  :host([disabled]:not([underlined])) #root {
-    background-color: ${neutralLighter};
-    border-color: ${neutralLighter};
-  }
-
-  :host([disabled]) #root i {
+  :host([disabled]) i {
     color: ${neutralTertiary};
   }
 
-  :host([disabled][underlined]) #root {
-    border-color: ${neutralLighter};
+  :host([underlined][disabled]) #fieldGroup {
+    background-color: ${white};
   }
+
+  ${getFocusStyle(':host([underlined][disabled]) #wrapper', {
+    color: neutralLighter,
+    position: css`0px`,
+    width: css`1px`,
+    radius: css`2px`
+  })}
 `

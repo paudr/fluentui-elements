@@ -1,8 +1,6 @@
 import { html } from 'lit-html'
-import { withKnobs, text, boolean, select } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 import './search-box'
-import iconCode from '../icon/code'
 
 const container = story => html`
   <div
@@ -15,18 +13,14 @@ const container = story => html`
 `
 
 export default {
-  title: 'SearchBox',
+  title: 'SearchBox/Underlined',
   component: 'fluent-search-box',
-  decorators: [container, withKnobs]
+  decorators: [container]
 }
-
-const iconOptions = Object.keys(iconCode).reduce(
-  (object, name) => Object.assign(object, { [name]: name }),
-  { None: '' }
-)
 
 export const Normal = () =>
   html`<fluent-search-box
+    underlined
     @change="${action('change')}"
     @input="${action('input')}"
     @search="${action('search')}"
@@ -35,6 +29,7 @@ export const Normal = () =>
 
 export const WithLabel = () =>
   html`<fluent-search-box
+    underlined
     label="Query string:"
     @change="${action('change')}"
     @input="${action('input')}"
@@ -42,8 +37,77 @@ export const WithLabel = () =>
     @escape="${action('escape')}"
   ></fluent-search-box>`
 
+export const WithDescription = () =>
+  html`<fluent-search-box
+    underlined
+    description="A fancy description."
+    @change="${action('change')}"
+    @input="${action('input')}"
+    @search="${action('search')}"
+    @escape="${action('escape')}"
+  ></fluent-search-box>`
+
+export const Invalid = () =>
+  html`<fluent-search-box
+    underlined
+    invalid
+    @change="${action('change')}"
+    @input="${action('input')}"
+    @search="${action('search')}"
+    @escape="${action('escape')}"
+  ></fluent-search-box>`
+
+export const WithErrorMessage = () =>
+  html`<fluent-search-box
+    underlined
+    errorMessage="Error message"
+    @change="${action('change')}"
+    @input="${action('input')}"
+    @search="${action('search')}"
+    @escape="${action('escape')}"
+  ></fluent-search-box>`
+
+export const Disabled = () =>
+  html`<fluent-search-box
+    underlined
+    disabled
+    @change="${action('change')}"
+    @input="${action('input')}"
+    @search="${action('search')}"
+    @escape="${action('escape')}"
+  ></fluent-search-box>`
+
+export const Required = () => html`
+  <style>
+    fluent-search-box {
+      width: 250px;
+    }
+  </style>
+  <p>
+    <fluent-search-box
+      underlined
+      label="Required"
+      required
+      @change="${action('change')}"
+      @input="${action('input')}"
+      @search="${action('search')}"
+      @escape="${action('escape')}"
+    ></fluent-search-box>
+  </p>
+  <p>
+    <fluent-search-box
+      underlined
+      required
+      @change="${action('change')}"
+      @input="${action('input')}"
+      @search="${action('search')}"
+      @escape="${action('escape')}"
+    ></fluent-search-box>
+  </p>
+`
 export const NoAnimations = () =>
   html`<fluent-search-box
+    underlined
     disableAnimation
     @change="${action('change')}"
     @input="${action('input')}"
@@ -53,49 +117,9 @@ export const NoAnimations = () =>
 
 export const CustomIcon = () =>
   html`<fluent-search-box
+    underlined
     icon="Filter"
     placeholder="Filter"
-    @change="${action('change')}"
-    @input="${action('input')}"
-    @search="${action('search')}"
-    @escape="${action('escape')}"
-  ></fluent-search-box>`
-
-export const Underlined = () =>
-  html`<fluent-search-box
-    underlined
-    @change="${action('change')}"
-    @input="${action('input')}"
-    @search="${action('search')}"
-    @escape="${action('escape')}"
-  ></fluent-search-box>`
-
-export const Disabled = () =>
-  html`<fluent-search-box
-    disabled
-    @change="${action('change')}"
-    @input="${action('input')}"
-    @search="${action('search')}"
-    @escape="${action('escape')}"
-  ></fluent-search-box>`
-
-export const UnderlinedAndDisabled = () =>
-  html`<fluent-search-box
-    underlined
-    disabled
-    @change="${action('change')}"
-    @input="${action('input')}"
-    @search="${action('search')}"
-    @escape="${action('escape')}"
-  ></fluent-search-box>`
-
-export const Sandbox = () =>
-  html`<fluent-search-box
-    .icon="${select('icon', iconOptions, 'Search')}"
-    .placeholder="${text('placeholder', 'Search')}"
-    .disableAnimation="${boolean('disableAnimation', false)}"
-    .underlined="${boolean('underlined', false)}"
-    .disabled="${boolean('disabled', false)}"
     @change="${action('change')}"
     @input="${action('input')}"
     @search="${action('search')}"
