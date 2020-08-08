@@ -1,31 +1,15 @@
 import { css } from 'lit-element'
 
-import {
-  normalize,
-  iconCss,
-  getLabelStyle,
-  getFocusStyle
-} from '../../theme/mixins.css'
+import { normalize, iconCss } from '../../theme/mixins.css'
 import { fontStyle } from '../../theme/typografy.css'
-import {
-  blackTranslucent40,
-  redDark,
-  neutralLight,
-  neutralLighter,
-  neutralPrimary,
-  neutralSecondary,
-  themePrimary,
-  white
-} from '../../theme/color.css'
-import { slideDownIn20 } from '../../theme/animation.css'
+import { neutralLighter, neutralSecondary, white } from '../../theme/color.css'
 
 export default css`
-  ${getLabelStyle('label')}
-
   #container {
-    position: relative;
     ${normalize};
     ${fontStyle.medium};
+    width: 100%;
+    max-width: 100%;
     color: ${neutralSecondary};
     user-select: none;
     outline: 0px;
@@ -43,7 +27,7 @@ export default css`
     white-space: nowrap;
     text-overflow: ellipsis;
     color: ${neutralSecondary};
-    border: 1px solid ${neutralSecondary};
+    border: 0px solid transparent;
     border-radius: 2px;
     overflow: hidden;
   }
@@ -64,56 +48,9 @@ export default css`
     pointer-events: none;
   }
 
-  ${getFocusStyle('#container:not(.open):focus #title', {
-    color: themePrimary,
-    radius: css`2px`
-  })}
-
-  #container:hover #title {
-    border-color: ${neutralPrimary}
-  }
-
-  #container.open #title {
-    border-color: ${neutralSecondary}
-  }
-
-  #items {
-    ${normalize};
-    background-color: ${white};
-    display: none;
-    position: absolute;
-    width: 100%;
-    z-index: 400;
-    max-width: 100%;
-    box-shadow: 0 0px 15px -5px ${blackTranslucent40};
-    border: 1px solid ${neutralLight};
-    user-select: none;
-  }
-
-  #container.open #items {
-    display: block;
-  }
-
-  #errorMessage {
-    ${fontStyle.small}
-    color: ${redDark};
-    padding-top: 5px;
-  }
-
-  #container.invalid #title {
-    border-color: ${redDark};
-  }
-
-  :host([disabled]) #container #title {
+  :host([disabled]) #title {
     background: ${neutralLighter};
     border-color: ${neutralLighter};
     cursor: default;
   }
-
-  ${getFocusStyle('#container.invalid:not(.open):focus #title', {
-    color: redDark,
-    radius: css`2px`
-  })}
-
-  ${slideDownIn20}
 `

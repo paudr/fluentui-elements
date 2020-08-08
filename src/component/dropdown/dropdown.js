@@ -1,6 +1,6 @@
-import { html, nothing } from 'lit-html'
+import { html } from 'lit-html'
 import { classMap } from 'lit-html/directives/class-map'
-import StyledElement from '../../base/styled-element'
+import ComboElement from '../../base/combo-element'
 import OptionsManager from '../../utils/options-manager'
 import { equalInsensitive } from '../../utils/text'
 import '../select'
@@ -9,36 +9,26 @@ import iconCode from '../icon/code'
 
 const _optionsManager = new WeakMap()
 
-class Dropdown extends StyledElement {
+class Dropdown extends ComboElement {
   static get styles () {
-    return styles
+    return [ComboElement.styles, styles]
   }
 
   static get properties () {
     return {
+      ...ComboElement.properties,
       options: { type: Array },
       value: { type: Object, reflect: true },
-      label: { type: String, reflect: true },
       placeholder: { type: String, reflect: true },
-      disabled: { type: Boolean, reflect: true },
-      required: { type: Boolean, reflect: true },
       readonly: { type: Boolean, reflect: true },
-      multiple: { type: Boolean, reflect: true },
-      errorMessage: { type: String, reflect: true },
-      open: { type: Boolean }
+      multiple: { type: Boolean, reflect: true }
     }
   }
 
   constructor () {
     super()
-
-    this.label = ''
     this.placeholder = ''
-    this.disabled = false
-    this.required = false
     this.readonly = false
-    this.errorMessage = ''
-    this.open = false
     _optionsManager.set(this, new OptionsManager())
   }
 
@@ -83,7 +73,7 @@ class Dropdown extends StyledElement {
     return _optionsManager.get(this).getSelectedText(this.placeholder)
   }
 
-  handleLabelClick (event) {
+  labelClick (event) {
     event.stopPropagation()
     this.renderRoot.getElementById('container').focus()
   }
@@ -137,11 +127,8 @@ class Dropdown extends StyledElement {
     }
   }
 
-  render () {
+  renderInputField () {
     return html`
-      ${this.label
-        ? html`<label @click="${this.handleLabelClick}">${this.label}</label>`
-        : nothing}
       <div
         id="container"
         class="${classMap({
@@ -156,23 +143,19 @@ class Dropdown extends StyledElement {
         <span id="caret">
           <i>${iconCode.ChevronDown}</i>
         </span>
-        <div id="items">
-          <fluent-select
-            .options="${this.options}"
-            .multiple="${this.multiple}"
-            .value="${this.value}"
-            maxHeight="200px"
-            @change="${this.handleSelectChange}"
-          ></fluent-select>
-        </div>
-        ${this.errorMessage
-          ? html`
-              <div id="errorMessage" class="slideDownIn20">
-                ${this.errorMessage}
-              </div>
-            `
-          : nothing}
       </div>
+    `
+  }
+
+  renderDropdown () {
+    return html`
+      <fluent-select
+        .options="${this.options}"
+        .multiple="${this.multiple}"
+        .value="${this.value}"
+        maxHeight="200px"
+        @change="${this.handleSelectChange}"
+      ></fluent-select>
     `
   }
 }
