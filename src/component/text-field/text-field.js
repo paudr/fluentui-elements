@@ -1,31 +1,25 @@
 import { html, nothing } from 'lit-html'
 import { classMap } from 'lit-html/directives/class-map'
 import { live } from 'lit-html/directives/live'
-import StyledElement from '../../base/styled-element'
+import InputElement from '../../base/input-element'
 import styles from './text-field.css'
 import iconCode from '../icon/code'
 
 const _privateData = new WeakMap()
 
-class TextField extends StyledElement {
+class TextField extends InputElement {
   static get styles () {
-    return styles
+    return [InputElement.styles, styles]
   }
 
   static get properties () {
     return {
-      label: { type: String, reflect: true },
-      description: { type: String, reflect: true },
+      ...InputElement.properties,
       placeholder: { type: String, reflect: true },
       prefix: { type: String, reflect: true },
       sufix: { type: String, reflect: true },
       multiline: { type: Boolean, reflect: true },
-      underlined: { type: Boolean, reflect: true },
-      borderless: { type: Boolean, reflect: true },
       icon: { type: String, reflect: true },
-      errorMessage: { type: String, reflect: true },
-      disabled: { type: Boolean, reflect: true },
-      required: { type: Boolean, reflect: true },
       readonly: { type: Boolean, reflect: true },
       maxlength: { type: Number, reflect: true },
       unresizable: { type: Boolean, reflect: true },
@@ -34,11 +28,13 @@ class TextField extends StyledElement {
     }
   }
 
+  static get fieldId () {
+    return 'field'
+  }
+
   constructor () {
     super()
 
-    this.label = ''
-    this.description = ''
     this.placeholder = ''
     this.prefix = ''
     this.sufix = ''
@@ -46,9 +42,6 @@ class TextField extends StyledElement {
     this.underlined = false
     this.borderless = false
     this.icon = ''
-    this.errorMessage = ''
-    this.disabled = false
-    this.required = false
     this.readonly = false
     this.unresizable = false
     this.autoAdjustHeight = false
@@ -67,7 +60,7 @@ class TextField extends StyledElement {
     const data = _privateData.get(this)
     data.value = value
     data.oldValue = value
-    const field = this.renderRoot.querySelector('.field')
+    const field = this.renderRoot.getElementById(TextField.fieldId)
     if (field) {
       field.value = value
     }
@@ -117,7 +110,7 @@ class TextField extends StyledElement {
   renderInput () {
     return html`
       <input
-        id="field"
+        id="${TextField.fieldId}"
         type="text"
         class="${classMap({ hasIcon: this.icon })}"
         .value="${live(this.value)}"
@@ -134,7 +127,7 @@ class TextField extends StyledElement {
   renderTextarea () {
     return html`
       <textarea
-        id="field"
+        id="${TextField.fieldId}"
         class="${classMap({
           hasIcon: this.icon,
           unresizable: this.unresizable
@@ -150,57 +143,26 @@ class TextField extends StyledElement {
     `
   }
 
-  render () {
+  renderInputField () {
     return html`
-      <div
-        id="root"
-        class="${classMap({
-          requiredPlaceholder: !this.label && this.required,
-          invalid: this.errorMessage
-        })}"
-      >
-        <div id="wrapper">
-          ${this.label
-            ? html`<label for="field">${this.label}</label>`
-            : nothing}
-          <div id="fieldGroup">
-            ${this.prefix
-              ? html`
-                  <div id="prefix">
-                    <span style="padding-bottom: 1px;">${this.prefix}</span>
-                  </div>
-                `
-              : nothing}
-            ${this.multiline ? this.renderTextarea() : this.renderInput()}
-            ${this.icon
-              ? html`<i @click="${this.handleClick}">${iconCode[this.icon]}</i>`
-              : nothing}
-            ${this.sufix
-              ? html`
-                  <div id="sufix">
-                    <span style="padding-bottom: 1px;">${this.sufix}</span>
-                  </div>
-                `
-              : nothing}
-          </div>
-        </div>
-        ${this.description || this.errorMessage
-          ? html`
-              <span>
-                ${this.description
-                  ? html`<span id="description">${this.description}</span>`
-                  : nothing}
-                ${this.errorMessage
-                  ? html`
-                      <p id="errorMessage" class="slideDownIn20">
-                        <span>${this.errorMessage}</span>
-                      </p>
-                    `
-                  : nothing}
-              </span>
-            `
-          : nothing}
-      </div>
+      ${this.prefix
+        ? html`
+            <div id="prefix">
+              <span style="padding-bottom: 1px;">${this.prefix}</span>
+            </div>
+          `
+        : nothing}
+      ${this.multiline ? this.renderTextarea() : this.renderInput()}
+      ${this.icon
+        ? html`<i @click="${this.handleClick}">${iconCode[this.icon]}</i>`
+        : nothing}
+      ${this.sufix
+        ? html`
+            <div id="sufix">
+              <span style="padding-bottom: 1px;">${this.sufix}</span>
+            </div>
+          `
+        : nothing}
     `
   }
 }

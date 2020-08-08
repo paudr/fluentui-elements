@@ -13,8 +13,8 @@ import iconCode from '../icon/code'
 const container = story => html`
   <div
     tabindex="0"
-    @keydown="${event => event.stopPropagation()}"
     style="outline: 0"
+    @keydown="${event => event.stopPropagation()}"
   >
     ${story()}
   </div>
@@ -33,21 +33,22 @@ const iconOptions = Object.keys(iconCode).reduce(
 
 export const Sandbox = () => html`
   <fluent-text-field
-    .value="${text('value', '')}"
     .label="${text('label', 'Standard')}"
     .description="${text('description', '')}"
-    .placeholder="${text('placeholder', 'Please enter text here')}"
-    .prefix="${text('prefix', '')}"
-    .sufix="${text('sufix', '')}"
-    .multiline="${boolean('multiline', false)}"
-    .underlined="${boolean('underlined', false)}"
-    .borderless="${boolean('borderless', false)}"
-    .icon="${select('icon', iconOptions, '')}"
+    .invalid="${boolean('invalid', false)}"
     .errorMessage="${text('errorMessage', '')}"
     .disabled="${boolean('disabled', false)}"
     .required="${boolean('required', false)}"
+    .borderless="${boolean('borderless', false)}"
+    .underlined="${boolean('underlined', false)}"
+    .value="${text('value', '')}"
+    .placeholder="${text('placeholder', 'Please enter text here')}"
+    .prefix="${text('prefix', '')}"
+    .sufix="${text('sufix', '')}"
+    .icon="${select('icon', iconOptions, '')}"
     .readonly="${boolean('readonly', false)}"
     .maxlength="${number('maxlength', null)}"
+    .multiline="${boolean('multiline', false)}"
     .unresizable="${boolean('unresizable', false)}"
     .autoAdjustHeight="${boolean('autoAdjustHeight', false)}"
     @focus="${action('focus')}"

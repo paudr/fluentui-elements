@@ -3,7 +3,11 @@ import { action } from '@storybook/addon-actions'
 import './text-field'
 
 const container = story => html`
-  <div tabindex="0" @keydown="${event => event.stopPropagation()}">
+  <div
+    tabindex="0"
+    style="outline: 0"
+    @keydown="${event => event.stopPropagation()}"
+  >
     ${story()}
   </div>
 `
@@ -25,6 +29,42 @@ export const Normal = () => html`
   ></fluent-text-field>
 `
 
+export const WithDescription = () => html`
+  <fluent-text-field
+    multiline
+    label="Standard"
+    description="A fancy description."
+    @focus="${action('focus')}"
+    @blur="${action('blur')}"
+    @input="${action('input')}"
+    @change="${action('change')}"
+  ></fluent-text-field>
+`
+
+export const Invalid = () => html`
+  <fluent-text-field
+    multiline
+    invalid
+    label="Invalid"
+    @focus="${action('focus')}"
+    @blur="${action('blur')}"
+    @input="${action('input')}"
+    @change="${action('change')}"
+  ></fluent-text-field>
+`
+
+export const WithErrorMessage = () => html`
+  <fluent-text-field
+    multiline
+    label="With error message"
+    errorMessage="Error message"
+    @focus="${action('focus')}"
+    @blur="${action('blur')}"
+    @input="${action('input')}"
+    @change="${action('change')}"
+  ></fluent-text-field>
+`
+
 export const Disabled = () => html`
   <fluent-text-field
     multiline
@@ -36,6 +76,35 @@ export const Disabled = () => html`
     @input="${action('input')}"
     @change="${action('change')}"
   ></fluent-text-field>
+`
+
+export const Required = () => html`
+  <style>
+    fluent-text-field {
+      width: 250px;
+    }
+  </style>
+  <p>
+    <fluent-text-field
+      multiline
+      label="Required"
+      required
+      @focus="${action('focus')}"
+      @blur="${action('blur')}"
+      @input="${action('input')}"
+      @change="${action('change')}"
+    ></fluent-text-field>
+  </p>
+  <p>
+    <fluent-text-field
+      multiline
+      required
+      @focus="${action('focus')}"
+      @blur="${action('blur')}"
+      @input="${action('input')}"
+      @change="${action('change')}"
+    ></fluent-text-field>
+  </p>
 `
 
 export const MaxLength = () => html`
@@ -79,6 +148,19 @@ export const WithAnIcon = () => html`
     multiline
     label="With an icon"
     icon="Edit"
+    @focus="${action('focus')}"
+    @blur="${action('blur')}"
+    @input="${action('input')}"
+    @change="${action('change')}"
+  ></fluent-text-field>
+`
+
+export const BorderlessMultiline = () => html`
+  <fluent-text-field
+    borderless
+    multiline
+    label="Borderless multi-line TextField"
+    placeholder="No borders here, forks."
     @focus="${action('focus')}"
     @blur="${action('blur')}"
     @input="${action('input')}"

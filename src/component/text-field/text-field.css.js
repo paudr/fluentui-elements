@@ -1,78 +1,22 @@
 import { css } from 'lit-element'
 
+import { normalize, iconCss } from '../../theme/mixins.css'
 import {
-  normalize,
-  iconCss,
-  getLabelStyle,
-  getFocusStyle
-} from '../../theme/mixins.css'
-import { fontStyle, fontSize } from '../../theme/typografy.css'
-import {
-  redDark,
   neutralLighter,
   neutralPrimary,
   neutralSecondary,
-  neutralTertiary,
-  themePrimary,
-  white
+  neutralTertiary
 } from '../../theme/color.css'
 import { slideDownIn20 } from '../../theme/animation.css'
 
-const backgroundColor = white
-const backgroundDisabledColor = neutralLighter
-
-const borderColor = neutralSecondary
-const borderDisabledColor = white
-const borderHoverColor = neutralPrimary
-const borderFocusColor = themePrimary
-const borderErrorColor = redDark
-
-const textColor = neutralPrimary
-const textDisabledColor = neutralTertiary
-
-const placeholderColor = neutralSecondary
-const placeholderDisabledColor = neutralTertiary
-
-const descriptionColor = neutralSecondary
-const errorColor = redDark
-
 export default css`
-  :host {
-    display: block;
-  }
-
-  #root {
-    ${normalize};
-    ${fontStyle.medium};
-    position: relative;
-  }
-
-  ${getLabelStyle('label')}
-
   /* Normal field */
-
-  #fieldGroup {
-    ${normalize};
-    border: 1px solid ${borderColor};
-    border-radius: 2px;
-    background: ${backgroundColor};
-    height: 32px;
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    position: relative;
-    cursor: text;
-  }
-
-  #fieldGroup:hover {
-    border-color: ${borderHoverColor};
-  }
 
   #field {
     ${normalize};
     border-radius: 0;
     padding: 0px 8px;
-    color: ${textColor};
+    color: ${neutralPrimary};
     width: 100%;
     min-width: 0px;
     text-overflow: ellipsis;
@@ -84,69 +28,13 @@ export default css`
   }
 
   #field::placeholder {
-    color: ${placeholderColor};
+    color: ${neutralSecondary};
     opacity: 1;
   }
 
-  #description {
-    color: ${descriptionColor};
-    ${fontSize.xSmall};
-  }
-
-  #errorMessage {
-    ${fontSize.small};
-    color: ${errorColor};
-    margin: 0;
-    padding-top: 5px;
-    display: flex;
-    align-items: center;
-  }
-
-  #root.requiredPlaceholder #fieldGroup::after {
-    content: '*';
-    color: ${redDark};
-    position: absolute;
-    top: -5px;
-    right: -10px;
-  }
-
-  /* Normal field -> focused  */
-
-  ${getFocusStyle(
-    ':host(:not([underlined]):not([borderless])) #root:focus-within #fieldGroup',
-    {
-      color: borderFocusColor,
-      radius: css`2px`
-    }
-  )}
-
-  /* Normal field -> invalid  */
-
-  #root.invalid #fieldGroup {
-    border-color: ${borderErrorColor};
-  }
-
-  ${getFocusStyle(
-    ':host(:not([underlined]):not([borderless])) #root.invalid:focus-within #fieldGroup',
-    {
-      color: borderErrorColor,
-      radius: css`2px`
-    }
-  )}
-
-  /* Normal field -> disabled */
-
-  :host([disabled]) #fieldGroup {
-    background-color: ${backgroundDisabledColor};
-    border-color: ${borderDisabledColor};
-    cursor: auto;
-  }
-
   :host([disabled]) #field::placeholder {
-    color: ${placeholderDisabledColor};
+    color: ${neutralTertiary};
   }
-
-  /* Normal field -> hasIcon */
 
   #field.hasIcon {
     padding-right: 24px;
@@ -164,87 +52,16 @@ export default css`
     color: ${neutralPrimary};
   }
 
-  /* Normal field -> prefix/sufix */
-
   #prefix,
   #sufix {
-    background: ${backgroundDisabledColor};
-    color: ${textDisabledColor};
+    background: ${neutralLighter};
+    color: ${neutralTertiary};
     display: flex;
     align-items: center;
     padding: 0 10px;
     line-height: 1px;
     white-space: nowrap;
     flex-shrink: 0;
-  }
-
-  /* Borderless field */
-
-  :host([borderless]) #root #fieldGroup {
-    border-color: transparent;
-    border-width: 0;
-  }
-
-  /* Underlined field */
-
-  :host([underlined]) #root {
-    text-overflow: ellipsis;
-  }
-
-  :host([underlined]) #root #wrapper {
-    position: relative;
-    display: flex;
-    width: 100%;
-    border-bottom: 1px solid ${borderColor};
-  }
-
-  :host([underlined]) #root label {
-    margin-right: 8px;
-    padding-left: 12px;
-    line-height: 22px;
-    height: 32px;
-  }
-
-  :host([underlined]) #root #fieldGroup {
-    flex: 1 1 0px;
-    border-width: 0;
-
-    text-align: left;
-  }
-
-  /* Underlined field -> focused */
-
-  ${getFocusStyle(':host([underlined]) #root:focus-within #wrapper', {
-    color: borderFocusColor,
-    radius: css`0px`,
-    type: 'borderBottom'
-  })}
-
-  /* Underlined field -> invalid */
-
-  :host([underlined]) #root.invalid #wrapper {
-    border-bottom: 1px solid ${borderErrorColor};
-  }
-
-  ${getFocusStyle(':host([underlined]) #root.invalid:focus-within #wrapper', {
-    color: borderErrorColor,
-    radius: css`0px`,
-    type: 'borderBottom'
-  })}
-
-  /* Underlined field -> disabled */
-
-  :host([disabled][underlined]) #root #wrapper {
-    border-color: ${backgroundDisabledColor};
-  }
-
-  :host([disabled][underlined]) #root #fieldGroup {
-    background-color: transparent;
-  }
-
-  :host([disabled][underlined]) #root #field {
-    background-color: ${backgroundDisabledColor};
-    color: ${textDisabledColor};
   }
 
   /* Multiline field */
@@ -263,8 +80,6 @@ export default css`
     overflow: auto;
   }
 
-  /* Multiline field -> hasIcon */
-
   :host([multiline]) #field.hasIcon {
     padding-right: 40px;
   }
@@ -272,8 +87,6 @@ export default css`
   :host([multiline]) i {
     padding-right: 24px;
   }
-
-  /* Multiline field -> unresizable */
 
   :host([multiline]) #field.unresizable {
     resize: none;
