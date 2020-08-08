@@ -1,20 +1,12 @@
 import { css } from 'lit-element'
 
-import {
-  normalize,
-  iconCss,
-  getLabelStyle,
-  getFocusStyle
-} from '../../theme/mixins.css'
+import { normalize, iconCss } from '../../theme/mixins.css'
 import {
   neutralLighter,
   neutralPrimary,
-  neutralSecondary,
   neutralTertiary,
-  themePrimary,
   white
 } from '../../theme/color.css'
-import { fontSize } from '../../theme/typografy.css'
 
 const defaultHeight = 32
 
@@ -23,71 +15,7 @@ export default css`
     ${iconCss}
   }
 
-  ${getLabelStyle('label')}
-
-  #root {
-    outline: none;
-    ${fontSize.medium};
-    width: 100%;
-  }
-
-  #labelWrapper {
-    display: inline-flex;
-    align-items: center;
-  }
-
-  :host([labelPosition="start"]) #labelWrapper {
-    margin-right: 10px;
-  }
-
-  :host([labelPosition="end"]) #labelWrapper {
-    margin-left: 10px;
-  }
-
-  :host([labelPosition="start"]) #labelWrapper,
-  :host([labelPosition="end"]) #labelWrapper {
-    height: ${defaultHeight}px;
-  }
-
-  #labelWrapper i {
-    padding: 0px 5px;
-    font-size: 20px;
-  }
-
-  :host([labelPosition="end"]) #labelWrapper i {
-    padding-left: 0px
-  }
-
-  :host([labelPosition="start"]) #labelWrapper {
-    float: left;
-  }
-
-  :host([labelPosition="end"]) #labelWrapper {
-    float: right;
-  }
-
-  #fieldWrapper {
-    display: flex;
-    position: relative;
-    box-sizing: border-box;
-    height: ${defaultHeight}px;
-    border: 0px solid transparent;
-    border-radius: 2px;
-  }
-
-  ${getFocusStyle('#fieldWrapper', {
-    color: neutralSecondary,
-    position: css`0px`,
-    width: css`1px`,
-    radius: css`2px`
-  })}
-
-  ${getFocusStyle('#fieldWrapper:focus-within', {
-    color: themePrimary,
-    radius: css`2px`
-  })}
-
-  #fieldWrapper > input {
+  #field {
     ${normalize}
     font-size: 14px;
     color: ${neutralPrimary};
@@ -144,23 +72,22 @@ export default css`
     margin
   }
 
-  :host([disabled]) #fieldWrapper > input,
+  :host([disabled]) #field,
   :host([disabled]) #arrowBox button {
     background-color: ${neutralLighter};
   }
-
-  ${getFocusStyle(':host([disabled]) #fieldWrapper', {
-    color: neutralTertiary,
-    position: css`0px`,
-    width: css`1px`,
-    radius: css`2px`
-  })}
 
   :host([disabled]) i {
     color: ${neutralTertiary};
   }
 
-  :host([disabled]) #fieldWrapper::after {
-    border-color: ${neutralLighter};
+  :host([underlined]) #label {
+    position: relative;
+  }
+
+  :host([underlined]) #label::after {
+    position: absolute;
+    top: 6px;
+    right: -20px;
   }
 `

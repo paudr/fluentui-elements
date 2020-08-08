@@ -1,65 +1,88 @@
 import { html } from 'lit-html'
-import {
-  withKnobs,
-  text,
-  number,
-  boolean,
-  select
-} from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 import './spin-button'
-import iconCode from '../icon/code'
 
 const container = story => html`
   <div
     tabindex="0"
-    @keydown="${event => event.stopPropagation()}"
     style="outline: 0"
+    @keydown="${event => event.stopPropagation()}"
   >
     ${story()}
   </div>
 `
 
 export default {
-  title: 'SpinButton',
+  title: 'SpinButton/Basic',
   component: 'fluent-spin-button',
-  decorators: [container, withKnobs]
+  decorators: [container]
 }
-
-const nameOptions = Object.keys(iconCode).reduce(
-  (object, name) => Object.assign(object, { [name]: name }),
-  { None: '' }
-)
 
 export const Normal = () => html`
   <fluent-spin-button
-    label="Spin Button"
+    label="Standard"
     @change="${action('change')}"
   ></fluent-spin-button>
 `
 
-export const WithIcon = () => html`
+export const WithDescription = () => html`
   <fluent-spin-button
-    label="Spin Button"
-    icon="IncreaseIndentLegacy"
+    label="Standard"
+    description="A fancy description."
     @change="${action('change')}"
   ></fluent-spin-button>
 `
 
-export const LabelAtStart = () => html`
+export const Invalid = () => html`
   <fluent-spin-button
-    label="Spin Button With Label At Start"
-    labelPosition="start"
-    icon="Light"
+    invalid
+    label="Invalid"
     @change="${action('change')}"
   ></fluent-spin-button>
 `
 
-export const LabelAtEnd = () => html`
+export const WithErrorMessage = () => html`
   <fluent-spin-button
-    label="Spin Button With Label At End"
-    labelPosition="end"
-    icon="Light"
+    label="Invalid"
+    errorMessage="Error message"
+    @change="${action('change')}"
+  ></fluent-spin-button>
+`
+
+export const Disabled = () => html`
+  <fluent-spin-button
+    label="Disabled"
+    value="42"
+    disabled
+    @change="${action('change')}"
+  ></fluent-spin-button>
+`
+
+export const Required = () => html`
+  <style>
+    fluent-spin-button {
+      width: 250px;
+    }
+  </style>
+  <p>
+    <fluent-spin-button
+      label="Required"
+      required
+      @change="${action('change')}"
+    ></fluent-spin-button>
+  </p>
+  <p>
+    <fluent-spin-button
+      required
+      @change="${action('change')}"
+    ></fluent-spin-button>
+  </p>
+`
+
+export const Borderless = () => html`
+  <fluent-spin-button
+    borderless
+    label="Borderless"
     @change="${action('change')}"
   ></fluent-spin-button>
 `
@@ -97,21 +120,6 @@ export const CustomUnit = () => html`
       const value = Number(text.replace(/\s*cm\s*$/i, ''))
       return isNaN(value) ? null : value
     }}"
-    @change="${action('change')}"
-  ></fluent-spin-button>
-`
-export const Sandbox = () => html`
-  <fluent-spin-button
-    .label="${text('label', 'Label')}"
-    .icon="${select('name', nameOptions, 'World')}"
-    .required="${boolean('required', false)}"
-    .disabled="${boolean('disabled', false)}"
-    .labelPosition="${select(
-      'labelPosition',
-      { Top: '', Start: 'start', End: 'end' },
-      ''
-    )}"
-    .step="${number('step', 1)}"
     @change="${action('change')}"
   ></fluent-spin-button>
 `

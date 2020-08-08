@@ -1,6 +1,6 @@
-import { html, nothing } from 'lit-html'
+import { html } from 'lit-html'
 import { live } from 'lit-html/directives/live'
-import StyledElement from '../../base/styled-element'
+import InputElement from '../../base/input-element'
 import styles from './spin-button.css'
 import iconCode from '../icon/code'
 import '../icon'
@@ -24,18 +24,15 @@ function defaultDec (value) {
 
 const _privateData = new WeakMap()
 
-class SpinButton extends StyledElement {
+class SpinButton extends InputElement {
   static get styles () {
-    return styles
+    return [InputElement.styles, styles]
   }
 
   static get properties () {
     return {
-      label: { type: String, reflect: true },
+      ...InputElement.properties,
       icon: { type: String, reflect: true },
-      required: { type: Boolean, reflect: true },
-      disabled: { type: Boolean, reflect: true },
-      labelPosition: { type: String, reflect: true },
       step: { type: Number, reflect: true },
       stringify: { type: Function },
       parse: { type: Function },
@@ -45,6 +42,10 @@ class SpinButton extends StyledElement {
     }
   }
 
+  static get fieldId () {
+    return 'field'
+  }
+
   constructor () {
     super()
 
@@ -52,7 +53,6 @@ class SpinButton extends StyledElement {
     this.icon = ''
     this.required = false
     this.disabled = false
-    this.labelPosition = ''
     this.step = 1
     this.stringify = defaultStringify
     this.parse = defaultParser
@@ -113,45 +113,31 @@ class SpinButton extends StyledElement {
     }
   }
 
-  render () {
+  renderInputField () {
     return html`
-      <div id="root">
-        ${this.icon || this.label
-          ? html`
-              <div id="labelWrapper">
-                ${this.icon ? html`<i>${iconCode[this.icon]}</i>` : nothing}
-                ${this.label
-                  ? html`<label for="field">${this.label}</label>`
-                  : nothing}
-              </div>
-            `
-          : nothing}
-        <div id="fieldWrapper">
-          <input
-            id="field"
-            type="text"
-            .value="${live(this.stringify(this.value))}"
-            ?disabled="${this.disabled}"
-            @change="${this.handleChange}"
-          />
-          <span id="arrowBox">
-            <button
-              class="up"
-              ?disabled="${this.disabled}"
-              @click="${this.handleClickUp}"
-            >
-              <i>${iconCode.ChevronUpSmall}</i>
-            </button>
-            <button
-              class="down"
-              ?disabled="${this.disabled}"
-              @click="${this.handleClickDown}"
-            >
-              <i>${iconCode.ChevronDownSmall}</i>
-            </button>
-          </span>
-        </div>
-      </div>
+      <input
+        id="${SpinButton.fieldId}"
+        type="text"
+        .value="${live(this.stringify(this.value))}"
+        ?disabled="${this.disabled}"
+        @change="${this.handleChange}"
+      />
+      <span id="arrowBox">
+        <button
+          class="up"
+          ?disabled="${this.disabled}"
+          @click="${this.handleClickUp}"
+        >
+          <i>${iconCode.ChevronUpSmall}</i>
+        </button>
+        <button
+          class="down"
+          ?disabled="${this.disabled}"
+          @click="${this.handleClickDown}"
+        >
+          <i>${iconCode.ChevronDownSmall}</i>
+        </button>
+      </span>
     `
   }
 }
