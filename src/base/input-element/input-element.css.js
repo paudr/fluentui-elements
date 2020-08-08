@@ -4,10 +4,10 @@ import { fontStyle, fontSize } from '../../theme/typografy.css'
 import { slideDownIn20 } from '../../theme/animation.css'
 import { normalize, getFocusStyle, getLabelStyle } from '../../theme/mixins.css'
 import {
-  redDark,
   neutralLighter,
   neutralPrimary,
   neutralSecondary,
+  redDark,
   themePrimary,
   white
 } from '../../theme/color.css'
@@ -40,7 +40,6 @@ export default css`
     height: 32px;
     display: flex;
     flex-direction: row;
-    align-items: stretch;
     position: relative;
     cursor: text;
   }
@@ -155,24 +154,18 @@ export default css`
     type: 'borderBottom'
   })}
 
-  ${getFocusStyle(':host([underlined]) #root:focus-within #wrapper', {
-    color: borderFocusColor,
-    radius: css`0px`,
-    type: 'borderBottom'
-  })}
-
   ${getFocusStyle(':host([underlined]) #wrapper:focus-within', {
     color: borderFocusColor,
     radius: css`0px`,
     type: 'borderBottom'
   })}
 
-${getFocusStyle(':host([underlined]) #root.invalid #wrapper', {
-  color: borderInvalidColor,
-  width: css`1px`,
-  radius: css`0px`,
-  type: 'borderBottom'
-})}
+  ${getFocusStyle(':host([underlined]) #root.invalid #wrapper', {
+    color: borderInvalidColor,
+    width: css`1px`,
+    radius: css`0px`,
+    type: 'borderBottom'
+  })}
 
   ${getFocusStyle(':host([underlined]) #root.invalid #wrapper:focus-within', {
     color: borderInvalidColor,
