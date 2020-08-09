@@ -1,6 +1,6 @@
 import { html, nothing } from 'lit-html'
 import { classMap } from 'lit-html/directives/class-map'
-import StyledElement from '../../base/styled-element'
+import ComboElement from '../../base/combo-element'
 import debounce from '../../utils/debounce'
 import styles from './tag-picker.css'
 import itemStyles from './item.css'
@@ -10,44 +10,34 @@ import '../select'
 
 const _privateData = new WeakMap()
 
-class TagPicker extends StyledElement {
+class TagPicker extends ComboElement {
   static get styles () {
-    return [styles, itemStyles]
+    return [ComboElement.styles, styles, itemStyles]
   }
 
   static get properties () {
     return {
-      label: { type: String, reflect: true },
+      ...ComboElement.properties,
       placeholder: { type: String, reflect: true },
-      required: { type: Boolean, reflect: true },
-      disabled: { type: Boolean, reflect: true },
       getItems: { type: Function },
       getItemsRate: { type: Number },
       filterItems: { type: Boolean, reflect: true },
       accentInsensitive: { type: Boolean, reflect: true },
-      errorMessage: { type: String, reflect: true },
       maxSelectedItems: { type: Number, reflect: true },
       value: { type: Array, reflect: true },
-      loadingText: { type: String, reflect: true },
-      open: { type: Boolean }
+      loadingText: { type: String, reflect: true }
     }
   }
 
   constructor () {
     super()
-
-    this.label = ''
     this.placeholder = ''
-    this.required = false
-    this.disabled = false
     this.getItems = null
     this.getItemsRate = 0
     this.filterItems = false
     this.accentInsensitive = false
-    this.errorMessage = ''
     this.maxSelectedItems = -1
     this.loadingText = 'Carregant'
-    this.open = false
     _privateData.set(this, {
       selectedItems: [],
       areItemsLoaded: false
@@ -115,7 +105,7 @@ class TagPicker extends StyledElement {
     this.requestUpdate()
   }
 
-  handleLabelClick (event) {
+  labelClick (event) {
     event.stopPropagation()
     this.renderRoot.querySelector('fluent-autofill').focus()
   }
@@ -164,78 +154,66 @@ class TagPicker extends StyledElement {
     this.renderRoot.querySelector('fluent-autofill').focus()
   }
 
-  render () {
-    const { selectedItems, areItemsLoaded } = _privateData.get(this)
+  renderInputField () {
+    const { selectedItems } = _privateData.get(this)
     const maxItemsReached =
       this.maxSelectedItems > -1 &&
       selectedItems.length >= this.maxSelectedItems
     const placeholder =
       !maxItemsReached || selectedItems.length === 0 ? this.placeholder : ''
     return html`
-      ${this.label
-        ? html`<label @click="${this.handleLabelClick}">${this.label}</label>`
-        : nothing}
-      <div
-        id="container"
-        class="${classMap({
-          open: this.open,
-          invalid: this.errorMessage
-        })}"
-      >
-        <div id="field">
-          ${selectedItems.length > 0
-            ? html`
-                <span id="itemsWrapper">
-                  ${selectedItems.map(
-                    (item, index) => html`
-                      <div class="item" tabindex="0">
-                        <span>${item.text}</span>
-                        <button
-                          tabindex="-1"
-                          @click="${() => this.handleRemoveItem(index)}"
-                        >
-                          <span>
-                            <i>${iconCode.Cancel}</i>
-                          </span>
-                        </button>
-                      </div>
-                    `
-                  )}
-                </span>
-              `
-            : nothing}
-          <fluent-autofill
-            autofill
-            .placeholder="${placeholder}"
-            .disabled="${this.disabled}"
-            .accentInsensitive="${this.accentInsensitive}"
-            @input="${debounce(this.handleInput, this.getItemsRate)}"
-            @navigate="${this.handleNavigate}"
-            @select="${this.handleSelect}"
-            @remove="${this.handleRemove}"
-            @blur="${this.handleAutofillBlur}"
-            @focus="${this.handleAutofillFocus}"
-          ></fluent-autofill>
-        </div>
-        <div id="items" class="${classMap({ loading: !areItemsLoaded })}">
-          <div id="spinner">
-            <div id="circle"></div>
-            ${this.loadingText
-              ? html`<div id="loadingText">${this.loadingText}</div>`
-              : nothing}
-          </div>
-          <fluent-select
-            maxHeight="200px"
-            @change="${this.handleSelectChange}"
-          ></fluent-select>
-        </div>
-        ${this.errorMessage
+      <div id="field">
+        ${selectedItems.length > 0
           ? html`
-              <div id="errorMessage" class="slideDownIn20">
-                ${this.errorMessage}
-              </div>
+              <span id="itemsWrapper">
+                ${selectedItems.map(
+                  (item, index) => html`
+                    <div class="item" tabindex="0">
+                      <span>${item.text}</span>
+                      <button
+                        tabindex="-1"
+                        @click="${() => this.handleRemoveItem(index)}"
+                      >
+                        <span>
+                          <i>${iconCode.Cancel}</i>
+                        </span>
+                      </button>
+                    </div>
+                  `
+                )}
+              </span>
             `
           : nothing}
+        <fluent-autofill
+          autofill
+          .placeholder="${placeholder}"
+          .disabled="${this.disabled}"
+          .accentInsensitive="${this.accentInsensitive}"
+          @input="${debounce(this.handleInput, this.getItemsRate)}"
+          @navigate="${this.handleNavigate}"
+          @select="${this.handleSelect}"
+          @remove="${this.handleRemove}"
+          @blur="${this.handleAutofillBlur}"
+          @focus="${this.handleAutofillFocus}"
+        ></fluent-autofill>
+      </div>
+    `
+  }
+
+  renderDropdown () {
+    const { areItemsLoaded } = _privateData.get(this)
+    return html`
+      <div id="items" class="${classMap({ loading: !areItemsLoaded })}">
+        <div id="spinner">
+          <div id="circle"></div>
+          ${this.loadingText
+            ? html`<div id="loadingText">${this.loadingText}</div>`
+            : nothing}
+        </div>
+        <fluent-select
+          maxHeight="200px"
+          @change="${this.handleSelectChange}"
+        ></fluent-select>
       </div>
     `
   }

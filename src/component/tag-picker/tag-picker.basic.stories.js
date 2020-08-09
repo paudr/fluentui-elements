@@ -1,5 +1,4 @@
 import { html } from 'lit-html'
-import { withKnobs, text, boolean, number } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 import './tag-picker'
 import iconCode from '../icon/code'
@@ -15,9 +14,9 @@ const container = story => html`
 `
 
 export default {
-  title: 'TagPicker',
+  title: 'TagPicker/Basic',
   component: 'fluent-tag-picker',
-  decorators: [container, withKnobs]
+  decorators: [container]
 }
 
 const iconItems = Object.keys(iconCode).map(name => ({
@@ -86,6 +85,86 @@ export const Normal = () => html`
   ></fluent-tag-picker>
 `
 
+export const WithDescription = () => html`
+  <fluent-tag-picker
+    label="Standard"
+    description="A fancy description."
+    .getItems="${getMockRest(iconItems)}"
+    .getItemsRate="250"
+    @change="${action('change')}"
+  ></fluent-tag-picker>
+`
+
+export const Invalid = () => html`
+  <fluent-tag-picker
+    invalid
+    label="Invalid"
+    .getItems="${getMockRest(iconItems)}"
+    .getItemsRate="250"
+    @change="${action('change')}"
+  ></fluent-tag-picker>
+`
+
+export const WithErrorMessage = () => html`
+  <fluent-tag-picker
+    label="With error message"
+    errorMessage="Error message"
+    .getItems="${getMockRest(iconItems)}"
+    .getItemsRate="250"
+    @change="${action('change')}"
+  ></fluent-tag-picker>
+`
+
+export const Disabled = () => html`
+  <p>
+    <fluent-tag-picker
+      disabled
+      label="Disabled Tag Picker"
+      .getItems="${getMockRest(iconItems)}"
+      .getItemsRate="250"
+      @change="${action('change')}"
+    ></fluent-tag-picker>
+  </p>
+  <p>
+    <fluent-tag-picker
+      label="Disabled Tag Picker with selected values"
+      disabled="true"
+      .value="${[
+        { text: 'Hello', key: 'hello' },
+        { text: 'World', key: 'world' }
+      ]}"
+      .getItems="${getMockRest(iconItems)}"
+      .getItemsRate="250"
+      @change="${action('change')}"
+    ></fluent-tag-picker>
+  </p>
+`
+
+export const Required = () => html`
+  <style>
+    fluent-tag-picker {
+      width: 250px;
+    }
+  </style>
+  <p>
+    <fluent-tag-picker
+      required
+      label="Required"
+      .getItems="${getMockRest(iconItems)}"
+      .getItemsRate="250"
+      @change="${action('change')}"
+    ></fluent-tag-picker>
+  </p>
+  <p>
+    <fluent-tag-picker
+      required
+      .getItems="${getMockRest(iconItems)}"
+      .getItemsRate="250"
+      @change="${action('change')}"
+    ></fluent-tag-picker>
+  </p>
+`
+
 export const Placeholder = () => html`
   <fluent-tag-picker
     label="Tag Picker"
@@ -96,31 +175,11 @@ export const Placeholder = () => html`
   ></fluent-tag-picker>
 `
 
-export const Disabled = () => html`
+export const Borderless = () => html`
   <fluent-tag-picker
-    label="Disabled Tag Picker"
-    disabled="true"
-    .getItems="${getMockRest(iconItems)}"
-    .getItemsRate="250"
-    @change="${action('change')}"
-  ></fluent-tag-picker>
-  <fluent-tag-picker
-    label="Disabled Tag Picker with selected values"
-    disabled="true"
-    .value="${[
-      { text: 'Hello', key: 'hello' },
-      { text: 'World', key: 'world' }
-    ]}"
-    .getItems="${getMockRest(iconItems)}"
-    .getItemsRate="250"
-    @change="${action('change')}"
-  ></fluent-tag-picker>
-`
-
-export const Required = () => html`
-  <fluent-tag-picker
-    label="Tag Picker"
-    required="true"
+    borderless
+    placeholder="Pick an item"
+    label="Borderless"
     .getItems="${getMockRest(iconItems)}"
     .getItemsRate="250"
     @change="${action('change')}"
@@ -160,42 +219,21 @@ export const MaxSelectedItemsWithPlaceholder = () => html`
 
 export const AccentInsensitive = () => html`
   <p>Word list: ${accentItems.map(item => item.text).join(', ')}</p>
-  <fluent-tag-picker
-    label="Tag Picker accent sensitive"
-    .getItems="${getMockRest(accentItems)}"
-    .getItemsRate="250"
-    @change="${action('change')}"
-  ></fluent-tag-picker>
-  <fluent-tag-picker
-    accentInsensitive
-    label="Tag Picker accent insensitive"
-    .getItems="${getMockRest(accentItems)}"
-    .getItemsRate="250"
-    @change="${action('change')}"
-  ></fluent-tag-picker>
-`
-
-export const WithErrorMessage = () => html`
-  <fluent-tag-picker
-    label="Tag Picker"
-    errorMessage="Error message"
-    .getItems="${getMockRest(iconItems)}"
-    .getItemsRate="250"
-    @change="${action('change')}"
-  ></fluent-tag-picker>
-`
-
-export const Sandbox = () => html`
-  <fluent-tag-picker
-    .label="${text('label', 'Tag Picker')}"
-    .loadingText="${text('loadingText', 'Carregant')}"
-    .disabled="${boolean('disabled', false)}"
-    .required="${boolean('required', false)}"
-    .getItems="${getMockRest(iconItems)}"
-    .getItemsRate="${number('getItemsRate', 250)}"
-    .accentInsensitive="${boolean('accentInsensitive', false)}"
-    .maxSelectedItems="${number('maxSelectedItems', -1)}"
-    .errorMessage="${text('errorMessage', '')}"
-    @change="${action('change')}"
-  ></fluent-tag-picker>
+  <p>
+    <fluent-tag-picker
+      label="Tag Picker accent sensitive"
+      .getItems="${getMockRest(accentItems)}"
+      .getItemsRate="250"
+      @change="${action('change')}"
+    ></fluent-tag-picker>
+  </p>
+  <p>
+    <fluent-tag-picker
+      accentInsensitive
+      label="Tag Picker accent insensitive"
+      .getItems="${getMockRest(accentItems)}"
+      .getItemsRate="250"
+      @change="${action('change')}"
+    ></fluent-tag-picker>
+  </p>
 `

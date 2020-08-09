@@ -1,27 +1,23 @@
 import { css } from 'lit-element'
 
-import { normalize, getLabelStyle, getFocusStyle } from '../../theme/mixins.css'
-import {
-  blackTranslucent40,
-  neutralLight,
-  neutralLighter,
-  neutralSecondary,
-  redDark,
-  themeLight,
-  themePrimary,
-  white
-} from '../../theme/color.css'
+import { normalize } from '../../theme/mixins.css'
+import { themeLight, themePrimary, white } from '../../theme/color.css'
 import { fontStyle } from '../../theme/typografy.css'
-import { slideDownIn20 } from '../../theme/animation.css'
 
 export default css`
-  ${getLabelStyle('label')}
+  #fieldGroup {
+    height: auto;
+    min-height: 32px;
+  }
 
-  #container {
+  :host([required]) #label {
     position: relative;
-    ${normalize};
-    user-select: none;
-    outline: 0px;
+    padding-right: 12px;
+  }
+
+  :host([required]) #label::after {
+    position: absolute;
+    right: -10px;
   }
 
   #field {
@@ -30,9 +26,10 @@ export default css`
     flex-wrap: wrap;
     align-items: center;
     box-sizing: border-box;
+    width: 100%;
     min-width: 180px;
     min-height: 30px;
-    border: 1px solid ${neutralSecondary};
+    border: 0px solid transparent;
     border-radius: 2px;
   }
 
@@ -49,47 +46,12 @@ export default css`
     align-self: flex-end;
   }
 
-  ${getFocusStyle('#container:not(.open) #field:focus-within', {
-    color: themePrimary,
-    radius: css`2px`
-  })}
-
   #items {
     ${normalize};
     background-color: ${white};
-    display: none;
-    position: absolute;
     width: 100%;
-    z-index: 400;
     max-width: 100%;
-    box-shadow: 0 0px 15px -5px ${blackTranslucent40};
-    border: 1px solid ${neutralLight};
-    user-select: none;
   }
-
-  .open #items {
-    display: block;
-  }
-
-  :host([disabled]) #field {
-    background: ${neutralLighter};
-    border-color: ${neutralLighter};
-  }
-
-  #errorMessage {
-    ${fontStyle.small}
-    color: ${redDark};
-    padding-top: 5px;
-  }
-
-  #container.invalid #field {
-    border-color: ${redDark};
-  }
-
-  ${getFocusStyle('#container.invalid:not(.open) #field:focus-within', {
-    color: redDark,
-    radius: css`2px`
-  })}
 
   #spinner {
     display: none;
@@ -133,6 +95,4 @@ export default css`
     margin: 0px 10px;
     text-align: center;
   }
-
-  ${slideDownIn20}
 `
