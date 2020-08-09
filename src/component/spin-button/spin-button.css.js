@@ -80,14 +80,4 @@ export default css`
   :host([disabled]) i {
     color: ${neutralTertiary};
   }
-
-  :host([underlined]) #label {
-    position: relative;
-  }
-
-  :host([underlined]) #label::after {
-    position: absolute;
-    top: 6px;
-    right: -20px;
-  }
 `

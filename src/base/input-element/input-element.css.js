@@ -132,6 +132,16 @@ export default css`
     line-height: 22px;
     height: 32px;
   }
+
+  :host([underlined][required]) #label {
+    position: relative;
+    padding-right: 2px
+  }
+
+  :host([underlined][required]) #label::after {
+    position: absolute;
+    right: -20px;
+  }
   
   :host([underlined]) #root #fieldGroup {
     flex: 1 1 0px;

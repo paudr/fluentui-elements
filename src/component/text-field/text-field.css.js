@@ -17,7 +17,7 @@ export default css`
     border-radius: 0;
     padding: 0px 8px;
     color: ${neutralPrimary};
-    width: 100%;
+    flex: 1 1 0px;
     min-width: 0px;
     text-overflow: ellipsis;
     border: none;
