@@ -127,14 +127,24 @@ export default css`
     display: flex;
     width: 100%;
   }
-  
+
   :host([underlined]) #label {
     margin-right: 8px;
     padding-left: 12px;
     line-height: 22px;
     height: 32px;
   }
-  
+
+  :host([underlined][required]) #label {
+    position: relative;
+    padding-right: 2px
+  }
+
+  :host([underlined][required]) #label::after {
+    position: absolute;
+    right: -20px;
+  }
+
   :host([underlined]) #fieldWrapper {
     flex: 1 1 0px;
     border-width: 0;

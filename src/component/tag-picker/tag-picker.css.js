@@ -10,16 +10,6 @@ export default css`
     min-height: 32px;
   }
 
-  :host([required]) #label {
-    position: relative;
-    padding-right: 12px;
-  }
-
-  :host([required]) #label::after {
-    position: absolute;
-    right: -10px;
-  }
-
   #field {
     display: flex;
     position: relative;
