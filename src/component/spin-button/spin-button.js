@@ -49,10 +49,7 @@ class SpinButton extends InputElement {
   constructor () {
     super()
 
-    this.label = ''
     this.icon = ''
-    this.required = false
-    this.disabled = false
     this.step = 1
     this.stringify = defaultStringify
     this.parse = defaultParser
