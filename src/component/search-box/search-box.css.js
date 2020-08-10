@@ -1,9 +1,8 @@
 import { css } from 'lit-element'
 
-import { iconCss, getFocusStyle } from '../../theme/mixins.css'
+import { iconCss } from '../../theme/mixins.css'
 import { iconFontSize } from '../../theme/typografy.css'
 import {
-  neutralLighter,
   neutralPrimary,
   neutralSecondary,
   neutralTertiary,
@@ -113,11 +112,4 @@ export default css`
   :host([underlined][disabled]) #fieldGroup {
     background-color: ${white};
   }
-
-  ${getFocusStyle(':host([underlined][disabled]) #wrapper', {
-    color: neutralLighter,
-    position: css`0px`,
-    width: css`1px`,
-    radius: css`2px`
-  })}
 `
