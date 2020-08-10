@@ -1,41 +1,38 @@
-import { html, nothing } from 'lit-html'
-import { classMap } from 'lit-html/directives/class-map'
+import { html } from 'lit-html'
 import { live } from 'lit-html/directives/live'
-import StyledElement from '../../base/styled-element'
+import ComboElement from '../../base/combo-element'
 import styles from './date-picker.css'
 import iconCode from '../icon/code'
 import '../calendar'
 
-class DatePicker extends StyledElement {
+class DatePicker extends ComboElement {
   static get styles () {
-    return styles
+    return [ComboElement.styles, styles]
   }
 
   static get properties () {
     return {
-      label: { type: String, reflect: true },
+      ...ComboElement.properties,
       value: { type: Date, reflect: true },
       today: { type: Date, reflect: true },
       firstDayOfTheWeek: { type: Number, reflect: true },
       goToday: { type: String, reflect: true },
       days: { type: Array },
       months: { type: Array },
-      showCalendar: { type: Boolean, reflect: true },
-      required: { type: Boolean, reflect: true },
-      disabled: { type: Boolean, reflect: true },
-      description: { type: String, reflect: true },
       placeholder: { type: String, reflect: true },
-      errorMessage: { type: String, reflect: true },
       notWritable: { type: Boolean, reflect: true },
       stringify: { type: Function },
       parse: { type: Function }
     }
   }
 
+  static get fieldId () {
+    return 'field'
+  }
+
   constructor () {
     super()
 
-    this.label = ''
     this.value = null
     this.today = new Date()
     this.firstDayOfTheWeek = 1
@@ -55,12 +52,8 @@ class DatePicker extends StyledElement {
       'Novembre',
       'Desembre'
     ]
-    this.showCalendar = false
-    this.required = false
-    this.disabled = false
-    this.description = ''
+    this.open = false
     this.placeholder = ''
-    this.errorMessage = ''
     this.notWritable = false
     this.stringify = date => {
       const padZero = (num, length = 2) => num.toString().padStart(length, '0')
@@ -109,13 +102,13 @@ class DatePicker extends StyledElement {
 
   handleClick () {
     if (this.notWritable && !this.disabled) {
-      this.showCalendar = !this.showCalendar
+      this.open = !this.open
     }
   }
 
   handleIconClick () {
     if (!this.disabled) {
-      this.showCalendar = !this.showCalendar
+      this.open = !this.open
     }
   }
 
@@ -139,7 +132,7 @@ class DatePicker extends StyledElement {
   handleTextClick (event) {
     event.stopPropagation()
     if (this.notWritable) {
-      this.showCalendar = !this.showCalendar
+      this.open = !this.open
     }
   }
 
@@ -147,57 +140,41 @@ class DatePicker extends StyledElement {
     const date = event.detail.value
     const textField = this.renderRoot.querySelector('fluent-text-field')
     this.updateValue(date, true)
-    this.showCalendar = false
+    this.open = false
     textField.value = this.textValue
     this.requestUpdate()
   }
 
-  render () {
+  renderInputField () {
     return html`
-      ${this.label ? html`<label for="field">${this.label}</label>` : nothing}
-      <div id="wrapper" class="${classMap({ invalid: this.errorMessage })}">
-        <div id="fieldGroup">
-          <input
-            id="field"
-            type="text"
-            .value="${live(this.textValue)}"
-            .placeholder="${this.placeholder}"
-            ?disabled="${this.disabled}"
-            ?readonly="${this.notWritable}"
-            @input="${this.handleTextInput}"
-            @change="${this.handleTextChange}"
-            @click="${this.handleTextClick}"
-          />
-          <i @click="${this.handleIconClick}">${iconCode.Calendar}</i>
-        </div>
-        ${this.showCalendar
-          ? html`
-              <div id="calendar">
-                <fluent-calendar
-                  .selected="${this.value}"
-                  .today="${this.today}"
-                  .currentYear="${this.currentYear}"
-                  .currentMonth="${this.currentMonth}"
-                  .firstDayOfTheWeek="${this.firstDayOfTheWeek}"
-                  .goToday="${this.goToday}"
-                  .days="${this.days}"
-                  .months="${this.months}"
-                  @change="${this.handleCalendarChange}"
-                ></fluent-calendar>
-              </div>
-            `
-          : nothing}
-        ${this.description
-          ? html`<span id="description">${this.description}</span>`
-          : nothing}
-        ${this.errorMessage
-          ? html`
-              <div id="errorMessage" class="slideDownIn20">
-                ${this.errorMessage}
-              </div>
-            `
-          : nothing}
-      </div>
+      <input
+        id="${DatePicker.fieldId}"
+        type="text"
+        .value="${live(this.textValue)}"
+        .placeholder="${this.placeholder}"
+        ?disabled="${this.disabled}"
+        ?readonly="${this.notWritable}"
+        @input="${this.handleTextInput}"
+        @change="${this.handleTextChange}"
+        @click="${this.handleTextClick}"
+      />
+      <i @click="${this.handleIconClick}">${iconCode.Calendar}</i>
+    `
+  }
+
+  renderDropdown () {
+    return html`
+      <fluent-calendar
+        .selected="${this.value}"
+        .today="${this.today}"
+        .currentYear="${this.currentYear}"
+        .currentMonth="${this.currentMonth}"
+        .firstDayOfTheWeek="${this.firstDayOfTheWeek}"
+        .goToday="${this.goToday}"
+        .days="${this.days}"
+        .months="${this.months}"
+        @change="${this.handleCalendarChange}"
+      ></fluent-calendar>
     `
   }
 }
