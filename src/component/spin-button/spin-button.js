@@ -15,11 +15,11 @@ function defaultParser (text) {
 }
 
 function defaultInc (value) {
-  return value + (this.step || 1)
+  return value + (this.step ?? 1)
 }
 
 function defaultDec (value) {
-  return value - (this.step || 1)
+  return value - (this.step ?? 1)
 }
 
 const _privateData = new WeakMap()

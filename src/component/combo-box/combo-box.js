@@ -145,7 +145,7 @@ class ComboBox extends ComboElement {
     const oldSelectedIndices = optionsManager.selectedIndices
     optionsManager.selectedIndices = Array.from(selectedIndices)
     if (!this.multiple) {
-      autofill.write(this.value || '')
+      autofill.write(this.value ?? '')
       this.open = false
     } else {
       autofill.write('')

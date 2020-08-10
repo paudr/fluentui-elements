@@ -37,7 +37,7 @@ class Toggle extends StyledElement {
   }
 
   render () {
-    const withText = this.onText || this.offText
+    const withText = this.onText ?? this.offText
     return html`
       <div id="root" class="${classMap({ withoutText: !withText })}">
         ${this.label

@@ -95,7 +95,7 @@ class NumberField extends TextField {
   }
 
   get text () {
-    return this.stringify(_privateData.get(this).value) || ''
+    return this.stringify(_privateData.get(this).value) ?? ''
   }
 
   set text (value) {
@@ -120,7 +120,7 @@ class NumberField extends TextField {
     ) {
       const oldValue = _privateData.get(this).oldValue
       this.value = number
-      event.target.value = this.stringify(_privateData.get(this).oldValue) || ''
+      event.target.value = this.stringify(_privateData.get(this).oldValue) ?? ''
       this.dispatchEvent(
         new CustomEvent('change', {
           detail: {

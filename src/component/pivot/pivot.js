@@ -40,8 +40,8 @@ class Pivot extends StyledElement {
 
   handleClick (index) {
     if (this.selectedTab !== index) {
-      const oldValue = (this.tabs[this.selectedTab] || {}).value
-      const value = (this.tabs[index] || {}).value
+      const oldValue = (this.tabs[this.selectedTab] ?? {}).value
+      const value = (this.tabs[index] ?? {}).value
       this.selectedTab = index
       this.dispatchEvent(
         new CustomEvent('change', { detail: { value, oldValue } })

@@ -64,7 +64,7 @@ class DatePicker extends ComboElement {
     }
     this.parse = text => {
       const [, day, month, year] =
-        text.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/) || []
+        text.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/) ?? []
       return day && month && year
         ? new Date(Number(year), Number(month) - 1, Number(day))
         : null
@@ -72,11 +72,11 @@ class DatePicker extends ComboElement {
   }
 
   get currentYear () {
-    return (this.value || new Date()).getFullYear()
+    return (this.value ?? new Date()).getFullYear()
   }
 
   get currentMonth () {
-    return (this.value || new Date()).getMonth()
+    return (this.value ?? new Date()).getMonth()
   }
 
   get textValue () {
