@@ -1,5 +1,4 @@
 import { html } from 'lit-html'
-import { withKnobs, text, boolean, object } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 import './combo-box'
 import iconCode from '../icon/code'
@@ -15,9 +14,9 @@ const container = story => html`
 `
 
 export default {
-  title: 'ComboBox',
+  title: 'ComboBox/Basic',
   component: 'fluent-combo-box',
-  decorators: [container, withKnobs]
+  decorators: [container]
 }
 
 const iconOptions = Object.keys(iconCode).map(name => ({
@@ -77,6 +76,96 @@ const accentItems = [
 export const Normal = () => html`
   <fluent-combo-box
     label="Standard"
+    .options="${fruitOptions}"
+    @focus="${action('focus')}"
+    @blur="${action('blur')}"
+    @input="${action('input')}"
+    @change="${action('change')}"
+  ></fluent-combo-box>
+`
+
+export const WithDescription = () => html`
+  <fluent-combo-box
+    label="Standard"
+    description="A fancy description."
+    .options="${fruitOptions}"
+    @focus="${action('focus')}"
+    @blur="${action('blur')}"
+    @input="${action('input')}"
+    @change="${action('change')}"
+  ></fluent-combo-box>
+`
+
+export const Invalid = () => html`
+  <fluent-combo-box
+    invalid
+    label="Invalid"
+    .options="${fruitOptions}"
+    @focus="${action('focus')}"
+    @blur="${action('blur')}"
+    @input="${action('input')}"
+    @change="${action('change')}"
+  ></fluent-combo-box>
+`
+
+export const WithErrorMessage = () => html`
+  <fluent-combo-box
+    label="With error message"
+    errorMessage="Error message"
+    .options="${fruitOptions}"
+    @focus="${action('focus')}"
+    @blur="${action('blur')}"
+    @input="${action('input')}"
+    @change="${action('change')}"
+  ></fluent-combo-box>
+`
+
+export const Disabled = () => html`
+  <fluent-combo-box
+    disabled
+    label="Required"
+    .options="${fruitOptions}"
+    @focus="${action('focus')}"
+    @blur="${action('blur')}"
+    @input="${action('input')}"
+    @change="${action('change')}"
+  ></fluent-combo-box>
+`
+
+export const Required = () => html`
+  <style>
+    fluent-combo-box {
+      width: 250px;
+    }
+  </style>
+  <p>
+    <fluent-combo-box
+      required
+      label="Required"
+      .options="${fruitOptions}"
+      @focus="${action('focus')}"
+      @blur="${action('blur')}"
+      @input="${action('input')}"
+      @change="${action('change')}"
+    ></fluent-combo-box>
+  </p>
+  <p>
+    <fluent-combo-box
+      required
+      multiple
+      .options="${fruitOptions}"
+      @focus="${action('focus')}"
+      @blur="${action('blur')}"
+      @input="${action('input')}"
+      @change="${action('change')}"
+    ></fluent-combo-box>
+  </p>
+`
+
+export const Borderless = () => html`
+  <fluent-combo-box
+    borderless
+    label="Required"
     .options="${fruitOptions}"
     @focus="${action('focus')}"
     @blur="${action('blur')}"
@@ -165,42 +254,34 @@ export const Placeholder = () => html`
 `
 
 export const AccentInsensitive = () => html`
-  <fluent-combo-box
-    allowFreeform
-    autoComplete
-    multiple
-    accentInsensitive
-    label="Multiple with allow freedon"
-    .options="${accentItems}"
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-combo-box>
-`
-
-export const Required = () => html`
-  <fluent-combo-box
-    required
-    label="Required"
-    .options="${fruitOptions}"
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-combo-box>
-`
-
-export const Disabled = () => html`
-  <fluent-combo-box
-    disabled
-    label="Required"
-    .options="${fruitOptions}"
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-combo-box>
+  <p>Word list: ${accentItems.map(item => item.text).join(', ')}</p>
+  <p>
+    <fluent-combo-box
+      allowFreeform
+      autoComplete
+      multiple
+      label="ComboBox accent sensitive"
+      .options="${accentItems}"
+      @focus="${action('focus')}"
+      @blur="${action('blur')}"
+      @input="${action('input')}"
+      @change="${action('change')}"
+    ></fluent-combo-box>
+  </p>
+  <p>
+    <fluent-combo-box
+      allowFreeform
+      autoComplete
+      multiple
+      accentInsensitive
+      label="ComboBox accent insensitive"
+      .options="${accentItems}"
+      @focus="${action('focus')}"
+      @blur="${action('blur')}"
+      @input="${action('input')}"
+      @change="${action('change')}"
+    ></fluent-combo-box>
+  </p>
 `
 
 export const ReadOnly = () => html`
@@ -215,44 +296,3 @@ export const ReadOnly = () => html`
     @change="${action('change')}"
   ></fluent-combo-box>
 `
-
-export const WithErrorMessage = () => html`
-  <fluent-combo-box
-    label="Required"
-    errorMessage="Error message"
-    .options="${fruitOptions}"
-    .value="${'banana'}"
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-combo-box>
-`
-
-export const Sandbox = () => html`
-  <fluent-combo-box
-    .label="${text('label', 'Standard')}"
-    .placeholder="${text('placeholder', '')}"
-    .disabled="${boolean('disabled', false)}"
-    .required="${boolean('required', false)}"
-    .readOnly="${boolean('readOnly', false)}"
-    .multiple="${boolean('multiple', false)}"
-    .allowFreeform="${boolean('allowFreeform', false)}"
-    .autoComplete="${boolean('autoComplete', false)}"
-    .errorMessage="${text('errorMessage', '')}"
-    .open="${boolean('open', false)}"
-    .options="${object('options', iconOptions)}"
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-combo-box>
-`
-Sandbox.story = {
-  parameters: {
-    knobs: {
-      timestamps: true,
-      escapeHTML: false
-    }
-  }
-}

@@ -1,6 +1,5 @@
-import { html, nothing } from 'lit-html'
-import { classMap } from 'lit-html/directives/class-map'
-import StyledElement from '../../base/styled-element'
+import { html } from 'lit-html'
+import ComboElement from '../../base/combo-element'
 import OptionsManager from '../../utils/options-manager'
 import { startsWith, equalInsensitive } from '../../utils/text'
 import styles from './combo-box.css'
@@ -10,41 +9,31 @@ import '../select'
 
 const _optionsManager = new WeakMap()
 
-class ComboBox extends StyledElement {
+class ComboBox extends ComboElement {
   static get styles () {
-    return styles
+    return [ComboElement.styles, styles]
   }
 
   static get properties () {
     return {
+      ...ComboElement.properties,
       options: { type: Array, reflect: true },
       value: { type: Object, reflect: true },
-      label: { type: String, reflect: true },
-      disabled: { type: Boolean, reflect: true },
-      required: { type: Boolean, reflect: true },
       readOnly: { type: Boolean, reflect: true },
       multiple: { type: Boolean, reflect: true },
       allowFreeform: { type: Boolean, reflect: true },
       autoComplete: { type: Boolean, reflect: true },
       accentInsensitive: { type: Boolean, reflect: true },
-      placeholder: { type: String, reflect: true },
-      errorMessage: { type: String, reflect: true },
-      open: { type: Boolean, reflect: true }
+      placeholder: { type: String, reflect: true }
     }
   }
 
   constructor () {
     super()
-    this.label = ''
-    this.disabled = false
-    this.required = false
     this.readOnly = false
     this.allowFreeform = false
     this.autoComplete = false
     this.accentInsensitive = false
-    this.placeholder = ''
-    this.errorMessage = ''
-    this.open = false
     this.selectedIndex = null
     this.suggestedIndex = null
     _optionsManager.set(this, new OptionsManager())
@@ -115,7 +104,7 @@ class ComboBox extends StyledElement {
     this.requestUpdate()
   }
 
-  handleLabelClick (event) {
+  labelClick (event) {
     event.stopPropagation()
     if (!this.disabled) {
       this.renderRoot.querySelector('fluent-autofill').focus()
@@ -255,7 +244,7 @@ class ComboBox extends StyledElement {
     }
   }
 
-  render () {
+  renderInputField () {
     const optionsManager = _optionsManager.get(this)
     const autofillValue = this.allowFreeform
       ? this.multiple
@@ -267,59 +256,42 @@ class ComboBox extends StyledElement {
         ? optionsManager.value.join(', ')
         : this.placeholder
     return html`
-      ${this.label
-        ? html`<label @click="${this.handleLabelClick}">${this.label}</label>`
-        : nothing}
-      <div
-        id="container"
-        class="${classMap({
-          invalid: this.errorMessage,
-          open: this.open && !this.disabled
-        })}"
-      >
-        <div id="wrapper">
-          <div id="title">
-            <fluent-autofill
-              autofill
-              .value="${autofillValue}"
-              .placeholder="${autofillPlaceholder}"
-              .disabled="${this.disabled}"
-              .readOnly="${!this.allowFreeform}"
-              .accentInsensitive="${this.accentInsensitive}"
-              @click="${this.handleAutofillClick}"
-              @input="${this.handleAutofillInput}"
-              @navigate="${this.handleAutofillNavigate}"
-              @select="${this.handleAutofillSelect}"
-              @escape="${this.closeOptions}"
-            ></fluent-autofill>
-          </div>
-          <button
-            id="caret"
-            .disabled="${this.disabled}"
-            @click="${this.handleCaretClick}"
-          >
-            <span>
-              <i>${iconCode.ChevronDown}</i>
-            </span>
-          </button>
-        </div>
-        <div id="items">
-          <fluent-select
-            .options="${this.options}"
-            .multiple="${this.multiple}"
-            .value="${this.value}"
-            maxHeight="200px"
-            @change="${this.handleSelectChange}"
-          ></fluent-select>
-        </div>
-        ${this.errorMessage
-          ? html`
-              <div id="errorMessage" class="slideDownIn20">
-                ${this.errorMessage}
-              </div>
-            `
-          : nothing}
+      <div id="title">
+        <fluent-autofill
+          autofill
+          .value="${autofillValue}"
+          .placeholder="${autofillPlaceholder}"
+          .disabled="${this.disabled}"
+          .readOnly="${!this.allowFreeform}"
+          .accentInsensitive="${this.accentInsensitive}"
+          @click="${this.handleAutofillClick}"
+          @input="${this.handleAutofillInput}"
+          @navigate="${this.handleAutofillNavigate}"
+          @select="${this.handleAutofillSelect}"
+          @escape="${this.closeOptions}"
+        ></fluent-autofill>
       </div>
+      <button
+        id="caret"
+        .disabled="${this.disabled}"
+        @click="${this.handleCaretClick}"
+      >
+        <span>
+          <i>${iconCode.ChevronDown}</i>
+        </span>
+      </button>
+    `
+  }
+
+  renderDropdown () {
+    return html`
+      <fluent-select
+        .options="${this.options}"
+        .multiple="${this.multiple}"
+        .value="${this.value}"
+        maxHeight="200px"
+        @change="${this.handleSelectChange}"
+      ></fluent-select>
     `
   }
 }

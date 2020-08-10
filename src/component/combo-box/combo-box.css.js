@@ -1,71 +1,29 @@
 import { css } from 'lit-element'
 
-import {
-  normalize,
-  iconCss,
-  getLabelStyle,
-  getFocusStyle
-} from '../../theme/mixins.css'
+import { normalize, iconCss } from '../../theme/mixins.css'
 import { fontStyle } from '../../theme/typografy.css'
 import {
-  blackTranslucent40,
-  redDark,
   neutralDark,
   neutralLight,
   neutralLighter,
   neutralQuaternaryAlt,
   neutralSecondary,
-  themePrimary,
   white
 } from '../../theme/color.css'
-import { slideDownIn20 } from '../../theme/animation.css'
 
 export default css`
-  ${getLabelStyle('label')}
-
-  #container {
-    position: relative;
-    ${normalize};
-    ${fontStyle.medium};
-    color: ${neutralSecondary};
-    user-select: none;
-    outline: 0px;
-  }
-
-  #wrapper {
-    position: relative;
-    ${normalize};
-    user-select: none;
-    outline: 0px;
-    border: 1px solid ${neutralSecondary};
-    border-radius: 2px;
-  }
-
-  ${getFocusStyle('#wrapper', {
-    color: neutralSecondary,
-    width: css`1px`,
-    radius: css`2px`
-  })}
-
-  ${getFocusStyle('#container:not(.open):focus-within #wrapper', {
-    color: themePrimary,
-    radius: css`2px`
-  })}
-
   #title {
+    flex: 1 1 0px;
     ${normalize};
     padding: 0px 28px 0px 8px;
-    background-color: ${white};
     cursor: pointer;
     display: block;
-    height: 30px;
+    height: 32px;
     line-height: 30px;
     position: relative;
     white-space: nowrap;
-    text-overflow: ellipsis;
     color: ${neutralSecondary};
-    border-radius: 2px;
-    overflow: hidden;
+    border: 0px solid transparent;
   }
 
   fluent-autofill {
@@ -118,7 +76,7 @@ export default css`
     flex-shrink: 0;
   }
 
-  .open #caret {
+  :host([open]) #caret {
     color: ${neutralDark};
     background-color: ${neutralLight};
   }
@@ -129,61 +87,17 @@ export default css`
     cursor: pointer;
   }
 
-  .open #caret:hover {
+  :host([open]) #caret:hover {
     background-color: ${neutralQuaternaryAlt};
   }
 
-  #items {
-    ${normalize};
-    background-color: ${white};
-    display: none;
-    position: absolute;
-    width: 100%;
-    z-index: 400;
-    max-width: 100%;
-    box-shadow: 0 0px 15px -5px ${blackTranslucent40};
-    border: 1px solid ${neutralLight};
-    user-select: none;
-  }
-
-  #container.open #items {
-    display: block;
-  }
-
-  #errorMessage {
-    ${fontStyle.small}
-    color: ${redDark};
-    padding-top: 5px;
-  }
-
-  :host([disabled]) #container #title {
-    background: ${neutralLighter};
-    border-color: ${neutralLighter};
+  :host([disabled]) #title {
     cursor: default;
   }
 
-  :host([disabled]) #container #caret {
+  :host([disabled]) #caret {
     cursor: default;
     pointer-events: none;
+    background-color: ${neutralLighter};
   }
-
-  ${getFocusStyle(':host([disabled]) #container #wrapper', {
-    color: neutralLighter,
-    width: css`1px`,
-    radius: css`2px`
-  })}
-
-
-  ${getFocusStyle('#container.invalid:not(:focus-within) #wrapper', {
-    color: redDark,
-    width: css`1px`,
-    radius: css`2px`
-  })}
-
-  ${getFocusStyle('#container.invalid:not(.open):focus-within #wrapper', {
-    color: redDark,
-    radius: css`2px`
-  })}
-
-  ${slideDownIn20}
 `
