@@ -11,7 +11,7 @@ import {
   themePrimary,
   white
 } from '../../theme/color.css'
-import { iconCss, getFocusStyle } from '../../theme/mixins.css'
+import { iconCss, getBorderCss } from '../../theme/mixins.css'
 
 const OPTION_HEIGHT = css`36px`
 
@@ -191,19 +191,13 @@ export default css`
     border-color: ${themeDark};
   }
 
-  ${getFocusStyle('button.marked', {
-    color: neutralSecondary,
-    radius: css`1px`,
-    position: css`0px`,
-    width: css`1px`
-  })}
+  button.marked::after {
+    ${getBorderCss({ color: neutralSecondary, radius: 1 })}
+  }
 
-  ${getFocusStyle('.checkbox.marked', {
-    color: neutralSecondary,
-    radius: css`1px`,
-    position: css`-1px`,
-    width: css`1px`
-  })}
+  .checkbox.marked::after {
+    ${getBorderCss({ color: neutralSecondary, offset: -1, radius: 1 })}
+  }
 
   .option.highlighted {
     background-color: ${neutralLight};

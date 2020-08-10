@@ -49,33 +49,35 @@ export function getLabelStyle (selector = '') {
   `)
 }
 
-export function getFocusStyle (
-  selector,
-  {
-    color,
-    radius,
-    type = 'border',
-    position = css`-1px`,
-    width = css`2px`
-  } = {}
-) {
-  const isBorderBottom = type === 'borderBottom'
-  return unsafeCSS(`
-    ${selector} {
-      border-color: ${color};
-    }
-
-    ${selector}::after {
-      pointer-events: none;
-      content: '';
-      position: absolute;
-      left: ${isBorderBottom ? '0px' : position};
-      top: ${position};
-      bottom: ${position};
-      right: ${isBorderBottom ? '0px' : position};
-      border${isBorderBottom ? '-bottom' : ''}: ${width} solid ${color};
-      border-radius: ${radius};
-      ${isBorderBottom ? 'width: 100%;' : ''}
-    }
-  `)
+export function getBorderCss ({
+  color,
+  type = 'border',
+  width = 1,
+  offset = 0,
+  radius = 2
+} = {}) {
+  const position = 1 + offset - width
+  return type === 'borderBottom'
+    ? css`
+        pointer-events: none;
+        content: '';
+        position: absolute;
+        left: 0px;
+        top: ${position}px;
+        bottom: ${position}px;
+        right: 0px;
+        border-bottom: ${width}px solid ${color};
+        width: 100%;
+      `
+    : css`
+        pointer-events: none;
+        content: '';
+        position: absolute;
+        left: ${position}px;
+        top: ${position}px;
+        bottom: ${position}px;
+        right: ${position}px;
+        border: ${width}px solid ${color};
+        border-radius: ${radius}px;
+      `
 }

@@ -2,7 +2,7 @@ import { css } from 'lit-element'
 
 import { fontStyle, fontSize } from '../../theme/typografy.css'
 import { slideDownIn20 } from '../../theme/animation.css'
-import { normalize, getFocusStyle, getLabelStyle } from '../../theme/mixins.css'
+import { normalize, getBorderCss, getLabelStyle } from '../../theme/mixins.css'
 import {
   blackTranslucent40,
   neutralLight,
@@ -51,51 +51,23 @@ export default css`
     cursor: auto;
   }
 
-  ${getFocusStyle(
-    ':host(:not([disabled]):not([underlined]):not([borderless])) #fieldGroup',
-    {
-      color: borderColor,
-      position: css`0px`,
-      width: css`1px`,
-      radius: css`2px`
-    }
-  )}
+  :host(:not([disabled]):not([underlined]):not([borderless]))
+    #fieldGroup::after {
+    ${getBorderCss({ color: borderColor })}
+  }
 
-  ${getFocusStyle(
-    ':host(:not([disabled]):not([underlined]):not([borderless])) #fieldGroup:hover',
-    {
-      color: borderHoverColor,
-      position: css`0px`,
-      width: css`1px`,
-      radius: css`2px`
-    }
-  )}
+  :host(:not([disabled]):not([borderless])) #fieldGroup:hover::after {
+    border-color: ${borderHoverColor};
+  }
 
-  ${getFocusStyle(
-    ':host(:not([disabled]):not([underlined]):not([borderless]):not([open])) #fieldGroup:focus-within',
-    {
-      color: borderFocusColor,
-      radius: css`2px`
-    }
-  )}
+  :host(:not([disabled]):not([underlined]):not([borderless]):not([open]))
+    #fieldGroup:focus-within::after {
+    ${getBorderCss({ color: borderFocusColor, width: 2 })}
+  }
 
-  ${getFocusStyle(
-    ':host(:not([disabled]):not([underlined]):not([borderless])) #root.invalid #fieldGroup',
-    {
-      color: borderInvalidColor,
-      position: css`0px`,
-      width: css`1px`,
-      radius: css`2px`
-    }
-  )}
-
-  ${getFocusStyle(
-    ':host(:not([disabled]):not([underlined]):not([borderless]):not([open])) #root.invalid #fieldGroup:focus-within',
-    {
-      color: borderInvalidColor,
-      radius: css`2px`
-    }
-  )}
+  :host(:not([disabled]):not([borderless])) #root.invalid #fieldGroup::after {
+    border-color: ${borderInvalidColor};
+  }
 
   #description {
     color: ${neutralSecondary};
@@ -137,7 +109,7 @@ export default css`
 
   :host([underlined][required]) #label {
     position: relative;
-    padding-right: 2px
+    padding-right: 2px;
   }
 
   :host([underlined][required]) #label::after {
@@ -159,41 +131,17 @@ export default css`
     right: -10px;
   }
 
-  ${getFocusStyle(':host([underlined]) #wrapper', {
-    color: borderColor,
-    width: css`1px`,
-    radius: css`0px`,
-    type: 'borderBottom'
-  })}
+  :host([underlined]) #wrapper::after {
+    ${getBorderCss({ color: borderColor, type: 'borderBottom' })}
+  }
 
-  ${getFocusStyle(':host([underlined]:not([open])) #wrapper:focus-within', {
-    color: borderFocusColor,
-    radius: css`0px`,
-    type: 'borderBottom'
-  })}
+  :host([underlined]:not([open])) #wrapper:focus-within::after {
+    ${getBorderCss({ color: borderFocusColor, width: 2, type: 'borderBottom' })}
+  }
 
-  ${getFocusStyle(':host([underlined]) #root.invalid #wrapper', {
-    color: borderInvalidColor,
-    width: css`1px`,
-    radius: css`0px`,
-    type: 'borderBottom'
-  })}
-
-  ${getFocusStyle(
-    ':host([underlined]:not([open])) #root.invalid #wrapper:focus-within',
-    {
-      color: borderInvalidColor,
-      radius: css`0px`,
-      type: 'borderBottom'
-    }
-  )}
-
-  ${getFocusStyle(':host([underlined][disabled]) #wrapper', {
-    color: backgroundDisabledColor,
-    width: css`1px`,
-    radius: css`0px`,
-    type: 'borderBottom'
-  })}
+  :host([underlined][disabled]) #wrapper::after {
+    border-color: ${backgroundDisabledColor};
+  }
 
   #dropdown {
     ${normalize};
