@@ -14,17 +14,14 @@ export default css`
 
   #field {
     ${normalize};
-    border-radius: 0;
     padding: 0px 8px;
     color: ${neutralPrimary};
     flex: 1 1 0px;
     min-width: 0px;
     text-overflow: ellipsis;
-    border: none;
-    border-radius: 0px;
-    border-style: none;
+    border: 0;
     background: none transparent;
-    outline: 0px;
+    outline: 0;
   }
 
   #field::placeholder {
@@ -76,7 +73,7 @@ export default css`
     min-height: inherit;
     line-height: 17px;
     flex-grow: 1;
-    outline: 0px;
+    outline: 0;
     overflow: auto;
   }
 

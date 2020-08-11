@@ -30,7 +30,7 @@ export default css`
     user-select: text;
     border-style: none;
     flex: 1 1 0%;
-    outline: 0px;
+    outline: 0;
     overflow: hidden;
     border-radius: 2px 0px 0px 2px;
   }
@@ -44,8 +44,8 @@ export default css`
   #arrowBox button {
     background: transparent;
     position: relative;
-    outline: none;
-    border: none;
+    outline: 0;
+    border: 0;
     border-radius: 0 2px 0 0;
     display: block;
     width: 23px;

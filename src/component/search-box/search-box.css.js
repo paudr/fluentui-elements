@@ -62,7 +62,7 @@ export default css`
     min-width: 0px;
     text-overflow: ellipsis;
     border: 0;
-    outline: none;
+    outline: 0;
     flex: 1 1 0px;
     overflow: hidden;
   }
@@ -91,7 +91,7 @@ export default css`
     height: auto;
     background-color: transparent;
     user-select: none;
-    outline: transparent;
+    outline: 0;
     border: 0;
     text-decoration: none;
   }
