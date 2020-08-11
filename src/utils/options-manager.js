@@ -28,6 +28,12 @@ export default class OptionsManager {
     }
   }
 
+  get selectedOptions () {
+    return this.selectedIndices
+      .map(index => this.options[index])
+      .filter(item => item)
+  }
+
   getSelectedText (defaultText = '') {
     const selectedIndices = this.multiple
       ? this.selectedIndices

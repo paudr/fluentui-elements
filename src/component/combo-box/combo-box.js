@@ -253,8 +253,8 @@ class ComboBox extends ComboElement {
       : optionsManager.getSelectedText('')
     const autofillPlaceholder =
       this.multiple && optionsManager.selectedIndices.length > 0
-        ? optionsManager.value.join(', ')
-        : this.placeholder
+        ? optionsManager.selectedOptions.map(({ text }) => text).join(', ')
+        : this.placeholder ?? ''
     return html`
       <div id="title">
         <fluent-autofill
