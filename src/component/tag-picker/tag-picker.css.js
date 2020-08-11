@@ -5,11 +5,6 @@ import { themeLight, themePrimary, white } from '../../theme/color.css'
 import { fontStyle } from '../../theme/typografy.css'
 
 export default css`
-  #fieldGroup {
-    height: auto;
-    min-height: 32px;
-  }
-
   #field {
     display: flex;
     position: relative;
@@ -19,8 +14,7 @@ export default css`
     width: 100%;
     min-width: 180px;
     min-height: 30px;
-    border: 0px solid transparent;
-    border-radius: 2px;
+    border: 0;
   }
 
   #itemsWrapper {
@@ -30,8 +24,8 @@ export default css`
   }
 
   fluent-autofill {
-    height: 30px;
-    flex-grow: 1;
+    flex: 1 1 0px;
+    height: 32px;
     padding: 0px 6px;
     align-self: flex-end;
   }
