@@ -30,23 +30,24 @@ export default css`
     position: relative;
   }
 
+  :host([disabled]) #root {
+    pointer-events: none;
+  }
+
   ${getLabelStyle('#label')}
 
   #fieldGroup {
     ${normalize};
-    border: 0px solid transparent;
-    border-radius: 2px;
+    border: 0;
     background: ${white};
     height: 32px;
     display: flex;
     flex-direction: row;
     position: relative;
-    cursor: text;
   }
 
   :host([disabled]) #fieldGroup {
     background-color: ${backgroundDisabledColor};
-    cursor: auto;
   }
 
   :host(:not([disabled]):not([underlined]):not([borderless]))
@@ -54,8 +55,7 @@ export default css`
     ${getBorderCss({ color: borderColor })}
   }
 
-  :host(:not([disabled]):not([underlined]):not([borderless]))
-    #fieldGroup:hover::after {
+  :host(:not([disabled]):not([borderless])) #fieldGroup:hover::after {
     border-color: ${borderHoverColor};
   }
 
@@ -98,7 +98,6 @@ export default css`
     text-overflow: ellipsis;
     position: relative;
     display: flex;
-    width: 100%;
   }
 
   :host([underlined]) #label {
@@ -110,7 +109,7 @@ export default css`
 
   :host([underlined][required]) #label {
     position: relative;
-    padding-right: 2px;
+    margin-right: 10px;
   }
 
   :host([underlined][required]) #label::after {
@@ -118,10 +117,11 @@ export default css`
     right: -20px;
   }
 
-  :host([underlined]) #root #fieldGroup {
+  :host([underlined]) #fieldGroup {
+    position: relative;
     flex: 1 1 0px;
-    border-width: 0;
-    text-align: left;
+    max-width: 100%;
+    width: 0%;
   }
 
   :host([underlined]) #root.requiredPlaceholder #fieldGroup::after {
