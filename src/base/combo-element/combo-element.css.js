@@ -4,8 +4,6 @@ import { fontStyle, fontSize } from '../../theme/typografy.css'
 import { slideDownIn20 } from '../../theme/animation.css'
 import { normalize, getBorderCss, getLabelStyle } from '../../theme/mixins.css'
 import {
-  blackTranslucent40,
-  neutralLight,
   neutralLighter,
   neutralPrimary,
   neutralSecondary,
@@ -32,23 +30,24 @@ export default css`
     position: relative;
   }
 
+  :host([disabled]) #root {
+    pointer-events: none;
+  }
+
   ${getLabelStyle('#label')}
 
   #fieldGroup {
     ${normalize};
-    border: 0px solid transparent;
-    border-radius: 2px;
+    border: 0;
     background: ${white};
     height: 32px;
     display: flex;
     flex-direction: row;
     position: relative;
-    cursor: text;
   }
 
   :host([disabled]) #fieldGroup {
     background-color: ${backgroundDisabledColor};
-    cursor: auto;
   }
 
   :host(:not([disabled]):not([underlined]):not([borderless]))
@@ -65,7 +64,9 @@ export default css`
     ${getBorderCss({ color: borderFocusColor, width: 2 })}
   }
 
-  :host(:not([disabled]):not([borderless])) #root.invalid #fieldGroup::after {
+  :host(:not([disabled]):not([underlined]):not([borderless]))
+    #root.invalid
+    #fieldGroup::after {
     border-color: ${borderInvalidColor};
   }
 
@@ -83,7 +84,7 @@ export default css`
     align-items: center;
   }
 
-  :host(:not([underlined])) #root.requiredPlaceholder #wrapper::after {
+  :host(:not([underlined])) #root.requiredPlaceholder #elementWrapper::after {
     content: '*';
     color: ${redDark};
     position: absolute;
@@ -93,11 +94,10 @@ export default css`
 
   /* Underlined */
 
-  :host([underlined]) #wrapper {
+  :host([underlined]) #elementWrapper {
     text-overflow: ellipsis;
     position: relative;
     display: flex;
-    width: 100%;
   }
 
   :host([underlined]) #label {
@@ -109,7 +109,7 @@ export default css`
 
   :host([underlined][required]) #label {
     position: relative;
-    padding-right: 2px;
+    margin-right: 10px;
   }
 
   :host([underlined][required]) #label::after {
@@ -118,9 +118,8 @@ export default css`
   }
 
   :host([underlined]) #fieldWrapper {
+    position: relative;
     flex: 1 1 0px;
-    border-width: 0;
-    text-align: left;
   }
 
   :host([underlined]) #root.requiredPlaceholder #fieldGroup::after {
@@ -131,32 +130,34 @@ export default css`
     right: -10px;
   }
 
-  :host([underlined]) #wrapper::after {
+  :host([underlined]) #elementWrapper::after {
     ${getBorderCss({ color: borderColor, type: 'borderBottom' })}
   }
 
-  :host([underlined]:not([open])) #wrapper:focus-within::after {
+  :host([underlined]:not([disabled]):not([open]))
+    #elementWrapper:focus-within::after {
     ${getBorderCss({ color: borderFocusColor, width: 2, type: 'borderBottom' })}
   }
 
-  :host([underlined][disabled]) #wrapper::after {
+  :host([underlined]:not([disabled])) #root.invalid #elementWrapper::after {
+    border-color: ${borderInvalidColor};
+  }
+
+  :host([underlined][disabled]) #elementWrapper::after {
     border-color: ${backgroundDisabledColor};
   }
 
   #dropdown {
     ${normalize};
-    background-color: ${white};
     display: none;
     position: absolute;
     width: 100%;
     z-index: 400;
-    box-shadow: 0 0px 15px -5px ${blackTranslucent40};
-    border: 1px solid ${neutralLight};
     user-select: none;
   }
 
   :host([open]) #dropdown {
-    display: block;
+    display: flex;
   }
 
   ${slideDownIn20}

@@ -66,7 +66,7 @@ export default class ComboElement extends StyledElement {
           invalid: this.invalid || this.errorMessage
         })}"
       >
-        <div id="wrapper">
+        <div id="elementWrapper">
           ${this.renderLabel()}
           <div id="fieldWrapper">
             <div id="fieldGroup">
