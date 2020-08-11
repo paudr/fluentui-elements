@@ -91,7 +91,7 @@ export default css`
     height: 100%;
     white-space: nowrap;
     text-transform: none;
-    color: rgb(50, 49, 48);
+    color: ${neutralPrimary};
     user-select: none;
     box-sizing: inherit;
     margin: 0;
@@ -138,7 +138,7 @@ export default css`
   }
 
   button.selected::before {
-    background-color: rgb(0, 120, 212);
+    background-color: ${themePrimary};
   }
 
   button.selected:hover::before {
