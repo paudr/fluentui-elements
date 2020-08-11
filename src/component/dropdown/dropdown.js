@@ -1,5 +1,4 @@
 import { html } from 'lit-html'
-import { classMap } from 'lit-html/directives/class-map'
 import ComboElement from '../../base/combo-element'
 import OptionsManager from '../../utils/options-manager'
 import { equalInsensitive } from '../../utils/text'
@@ -131,10 +130,6 @@ class Dropdown extends ComboElement {
     return html`
       <div
         id="container"
-        class="${classMap({
-          invalid: this.errorMessage,
-          open: this.open && !this.disabled
-        })}"
         tabindex="${this.disabled ? '' : '0'}"
         @click="${this.handleContainerClick}"
         @keydown="${this.handleKeydown}"

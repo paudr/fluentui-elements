@@ -2,34 +2,38 @@ import { css } from 'lit-element'
 
 import { normalize, iconCss } from '../../theme/mixins.css'
 import { fontStyle } from '../../theme/typografy.css'
-import { neutralLighter, neutralSecondary, white } from '../../theme/color.css'
+import {
+  blackTranslucent40,
+  neutralLight,
+  neutralSecondary,
+  white
+} from '../../theme/color.css'
 
 export default css`
   #container {
     ${normalize};
     ${fontStyle.medium};
-    width: 100%;
+    flex: 1 1 0px;
     max-width: 100%;
     color: ${neutralSecondary};
+    display: block;
     user-select: none;
-    outline: 0px;
+    outline: 0;
   }
 
   #title {
     ${normalize};
     padding: 0px 28px 0px 8px;
-    background-color: ${white};
     cursor: pointer;
     display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     height: 32px;
     line-height: 30px;
     position: relative;
-    white-space: nowrap;
-    text-overflow: ellipsis;
     color: ${neutralSecondary};
-    border: 0px solid transparent;
-    border-radius: 2px;
-    overflow: hidden;
+    border: 0;
   }
 
   #caret {
@@ -48,9 +52,10 @@ export default css`
     pointer-events: none;
   }
 
-  :host([disabled]) #title {
-    background: ${neutralLighter};
-    border-color: ${neutralLighter};
-    cursor: default;
+  fluent-select {
+    flex: 1 1 0px;
+    background-color: ${white};
+    box-shadow: 0 0px 15px -5px ${blackTranslucent40};
+    border: 1px solid ${neutralLight};
   }
 `
