@@ -120,6 +120,8 @@ export default css`
   :host([underlined]) #fieldWrapper {
     position: relative;
     flex: 1 1 0px;
+    max-width: 100%;
+    width: 0%;
   }
 
   :host([underlined]) #root.requiredPlaceholder #fieldGroup::after {
