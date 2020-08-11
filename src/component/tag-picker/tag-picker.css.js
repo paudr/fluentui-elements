@@ -5,6 +5,11 @@ import { themeLight, themePrimary, white } from '../../theme/color.css'
 import { fontStyle } from '../../theme/typografy.css'
 
 export default css`
+  #fieldGroup {
+    min-height: 32px;
+    height: auto;
+  }
+
   #field {
     display: flex;
     position: relative;

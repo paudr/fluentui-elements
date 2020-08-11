@@ -40,7 +40,7 @@ export default css`
     ${normalize};
     border: 0;
     background: ${white};
-    min-height: 32px;
+    height: 32px;
     display: flex;
     flex-direction: row;
     position: relative;
