@@ -1,4 +1,6 @@
+const webpack = require('webpack')
 const babelrc = require('../.babelrc.json')
+const packageJson = require('../package.json')
 
 module.exports = {
   stories: ['../src/**/*.stories.js'],
@@ -6,5 +8,13 @@ module.exports = {
     '@storybook/addon-docs',
     '@storybook/addon-actions',
     '@storybook/addon-knobs'
-  ]
+  ],
+  webpackFinal: async (config, { configType }) => {
+    config.plugins.push(
+      new webpack.DefinePlugin({
+        VERSION: JSON.stringify(packageJson.version)
+      })
+    )
+    return config
+  }
 }
