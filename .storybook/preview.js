@@ -3,11 +3,7 @@ import './assets/fonts.css'
 
 addParameters({ docs: { iframeHeight: '200px' } })
 
-const storiesModule = require.context(
-  '../src/component/',
-  true,
-  /\.stories\.js$/
-)
+const storiesModule = require.context('../src/', true, /\.stories\.js$/)
 configure(storiesModule, module)
 
 if (module.hot) {
