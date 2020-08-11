@@ -3,6 +3,7 @@ import { css } from 'lit-element'
 import { normalize, iconCss } from '../../theme/mixins.css'
 import { fontStyle } from '../../theme/typografy.css'
 import {
+  blackTranslucent40,
   neutralDark,
   neutralLight,
   neutralLighter,
@@ -17,22 +18,16 @@ export default css`
     ${normalize};
     padding: 0px 28px 0px 8px;
     cursor: pointer;
-    display: block;
-    height: 32px;
+    display: flex;
     line-height: 30px;
     position: relative;
     white-space: nowrap;
     color: ${neutralSecondary};
-    border: 0px solid transparent;
+    border: 0;
   }
 
   fluent-autofill {
-    background-color: ${white};
-    ${normalize}
-    width: 100%;
-    height: 100%;
-    border-style: none;
-    outline: none;
+    flex: 1 1 0px;
   }
 
   #caret {
@@ -52,9 +47,8 @@ export default css`
     line-height: 30px;
     user-select: none;
     outline: transparent;
-    border: 0px none transparent;
+    border: 0;
     text-decoration: none;
-    border-radius: 2px;
   }
 
   #caret span {
@@ -91,13 +85,10 @@ export default css`
     background-color: ${neutralQuaternaryAlt};
   }
 
-  :host([disabled]) #title {
-    cursor: default;
-  }
-
-  :host([disabled]) #caret {
-    cursor: default;
-    pointer-events: none;
-    background-color: ${neutralLighter};
+  fluent-select {
+    flex: 1 1 0px;
+    background-color: ${white};
+    box-shadow: 0 0px 15px -5px ${blackTranslucent40};
+    border: 1px solid ${neutralLight};
   }
 `
