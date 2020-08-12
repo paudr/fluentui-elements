@@ -17,6 +17,10 @@ export default css`
     background: none transparent;
   }
 
+  :host([notwritable]:not([disabled])) #field {
+    cursor: pointer;
+  }
+
   i {
     ${iconCss}
     color: ${neutralSecondary};
