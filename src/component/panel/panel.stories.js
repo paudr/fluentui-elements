@@ -121,8 +121,8 @@ export const Footer = () => html`
   >
     <p>Content goes here.</p>
     <div slot="footer" class="okCancel">
-      <fluent-button type="primary">Ok</fluent-button>
-      <fluent-button>Cancel</fluent-button>
+      <fluent-button primary text="Ok"></fluent-button>
+      <fluent-button text="Cancel"></fluent-button>
     </div>
   </fluent-panel>
 `
