@@ -1,5 +1,6 @@
 import { html, nothing } from 'lit-html'
 import StyledElement from '../../base/styled-element'
+import debounce from '../../utils/debounce'
 import styles from './command-bar.css'
 import iconCode from '../icon/code'
 
@@ -26,7 +27,8 @@ class CommandBar extends StyledElement {
       overflowItems: { type: Array },
       farItems: { type: Array },
       overflowedItemsIndex: { type: Number },
-      autoUpdateOverflowedItemsIndex: { type: Boolean }
+      autoUpdateOverflowedItemsIndex: { type: Boolean },
+      onResizeRate: { type: Number }
     }
   }
 
@@ -36,6 +38,7 @@ class CommandBar extends StyledElement {
     this.overflowItems = []
     this.farItems = []
     this.overflowedItemsIndex = -1
+    this.onResizeRate = 250
     _open.set(this, [])
   }
 
@@ -104,9 +107,9 @@ class CommandBar extends StyledElement {
 
   connectedCallback () {
     super.connectedCallback()
-    const event = () => {
+    const event = debounce(() => {
       this.onResize()
-    }
+    }, this.onResizeRate)
     _event.set(this, event)
     window.addEventListener('resize', event)
   }

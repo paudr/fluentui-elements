@@ -160,6 +160,7 @@ export const CalculateOverflowIndex = () => html`
         'overflowautoUpdateOverflowedItemsIndexedItemsIndex',
         false
       )}"
+      .onResizeRate="${number('overflowedItemsIndex', 250)}"
       @click="${action('click')}"
     ></fluent-command-bar>
     <fluent-text-field
