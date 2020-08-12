@@ -140,7 +140,7 @@ function onContainerWitdhChanged (event) {
 
 function onCalculateOverflowIndex () {
   const commandBar = document.querySelector('#container fluent-command-bar')
-  commandBar.updateOverflowItemIndex()
+  commandBar.onResize()
 }
 
 export const CalculateOverflowIndex = () => html`
