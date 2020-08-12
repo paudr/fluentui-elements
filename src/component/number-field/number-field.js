@@ -135,7 +135,7 @@ class NumberField extends TextField {
   renderInput () {
     return html`
       <input
-        id="field"
+        id="${TextField.fieldId}"
         type="text"
         class="${classMap({ hasIcon: this.icon })}"
         .value="${live(this.text)}"
@@ -152,7 +152,7 @@ class NumberField extends TextField {
   renderTextarea () {
     return html`
       <textarea
-        id="field"
+        id="${TextField.fieldId}"
         class="${classMap({
           hasIcon: this.icon,
           unresizable: this.unresizable
