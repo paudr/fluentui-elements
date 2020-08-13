@@ -70,10 +70,7 @@ class CommandBar extends StyledElement {
       overflowedItemsIndex: -1,
       itemWidths: [],
       resizeObserver: new ResizeObserver(
-        debounce(entries => {
-          console.log(entries)
-          this.updateOverflowIndex()
-        }),
+        debounce(entries => this.updateOverflowIndex()),
         this.onResizeRate
       )
     })
@@ -184,7 +181,7 @@ class CommandBar extends StyledElement {
       let width = 0
       data.itemWidths = []
       for (const option of options) {
-        width += option.getBoundingClientRect().width + 1
+        width += option.getBoundingClientRect().width
         data.itemWidths.push(width)
       }
       if (this.autoUpdateOverflowIndex) {
