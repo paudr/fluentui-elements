@@ -88,7 +88,8 @@ class DatePicker extends ComboElement {
     if (
       value ||
       this.value ||
-      (value && this.value && date.getTime() !== this.value.getTime())
+      (value && this.value && date.getTime() !== this.value.getTime()) ||
+      (value == null && this.value)
     ) {
       const oldValue = this.value
       this.value = value
@@ -116,6 +117,8 @@ class DatePicker extends ComboElement {
     const date = this.parse(event.target.value)
     if (date) {
       this.updateValue(date, true)
+    } else if (event.target.value === '') {
+      this.updateValue(null, true)
     }
   }
 
@@ -123,6 +126,9 @@ class DatePicker extends ComboElement {
     const date = this.parse(event.target.value)
     if (date) {
       this.updateValue(date, true)
+      this.requestUpdate()
+    } else if (event.target.value === '') {
+      this.updateValue(null, true)
       this.requestUpdate()
     } else {
       event.target.value = this.textValue
