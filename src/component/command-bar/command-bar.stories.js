@@ -1,5 +1,5 @@
 import { html } from 'lit-html'
-import { withKnobs, object, number, boolean } from '@storybook/addon-knobs'
+import { withKnobs, object, boolean, number } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 import './command-bar'
 
@@ -126,11 +126,8 @@ export const Sandbox = () => html`<fluent-command-bar
   .items="${object('items', items)}"
   .overflowItems="${object('overflowItems', overflowItems)}"
   .farItems="${object('farItems', farItems)}"
-  .overflowedItemsIndex="${number('overflowedItemsIndex', -1)}"
-  .autoUpdateOverflowedItemsIndex="${boolean(
-    'overflowautoUpdateOverflowedItemsIndexedItemsIndex',
-    false
-  )}"
+  .autoUpdateOverflowIndex="${boolean('autoUpdateOverflowIndex', false)}"
+  .onResizeRate="${number('onResizeRate', 250)}"
   @click="${action('click')}"
 ></fluent-command-bar>`
 
@@ -140,7 +137,7 @@ function onContainerWitdhChanged (event) {
 
 function onCalculateOverflowIndex () {
   const commandBar = document.querySelector('#container fluent-command-bar')
-  commandBar.onResize()
+  commandBar.updateOverflowIndex()
 }
 
 export const CalculateOverflowIndex = () => html`
@@ -155,12 +152,8 @@ export const CalculateOverflowIndex = () => html`
       .items="${object('items', items)}"
       .overflowItems="${object('overflowItems', overflowItems)}"
       .farItems="${object('farItems', farItems)}"
-      .overflowedItemsIndex="${number('overflowedItemsIndex', -1)}"
-      .autoUpdateOverflowedItemsIndex="${boolean(
-        'overflowautoUpdateOverflowedItemsIndexedItemsIndex',
-        false
-      )}"
-      .onResizeRate="${number('overflowedItemsIndex', 250)}"
+      .autoUpdateOverflowIndex="${boolean('autoUpdateOverflowIndex', false)}"
+      .onResizeRate="${number('onResizeRate', 250)}"
       @click="${action('click')}"
     ></fluent-command-bar>
     <fluent-text-field

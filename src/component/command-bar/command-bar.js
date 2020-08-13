@@ -12,8 +12,35 @@ function arrayTransfer (source, target, index) {
   }
 }
 
-const _event = new WeakMap()
-const _open = new WeakMap()
+function getItems ({ items, overflowItems, overflowedItemsIndex }) {
+  const [newItems, newOverflowItems] = arrayTransfer(
+    items,
+    overflowItems,
+    overflowedItemsIndex
+  )
+  if (newOverflowItems.length > 0) {
+    newItems.push({
+      value: more,
+      icon: 'More',
+      iconColor: '#333333',
+      childs: newOverflowItems
+    })
+  }
+  return newItems
+}
+
+function copyItem (item) {
+  return {
+    value: item.value,
+    text: item.text,
+    icon: item.icon,
+    iconColor: item.iconColor,
+    action: item.action,
+    childs: Array.isArray(item.childs) ? item.childs.map(copyItem) : undefined
+  }
+}
+
+const _privateData = new WeakMap()
 const more = Symbol('more')
 
 class CommandBar extends StyledElement {
@@ -26,57 +53,74 @@ class CommandBar extends StyledElement {
       items: { type: Array },
       overflowItems: { type: Array },
       farItems: { type: Array },
-      overflowedItemsIndex: { type: Number },
-      autoUpdateOverflowedItemsIndex: { type: Boolean },
+      autoUpdateOverflowIndex: { type: Boolean },
       onResizeRate: { type: Number }
     }
   }
 
   constructor () {
     super()
-    this.items = []
-    this.overflowItems = []
-    this.farItems = []
-    this.overflowedItemsIndex = -1
+    this.autoUpdateOverflowIndex = false
     this.onResizeRate = 250
-    _open.set(this, [])
-  }
-
-  onResize () {
-    if (this.autoUpdateOverflowedItemsIndex) {
-      this.overflowedItemsIndex = -1
-      setImmediate(() => {
-        this.overflowedItemsIndex = this.getOverflowItemIndex()
-      })
-    }
-  }
-
-  getOverflowItemIndex () {
-    const root = this.renderRoot.getElementById('root')
-    const farOptions = this.renderRoot.querySelector('#root > div:last-child')
-    const options = [
-      ...this.renderRoot.querySelectorAll(
-        '#root > div:first-child > div.commandItem'
+    _privateData.set(this, {
+      items: [],
+      overflowItems: [],
+      farItems: [],
+      open: [],
+      overflowedItemsIndex: -1,
+      itemWidths: [],
+      resizeObserver: new ResizeObserver(
+        debounce(entries => {
+          console.log(entries)
+          this.updateOverflowIndex()
+        }),
+        this.onResizeRate
       )
-    ].filter(option => option.getAttribute('data-type') !== 'more')
-    const moreButton = this.renderRoot.querySelector(
-      '#root > div:first-child > div[data-type="more"]'
-    )
-    const maxWidth =
-      root.getBoundingClientRect().width -
-      farOptions.getBoundingClientRect().width -
-      moreButton.getBoundingClientRect().width -
-      20
-    let currentWidth = 0
-    for (let index = 0; index < options.length; index += 1) {
-      currentWidth += options[index].getBoundingClientRect().width
-      if (currentWidth > maxWidth) return index
-    }
-    return -1
+    })
+  }
+
+  get items () {
+    return _privateData.get(this).items.map(copyItem)
+  }
+
+  set items (value) {
+    const data = _privateData.get(this)
+    const oldValue = data.items
+    data.items = value.map(copyItem)
+    data.overflowedItemsIndex = -1
+    this.requestUpdate('items', oldValue)
+  }
+
+  get overflowItems () {
+    return _privateData.get(this).overflowItems.map(copyItem)
+  }
+
+  set overflowItems (value) {
+    const data = _privateData.get(this)
+    const oldValue = data.overflowItems
+    data.overflowItems = value.map(copyItem)
+    data.overflowedItemsIndex = -1
+    this.requestUpdate('overflowItems', oldValue)
+  }
+
+  get farItems () {
+    return _privateData.get(this).farItems.map(copyItem)
+  }
+
+  set farItems (value) {
+    const data = _privateData.get(this)
+    const oldValue = data.farItems
+    data.farItems = value.map(copyItem)
+    data.overflowedItemsIndex = -1
+    this.requestUpdate('farItems', oldValue)
+  }
+
+  get overflowedItemsIndex () {
+    return _privateData.get(this).overflowedItemsIndex
   }
 
   expandLevel (key, level, noClose) {
-    const open = _open.get(this)
+    const { open } = _privateData.get(this)
     if (open[level] === key) {
       if (!noClose) {
         open.splice(level)
@@ -88,35 +132,65 @@ class CommandBar extends StyledElement {
     this.requestUpdate()
   }
 
-  getItems () {
-    const [items, overflowItems] = arrayTransfer(
-      this.items,
-      this.overflowItems,
-      this.overflowedItemsIndex
+  updateOverflowIndex () {
+    const root = this.renderRoot.getElementById('root')
+    const farOptions = this.renderRoot.querySelector('#root > div:last-child')
+    const moreButton = this.renderRoot.querySelector(
+      '#root > div:first-child > div[data-type="more"]'
     )
-    if (overflowItems.length > 0) {
-      items.push({
-        value: more,
-        icon: 'More',
-        iconColor: '#333333',
-        childs: overflowItems
-      })
+    const farOptionsWidth = farOptions
+      ? farOptions.getBoundingClientRect().width
+      : 0
+    const moreButtonWidth = moreButton
+      ? moreButton.getBoundingClientRect().width
+      : 40
+    const maxWidth =
+      root.getBoundingClientRect().width -
+      farOptionsWidth -
+      moreButtonWidth -
+      38 // padding
+    const data = _privateData.get(this)
+    let index = data.itemWidths.length - 1
+    for (; index >= 0; index--) {
+      if (data.itemWidths[index] < maxWidth) break
     }
-    return items
+    const newIndex = index + 1
+    if (data.overflowedItemsIndex !== newIndex) {
+      data.overflowedItemsIndex = newIndex
+      this.requestUpdate()
+    }
   }
 
-  connectedCallback () {
-    super.connectedCallback()
-    const event = debounce(() => {
-      this.onResize()
-    }, this.onResizeRate)
-    _event.set(this, event)
-    window.addEventListener('resize', event)
-  }
+  updated (changedProperties) {
+    const data = _privateData.get(this)
 
-  disconnectedCallback () {
-    super.disconnectedCallback()
-    window.removeEventListener('resize', _event.get(this))
+    if (changedProperties.has('autoUpdateOverflowIndex')) {
+      const root = this.renderRoot.getElementById('root')
+      if (this.autoUpdateOverflowIndex) {
+        data.resizeObserver.observe(root)
+      } else {
+        data.resizeObserver.unobserve(root)
+      }
+    }
+
+    if (
+      changedProperties.has('items') ||
+      changedProperties.has('overflowItems') ||
+      changedProperties.has('farItems')
+    ) {
+      const options = this.renderRoot.querySelectorAll(
+        '#root > div:first-child > div.commandItem[data-type="option"]'
+      )
+      let width = 0
+      data.itemWidths = []
+      for (const option of options) {
+        width += option.getBoundingClientRect().width + 1
+        data.itemWidths.push(width)
+      }
+      if (this.autoUpdateOverflowIndex) {
+        this.updateOverflowIndex()
+      }
+    }
   }
 
   renderCommandButton ({
@@ -219,9 +293,10 @@ class CommandBar extends StyledElement {
     const hasChilds = Array.isArray(item.childs) && item.childs.length > 0
     const hasAction = typeof item.action === 'function'
     const expandIcon = hasChilds ? 'ChevronDown' : null
-    const showChilds = _open.get(this)[0] === item.value
+    const data = _privateData.get(this)
+    const showChilds = data.open[0] === item.value
     const action = () => {
-      _open.set(this, [])
+      data.open = []
       this.requestUpdate()
       hasAction && item.action.call(null, item.value)
     }
@@ -261,9 +336,10 @@ class CommandBar extends StyledElement {
     const hasChilds = Array.isArray(item.childs) && item.childs.length > 0
     const hasAction = typeof item.action === 'function'
     const expandIcon = hasChilds ? 'ChevronRight' : null
-    const showChilds = _open.get(this)[level] === item.value
+    const data = _privateData.get(this)
+    const showChilds = data.open[level] === item.value
     const action = () => {
-      _open.set(this, [])
+      data.open = []
       this.requestUpdate()
       hasAction && item.action.call(null, item.value)
     }
@@ -335,13 +411,14 @@ class CommandBar extends StyledElement {
   }
 
   render () {
+    const data = _privateData.get(this)
     return html`
       <div id="root">
         <div>
-          ${this.getItems().map(item => this.renderCommandItem(item))}
+          ${getItems(data).map(item => this.renderCommandItem(item))}
         </div>
         <div>
-          ${this.farItems.map(item => this.renderCommandItem(item))}
+          ${data.farItems.map(item => this.renderCommandItem(item))}
         </div>
       </div>
     `
