@@ -105,8 +105,8 @@ class SpinButton extends InputElement {
     if (value !== null) {
       this.updateValue(value, true)
     } else {
-      const { oldValue } = _privateData.get(this)
-      input.value = this.stringify(oldValue)
+      const { value } = _privateData.get(this)
+      input.value = this.stringify(value)
     }
   }
 
