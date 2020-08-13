@@ -122,14 +122,6 @@ const tabs = [
   { text: 'Shared with me', value: 'shared', icon: 'Ringer', count: 1 }
 ]
 
-function toggleTheme (event) {
-  if (event.detail) {
-    document.getElementById('themeTest').className = 'custom'
-  } else {
-    document.getElementById('themeTest').className = ''
-  }
-}
-
 export const Normal = () => html`
   <style>
     #themeTest {
@@ -161,7 +153,16 @@ export const Normal = () => html`
       --white: #ffffff;
     }
   </style>
-  <fluent-toggle label="Custom theme" @change="${toggleTheme}"></fluent-toggle>
+  <fluent-toggle
+    label="Custom theme"
+    @change="${event => {
+      if (event.detail) {
+        document.getElementById('themeTest').className = 'custom'
+      } else {
+        document.getElementById('themeTest').className = ''
+      }
+    }}"
+  ></fluent-toggle>
   <div
     id="themeTest"
     tabindex="0"
@@ -171,7 +172,6 @@ export const Normal = () => html`
       .items="${commandBar.items}"
       .overflowItems="${commandBar.overflowItems}"
       .farItems="${commandBar.farItems}"
-      .overflowedItemsIndex="${-1}"
     ></fluent-command-bar>
     <fluent-text-field required label="Name"></fluent-text-field>
     <fluent-pivot .tabs="${tabs}"></fluent-pivot>

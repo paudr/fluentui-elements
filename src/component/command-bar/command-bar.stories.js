@@ -131,15 +131,6 @@ export const Sandbox = () => html`<fluent-command-bar
   @click="${action('click')}"
 ></fluent-command-bar>`
 
-function onContainerWitdhChanged (event) {
-  document.getElementById('container').style.width = event.detail.value
-}
-
-function onCalculateOverflowIndex () {
-  const commandBar = document.querySelector('#container fluent-command-bar')
-  commandBar.updateOverflowIndex()
-}
-
 export const CalculateOverflowIndex = () => html`
   <style>
     #container {
@@ -159,11 +150,18 @@ export const CalculateOverflowIndex = () => html`
     <fluent-text-field
       label="Container width"
       value="100%"
-      @change="${onContainerWitdhChanged}"
+      @change="${event => {
+        document.getElementById('container').style.width = event.detail.value
+      }}"
     ></fluent-text-field>
     <fluent-button
       text="Calculate overflow index"
-      @click="${onCalculateOverflowIndex}"
+      @click="${() => {
+        const commandBar = document.querySelector(
+          '#container fluent-command-bar'
+        )
+        commandBar.updateOverflowIndex()
+      }}"
     ></fluent-button>
   </div>
 `
