@@ -106,6 +106,7 @@ class NumberField extends TextField {
   }
 
   handleChange (event) {
+    const { oldValue } = _privateData.get(this)
     const number = this.parse(event.target.value)
     if (
       !isNaN(number) &&
@@ -118,9 +119,7 @@ class NumberField extends TextField {
         this.max === -1 ||
         number <= this.max)
     ) {
-      const oldValue = _privateData.get(this).oldValue
       this.value = number
-      event.target.value = this.stringify(_privateData.get(this).oldValue) ?? ''
       this.dispatchEvent(
         new CustomEvent('change', {
           detail: {
@@ -129,6 +128,8 @@ class NumberField extends TextField {
           }
         })
       )
+    } else {
+      event.target.value = this.stringify(oldValue) ?? ''
     }
   }
 
