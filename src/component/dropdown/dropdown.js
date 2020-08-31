@@ -90,6 +90,9 @@ class Dropdown extends ComboElement {
     const optionsManager = _optionsManager.get(this)
     optionsManager.selectedIndices = Array.from(detail.selectedIndices)
     this.dispatchEvent(new CustomEvent('change', { detail }))
+    if (!this.multiple) {
+      this.open = false
+    }
     this.requestUpdate()
   }
 
