@@ -65,9 +65,7 @@ class Pivot extends StyledElement {
                         ><i>${iconCode[tab.icon]}</i></span
                       >`
                     : nothing}
-                  <span class="label">
-                    ${tab.text}
-                  </span>
+                  <span class="label"> ${tab.text} </span>
                   ${tab.count != null
                     ? html`<span class="count">(${tab.count.toString()})</span>`
                     : nothing}

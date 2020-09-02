@@ -35,9 +35,7 @@ export default class CalendarMonth {
 
   renderTitle () {
     return html`
-      <div @click="${() => this.calendar.setView('day')}">
-        ${this.year}
-      </div>
+      <div @click="${() => this.calendar.setView('day')}">${this.year}</div>
     `
   }
 

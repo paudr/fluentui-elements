@@ -144,9 +144,7 @@ class Calendar extends StyledElement {
     return html`
       <div id="root" class="${this.goToday ? 'showGoToday' : ''}">
         <div id="header">
-          <div id="title">
-            ${viewObject.renderTitle()}
-          </div>
+          <div id="title">${viewObject.renderTitle()}</div>
           <div id="titleComponents">
             <div id="navContainer">
               <button id="prev" @click="${() => viewObject.navigate(-1)}">

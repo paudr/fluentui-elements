@@ -63,9 +63,7 @@ export default class InputElement extends StyledElement {
       >
         <div id="wrapper">
           ${this.renderLabel()}
-          <div id="fieldGroup">
-            ${this.renderInputField()}
-          </div>
+          <div id="fieldGroup">${this.renderInputField()}</div>
         </div>
         ${this.description || this.errorMessage
           ? html`

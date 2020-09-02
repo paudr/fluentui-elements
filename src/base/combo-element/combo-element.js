@@ -69,12 +69,8 @@ export default class ComboElement extends StyledElement {
         <div id="elementWrapper">
           ${this.renderLabel()}
           <div id="fieldWrapper">
-            <div id="fieldGroup">
-              ${this.renderInputField()}
-            </div>
-            <div id="dropdown">
-              ${this.renderDropdown()}
-            </div>
+            <div id="fieldGroup">${this.renderInputField()}</div>
+            <div id="dropdown">${this.renderDropdown()}</div>
           </div>
         </div>
         ${this.description || this.errorMessage

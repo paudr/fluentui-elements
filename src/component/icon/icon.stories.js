@@ -12,9 +12,7 @@ const container = story => html`
       margin: 0 25px;
     }
   </style>
-  <div>
-    ${story()}
-  </div>
+  <div>${story()}</div>
 `
 
 export default {

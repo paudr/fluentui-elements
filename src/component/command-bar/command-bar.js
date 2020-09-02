@@ -242,9 +242,7 @@ class CommandBar extends StyledElement {
           ${!icon && emptyIcon ? html`<i class="empty"></i>` : nothing}
           ${text
             ? html`<span class="text">
-                <span>
-                  ${text}
-                </span>
+                <span> ${text} </span>
               </span>`
             : nothing}
           ${expandIcon
@@ -411,12 +409,8 @@ class CommandBar extends StyledElement {
     const data = _privateData.get(this)
     return html`
       <div id="root">
-        <div>
-          ${getItems(data).map(item => this.renderCommandItem(item))}
-        </div>
-        <div>
-          ${data.farItems.map(item => this.renderCommandItem(item))}
-        </div>
+        <div>${getItems(data).map(item => this.renderCommandItem(item))}</div>
+        <div>${data.farItems.map(item => this.renderCommandItem(item))}</div>
       </div>
     `
   }
