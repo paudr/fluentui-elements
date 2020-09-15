@@ -39,4 +39,4 @@ const nameOptions = Object.keys(iconCode).reduce(
 )
 
 export const Sandbox = () =>
-  html` <fluent-icon name="${select('name', nameOptions, '')}"></fluent-icon> `
+  html`<fluent-icon name="${select('name', nameOptions, '')}"></fluent-icon>`

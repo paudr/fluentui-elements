@@ -11,13 +11,13 @@ export default {
 export const Normal = () => html`<fluent-label>I'm a Label</fluent-label>`
 
 export const Required = () =>
-  html` <fluent-label required>I'm a required Label</fluent-label> `
+  html`<fluent-label required>I'm a required Label</fluent-label>`
 
 export const Disabled = () =>
-  html` <fluent-label disabled>I'm a disabled Label</fluent-label> `
+  html`<fluent-label disabled>I'm a disabled Label</fluent-label>`
 
 export const RequiredDisabled = () =>
-  html` <fluent-label required disabled>I'm a disabled Label</fluent-label> `
+  html`<fluent-label required disabled>I'm a disabled Label</fluent-label>`
 
 export const Sandbox = () => html`
   <fluent-label
