@@ -107,7 +107,7 @@ class Panel extends StyledElement {
 
   render () {
     return this.overlay
-      ? html` <fluent-overlay
+      ? html`<fluent-overlay
           id="overlay"
           .dark="${this.dark}"
           @click="${this.handleOverlayClose}"

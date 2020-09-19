@@ -105,7 +105,7 @@ class Dialog extends StyledElement {
 
   render () {
     return this.overlay
-      ? html` <fluent-overlay
+      ? html`<fluent-overlay
           id="overlay"
           .dark="${this.dark}"
           .styleSheet="${overlay.styleSheet}"
