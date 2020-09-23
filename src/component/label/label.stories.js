@@ -1,37 +1,41 @@
-import { html } from 'lit-html'
-import { withKnobs, text, boolean } from '@storybook/addon-knobs'
-import './label'
+import argTypes from './arg-types'
 
-export default {
-  title: 'Label',
-  component: 'fluent-label',
-  decorators: [withKnobs]
+function renderLabel (args) {
+  const label = document.createElement('FLUENT-LABEL')
+
+  for (const prop in args) {
+    label[prop] = args[prop]
+  }
+
+  return label
 }
 
-export const Normal = () => html`<fluent-label>I'm a Label</fluent-label>`
+export default {
+  title: 'Basic Inputs/Label',
+  component: 'fluent-label',
+  argTypes
+}
 
-export const Required = () =>
-  html`<fluent-label required>I'm a required Label</fluent-label>`
+export const Normal = renderLabel.bind({})
+Normal.args = {
+  textContent: "I'm a Label"
+}
 
-export const Disabled = () =>
-  html`<fluent-label disabled>I'm a disabled Label</fluent-label>`
+export const Required = renderLabel.bind({})
+Required.args = {
+  textContent: "I'm a required Label",
+  required: true
+}
 
-export const RequiredDisabled = () =>
-  html`<fluent-label required disabled>I'm a disabled Label</fluent-label>`
+export const Disabled = renderLabel.bind({})
+Disabled.args = {
+  textContent: "I'm a disabled Label",
+  disabled: true
+}
 
-export const Sandbox = () => html`
-  <fluent-label
-    ?required="${boolean('required', false)}"
-    ?disabled="${boolean('disabled', false)}"
-  >
-    ${text('text', "I'm a Label")}
-  </fluent-label>
-`
-Sandbox.story = {
-  parameters: {
-    knobs: {
-      timestamps: true,
-      escapeHTML: false
-    }
-  }
+export const RequiredDisabled = renderLabel.bind({})
+RequiredDisabled.args = {
+  textContent: "I'm a required and disabled Label",
+  required: true,
+  disabled: true
 }

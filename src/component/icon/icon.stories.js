@@ -1,42 +1,24 @@
-import { html } from 'lit-html'
-import { withKnobs, select } from '@storybook/addon-knobs'
-import './icon'
-import iconCode from './code'
+import argTypes from './arg-types'
 
-const container = story => html`
-  <style>
-    fluent-icon {
-      font-size: 50px;
-      height: 50px;
-      width: 50px;
-      margin: 0 25px;
-    }
-  </style>
-  <div>${story()}</div>
-`
+function renderIcon (args) {
+  const icon = document.createElement('FLUENT-ICON')
+  icon.style.fontSize = '50px'
+  icon.style.height = '50px'
+  icon.style.width = '50px'
+  icon.style.margin = '0 25px'
 
-export default {
-  title: 'Icon',
-  component: 'fluent-icon',
-  decorators: [container, withKnobs]
+  for (const prop in args) {
+    icon[prop] = args[prop]
+  }
+
+  return icon
 }
 
-export const Normal = () => html`
-  <fluent-icon name="CompassNW"></fluent-icon>
-  <fluent-icon name="Dictionary"></fluent-icon>
-  <fluent-icon name="TrainSolid"></fluent-icon>
-`
+export default {
+  title: 'Basic Inputs/Icon',
+  component: 'fluent-icon',
+  argTypes
+}
 
-export const Colored = () => html`
-  <fluent-icon style="color: deepskyblue;" name="CompassNW"></fluent-icon>
-  <fluent-icon style="color: greenyellow;" name="Dictionary"></fluent-icon>
-  <fluent-icon style="color: salmon;" name="TrainSolid"></fluent-icon>
-`
-
-const nameOptions = Object.keys(iconCode).reduce(
-  (object, name) => Object.assign(object, { [name]: name }),
-  { None: '' }
-)
-
-export const Sandbox = () =>
-  html`<fluent-icon name="${select('name', nameOptions, '')}"></fluent-icon>`
+export const Normal = renderIcon.bind({})
+Normal.args = { name: 'CompassNW' }
