@@ -1,63 +1,63 @@
-import { html } from 'lit-html'
 import { action } from '@storybook/addon-actions'
-import './button'
+import argTypes from './arg-types'
 
-export default {
-  title: 'Button/Anchor/Default',
-  component: 'fluent-button'
+function renderButton (args) {
+  const button = document.createElement('FLUENT-BUTTON')
+
+  button.addEventListener('click', action('click'))
+
+  for (const prop in args) {
+    button[prop] = args[prop]
+  }
+
+  return button
 }
 
-export const Standard = () => html`
-  <fluent-button
-    text="Standard"
-    href="javascript:alert('Hello World!')"
-    @click="${action('click')}"
-  />
-`
+export default {
+  title: 'Basic Inputs/Button/Anchor/Default',
+  component: 'fluent-button',
+  argTypes
+}
 
-export const Primary = () => html`
-  <fluent-button
-    primary
-    text="Primary"
-    href="javascript:alert('Hello World!')"
-    @click="${action('click')}"
-  />
-`
+export const Standard = renderButton.bind({})
+Standard.args = {
+  text: 'Standard',
+  href: "javascript:alert('Hello World!')"
+}
 
-export const Checked = () => html`
-  <fluent-button
-    checked
-    text="Checked"
-    href="javascript:alert('Hello World!')"
-    @click="${action('click')}"
-  />
-`
+export const Primary = renderButton.bind({})
+Primary.args = {
+  primary: true,
+  text: 'Primary',
+  href: "javascript:alert('Hello World!')"
+}
 
-export const PrimaryChecked = () => html`
-  <fluent-button
-    primary
-    checked
-    text="Primary Checked"
-    href="javascript:alert('Hello World!')"
-    @click="${action('click')}"
-  />
-`
+export const Checked = renderButton.bind({})
+Checked.args = {
+  checked: true,
+  text: 'Checked',
+  href: "javascript:alert('Hello World!')"
+}
 
-export const Disabled = () => html`
-  <fluent-button
-    disabled
-    text="Standard"
-    href="javascript:alert('Hello World!')"
-    @click="${action('click')}"
-  />
-`
+export const PrimaryChecked = renderButton.bind({})
+PrimaryChecked.args = {
+  primary: true,
+  checked: true,
+  text: 'Primary Checked',
+  href: "javascript:alert('Hello World!')"
+}
 
-export const DisabledPrimary = () => html`
-  <fluent-button
-    disabled
-    primary
-    text="Primary"
-    href="javascript:alert('Hello World!')"
-    @click="${action('click')}"
-  />
-`
+export const Disabled = renderButton.bind({})
+Disabled.args = {
+  disabled: true,
+  text: 'Disabled',
+  href: "javascript:alert('Hello World!')"
+}
+
+export const PrimaryDisabled = renderButton.bind({})
+PrimaryDisabled.args = {
+  primary: true,
+  disabled: true,
+  text: 'Disabled',
+  href: "javascript:alert('Hello World!')"
+}

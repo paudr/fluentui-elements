@@ -1,40 +1,46 @@
-import { html } from 'lit-html'
 import { action } from '@storybook/addon-actions'
-import './button'
+import argTypes from './arg-types'
 
-export default {
-  title: 'Button/Anchor/Command',
-  component: 'fluent-button'
+function renderButton (args) {
+  const button = document.createElement('FLUENT-BUTTON')
+
+  button.addEventListener('click', action('click'))
+
+  for (const prop in args) {
+    button[prop] = args[prop]
+  }
+
+  return button
 }
 
-export const Standard = () => html`
-  <fluent-button
-    type="command"
-    text="New Item"
-    icon="Add"
-    href="javascript:alert('Hello World!')"
-    @click="${action('click')}"
-  />
-`
+export default {
+  title: 'Basic Inputs/Button/Anchor/Command',
+  component: 'fluent-button',
+  argTypes
+}
 
-export const Checked = () => html`
-  <fluent-button
-    type="command"
-    checked
-    text="New Item"
-    icon="Add"
-    href="javascript:alert('Hello World!')"
-    @click="${action('click')}"
-  />
-`
+export const Standard = renderButton.bind({})
+Standard.args = {
+  type: 'command',
+  text: 'New Item',
+  icon: 'Add',
+  href: "javascript:alert('Hello World!')"
+}
 
-export const Disabed = () => html`
-  <fluent-button
-    disabled
-    type="command"
-    text="New Item"
-    icon="Add"
-    href="javascript:alert('Hello World!')"
-    @click="${action('click')}"
-  />
-`
+export const Checked = renderButton.bind({})
+Checked.args = {
+  type: 'command',
+  checked: true,
+  text: 'New Item',
+  icon: 'Add',
+  href: "javascript:alert('Hello World!')"
+}
+
+export const Disabled = renderButton.bind({})
+Disabled.args = {
+  type: 'command',
+  disabled: true,
+  text: 'New Item',
+  icon: 'Add',
+  href: "javascript:alert('Hello World!')"
+}
