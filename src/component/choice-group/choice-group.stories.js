@@ -1,12 +1,16 @@
-import { html } from 'lit-html'
-import { withKnobs, text, boolean, object } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
-import './choice-group'
+import argTypes from './arg-types'
 
-export default {
-  title: 'ChoiceGroup',
-  component: 'fluent-choice-group',
-  decorators: [withKnobs]
+function renderChoiceGroup (args) {
+  const choiceGroup = document.createElement('FLUENT-CHOICE-GROUP')
+
+  choiceGroup.addEventListener('change', action('change'))
+
+  for (const prop in args) {
+    choiceGroup[prop] = args[prop]
+  }
+
+  return choiceGroup
 }
 
 const choiceOptions = [
@@ -16,49 +20,35 @@ const choiceOptions = [
   { value: 'D', text: 'Option D' }
 ]
 
-export const Normal = () => html`
-  <fluent-choice-group
-    label="Pick one"
-    .options="${choiceOptions}"
-    @change="${action('change')}"
-  ></fluent-choice-group>
-`
+export default {
+  title: 'Basic Inputs/ChoiceGroup',
+  component: 'fluent-choice-group',
+  argTypes
+}
 
-export const Required = () => html`
-  <fluent-choice-group
-    label="Pick one"
-    .options="${choiceOptions}"
-    required
-    @change="${action('change')}"
-  ></fluent-choice-group>
-`
+export const Normal = renderChoiceGroup.bind({})
+Normal.args = {
+  label: 'Pick one',
+  options: choiceOptions
+}
 
-export const Disabled = () => html`
-  <fluent-choice-group
-    label="Pick one"
-    .options="${choiceOptions}"
-    disabled
-    @change="${action('change')}"
-  ></fluent-choice-group>
-`
+export const Required = renderChoiceGroup.bind({})
+Required.args = {
+  label: 'Pick one',
+  options: choiceOptions,
+  required: true
+}
 
-export const InRow = () => html`
-  <fluent-choice-group
-    label="Pick one"
-    .options="${choiceOptions}"
-    inRow
-    @change="${action('change')}"
-  ></fluent-choice-group>
-`
+export const Disabled = renderChoiceGroup.bind({})
+Disabled.args = {
+  label: 'Pick one',
+  options: choiceOptions,
+  disabled: true
+}
 
-export const Sandbox = () => html`
-  <fluent-choice-group
-    .value="${text('value', 'C')}"
-    .label="${text('label', 'Pick one')}"
-    .required="${boolean('required', false)}"
-    .disabled="${boolean('disabled', false)}"
-    .inRow="${boolean('inRow', false)}"
-    .options="${object('options', choiceOptions)}"
-    @change="${action('change')}"
-  ></fluent-choice-group>
-`
+export const InRow = renderChoiceGroup.bind({})
+InRow.args = {
+  label: 'Pick one',
+  options: choiceOptions,
+  InRow: true
+}
