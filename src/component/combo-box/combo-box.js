@@ -19,7 +19,7 @@ class ComboBox extends ComboElement {
       ...ComboElement.properties,
       options: { type: Array, reflect: true },
       value: { type: Object, reflect: true },
-      readOnly: { type: Boolean, reflect: true },
+      readonly: { type: Boolean, reflect: true },
       multiple: { type: Boolean, reflect: true },
       allowFreeform: { type: Boolean, reflect: true },
       autoComplete: { type: Boolean, reflect: true },
@@ -30,7 +30,7 @@ class ComboBox extends ComboElement {
 
   constructor () {
     super()
-    this.readOnly = false
+    this.readonly = false
     this.allowFreeform = false
     this.autoComplete = false
     this.accentInsensitive = false
@@ -96,11 +96,10 @@ class ComboBox extends ComboElement {
     this.open = false
     select.markedIndex = -1
     select.highlightedIndex = -1
-    autofill.value = this.allowFreeform
-      ? this.multiple
+    autofill.value =
+      this.allowFreeform && this.multiple
         ? ''
-        : optionsManager.getSelectedText('')
-      : optionsManager.getSelectedText('')
+        : optionsManager.getSelectedText()
     this.requestUpdate()
   }
 
@@ -112,7 +111,7 @@ class ComboBox extends ComboElement {
   }
 
   handleCaretClick () {
-    if (!this.disabled && !this.readOnly) {
+    if (!this.disabled && !this.readonly) {
       const select = this.renderRoot.querySelector('fluent-select')
       this.open = !this.open
       if (this.open) {
@@ -166,7 +165,7 @@ class ComboBox extends ComboElement {
   }
 
   handleAutofillClick (event) {
-    if (!this.disabled && !this.readOnly && !this.allowFreeform) {
+    if (!this.disabled && !this.readonly && !this.allowFreeform) {
       this.open = !this.open
     }
   }
@@ -246,11 +245,10 @@ class ComboBox extends ComboElement {
 
   renderInputField () {
     const optionsManager = _optionsManager.get(this)
-    const autofillValue = this.allowFreeform
-      ? this.multiple
+    const autofillValue =
+      this.allowFreeform && this.multiple
         ? ''
-        : optionsManager.getSelectedText('')
-      : optionsManager.getSelectedText('')
+        : optionsManager.getSelectedText()
     const autofillPlaceholder =
       this.multiple && optionsManager.selectedIndices.length > 0
         ? optionsManager.selectedOptions.map(({ text }) => text).join(', ')
@@ -262,7 +260,7 @@ class ComboBox extends ComboElement {
           .value="${autofillValue}"
           .placeholder="${autofillPlaceholder}"
           .disabled="${this.disabled}"
-          .readOnly="${!this.allowFreeform}"
+          .readonly="${!this.allowFreeform}"
           .accentInsensitive="${this.accentInsensitive}"
           @click="${this.handleAutofillClick}"
           @input="${this.handleAutofillInput}"

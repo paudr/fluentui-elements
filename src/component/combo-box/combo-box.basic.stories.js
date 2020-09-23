@@ -1,22 +1,41 @@
-import { html } from 'lit-html'
 import { action } from '@storybook/addon-actions'
-import './combo-box'
+import argTypes from './arg-types'
 import iconCode from '../icon/code'
 
-const container = story => html`
-  <div
-    tabindex="0"
-    @keydown="${event => event.stopPropagation()}"
-    style="outline: 0"
-  >
-    ${story()}
-  </div>
-`
+function renderComboBox (args) {
+  const comboBox = document.createElement('FLUENT-COMBO-BOX')
+  comboBox.addEventListener('keydown', event => event.stopPropagation())
 
-export default {
-  title: 'ComboBox/Basic',
-  component: 'fluent-combo-box',
-  decorators: [container]
+  comboBox.addEventListener('focus', action('focus'))
+  comboBox.addEventListener('blur', action('blur'))
+  comboBox.addEventListener('input', action('input'))
+  comboBox.addEventListener('change', action('change'))
+
+  for (const prop in args) {
+    comboBox[prop] = args[prop]
+  }
+
+  const container = document.createElement('DIV')
+  const paragraph = document.createElement('P')
+  const textContent = [
+    'Keys:',
+    ' - ArrowDown: Highlight next option',
+    ' - ArrowUp: Highlight previous option',
+    ' - Enter: Select highlighted option',
+    ' - Esc: Close dropdown'
+  ]
+
+  textContent.forEach(phrase => {
+    const span = document.createElement('SPAN')
+    span.textContent = phrase
+    paragraph.appendChild(span)
+    paragraph.appendChild(document.createElement('BR'))
+  })
+
+  container.appendChild(comboBox)
+  container.appendChild(paragraph)
+
+  return container
 }
 
 const iconOptions = Object.keys(iconCode).map(name => ({
@@ -33,266 +52,193 @@ const fruitOptions = [
   { text: 'Grape', value: 'grape' }
 ]
 
-const accentItems = [
-  { text: 'menjàrem', value: 'menjarem' },
-  { text: 'bàscula', value: 'bascula' },
-  { text: 'vàlid', value: 'valid' },
-  { text: 'matalàs', value: 'matalas' },
-  { text: 'pàmfil', value: 'pamfil' },
-  { text: 'interès', value: 'interes' },
-  { text: 'bèstia', value: 'bestia' },
-  { text: 'mèrit', value: 'merit' },
-  { text: 'canapè', value: 'canape' },
-  { text: 'perquè', value: 'perque' },
-  { text: 'cèntim', value: 'centim' },
-  { text: 'mòdul', value: 'modul' },
-  { text: 'allò', value: 'allo' },
-  { text: 'òliba', value: 'oliba' },
-  { text: 'repòs', value: 'repos' },
-  { text: 'Sònia', value: 'Sonia' },
-  { text: 'arròsvindré', value: 'arrosvindre' },
-  { text: 'créixens', value: 'creixens' },
-  { text: 'haguéreu', value: 'haguereu' },
-  { text: 'accés', value: 'acces' },
-  { text: 'també', value: 'tambe' },
-  { text: 'Berlín', value: 'Berlin' },
-  { text: 'pastís', value: 'pastis' },
-  { text: 'legítima', value: 'legitima' },
-  { text: 'veí', value: 'vei' },
-  { text: 'rítmic', value: 'ritmic' },
-  { text: 'tísic', value: 'tisic' },
-  { text: 'pastós', value: 'pastos' },
-  { text: 'furóncol', value: 'furoncol' },
-  { text: 'tórtora', value: 'tortora' },
-  { text: 'cantó', value: 'canto' },
-  { text: 'institució', value: 'institucio' },
-  { text: 'cautxú', value: 'cautxu' },
-  { text: 'múscul', value: 'muscul' },
-  { text: 'fúcsia', value: 'fucsia' },
-  { text: 'brúixola', value: 'bruixola' },
-  { text: 'pallús', value: 'pallus' }
-]
+export default {
+  title: 'Basic Inputs/ComboBox/Basic',
+  component: 'fluent-combo-box',
+  argTypes
+}
 
-export const Normal = () => html`
-  <fluent-combo-box
-    label="Standard"
-    .options="${fruitOptions}"
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-combo-box>
-`
+export const Normal = renderComboBox.bind({})
+Normal.args = {
+  options: fruitOptions,
+  label: 'Standard'
+}
 
-export const WithDescription = () => html`
-  <fluent-combo-box
-    label="Standard"
-    description="A fancy description."
-    .options="${fruitOptions}"
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-combo-box>
-`
+export const WithDescription = renderComboBox.bind({})
+WithDescription.args = {
+  options: fruitOptions,
+  label: 'Standard',
+  description: 'A fancy description.'
+}
 
-export const Invalid = () => html`
-  <fluent-combo-box
-    invalid
-    label="Invalid"
-    .options="${fruitOptions}"
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-combo-box>
-`
+export const Invalid = renderComboBox.bind({})
+Invalid.args = {
+  options: fruitOptions,
+  label: 'Invalid',
+  invalid: true
+}
 
-export const WithErrorMessage = () => html`
-  <fluent-combo-box
-    label="With error message"
-    errorMessage="Error message"
-    .options="${fruitOptions}"
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-combo-box>
-`
+export const WithErrorMessage = renderComboBox.bind({})
+WithErrorMessage.args = {
+  options: fruitOptions,
+  label: 'With error message',
+  errorMessage: 'Error message'
+}
 
-export const Disabled = () => html`
-  <fluent-combo-box
-    disabled
-    label="Required"
-    .options="${fruitOptions}"
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-combo-box>
-`
+export const Disabled = renderComboBox.bind({})
+Disabled.args = {
+  options: fruitOptions,
+  label: 'Disabled',
+  value: 'I am disabled',
+  disabled: true
+}
 
-export const Required = () => html`
-  <style>
-    fluent-combo-box {
-      width: 250px;
-    }
-  </style>
-  <p>
-    <fluent-combo-box
-      required
-      label="Required"
-      .options="${fruitOptions}"
-      @focus="${action('focus')}"
-      @blur="${action('blur')}"
-      @input="${action('input')}"
-      @change="${action('change')}"
-    ></fluent-combo-box>
-  </p>
-  <p>
-    <fluent-combo-box
-      required
-      multiple
-      .options="${fruitOptions}"
-      @focus="${action('focus')}"
-      @blur="${action('blur')}"
-      @input="${action('input')}"
-      @change="${action('change')}"
-    ></fluent-combo-box>
-  </p>
-`
+export const Required = renderComboBox.bind({})
+Required.args = {
+  options: fruitOptions,
+  label: 'Required',
+  required: true
+}
 
-export const Borderless = () => html`
-  <fluent-combo-box
-    borderless
-    label="Required"
-    .options="${fruitOptions}"
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-combo-box>
-`
+export const RequiredWithoutLabel = renderComboBox.bind({})
+RequiredWithoutLabel.args = {
+  options: fruitOptions,
+  required: true
+}
 
-export const Multiple = () => html`
-  <fluent-combo-box
-    multiple
-    label="Multiple"
-    .options="${fruitOptions}"
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-combo-box>
-`
+export const Borderless = renderComboBox.bind({})
+Borderless.args = {
+  options: fruitOptions,
+  label: 'Borderless',
+  borderless: true
+}
 
-export const NormalAllowFreedom = () => html`
-  <fluent-combo-box
-    allowFreeform
-    label="Standar with allow freedon"
-    .options="${fruitOptions}"
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-combo-box>
-`
+export const Multiple = renderComboBox.bind({})
+Multiple.args = {
+  options: fruitOptions,
+  label: 'Multiple',
+  multiple: true
+}
 
-export const MultipleAllowFreedom = () => html`
-  <fluent-combo-box
-    allowFreeform
-    multiple
-    label="Multiple with allow freedon"
-    .options="${fruitOptions}"
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-combo-box>
-`
+export const NormalAllowFreeform = renderComboBox.bind({})
+NormalAllowFreeform.args = {
+  options: fruitOptions,
+  label: 'Standar with allow freeform',
+  allowFreeform: true
+}
 
-export const NormalAutocomplete = () => html`
-  <fluent-combo-box
-    allowFreeform
-    autoComplete
-    label="Standar with allow freedon"
-    .options="${iconOptions}"
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-combo-box>
-`
+export const MultipleAllowFreeform = renderComboBox.bind({})
+MultipleAllowFreeform.args = {
+  options: fruitOptions,
+  label: 'Multiple with allow freeform',
+  multiple: true,
+  allowFreeform: true
+}
 
-export const MultipleAutocomplete = () => html`
-  <fluent-combo-box
-    allowFreeform
-    autoComplete
-    multiple
-    label="Multiple with allow freedon"
-    .options="${iconOptions}"
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-combo-box>
-`
+export const NormalAutoComplete = renderComboBox.bind({})
+NormalAutoComplete.args = {
+  options: fruitOptions,
+  label: 'Standar with allow freeform and autoComplete',
+  allowFreeform: true,
+  autoComplete: true
+}
 
-export const Placeholder = () => html`
-  <fluent-combo-box
-    allowFreeform
-    autoComplete
-    multiple
-    label="Multiple with allow freedon"
-    placeholder="Select an element"
-    .options="${iconOptions}"
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-combo-box>
-`
+export const MultipleAutoComplete = renderComboBox.bind({})
+MultipleAutoComplete.args = {
+  options: fruitOptions,
+  label: 'Multiple with allow freeform and autoComplete',
+  multiple: true,
+  allowFreeform: true,
+  autoComplete: true
+}
 
-export const AccentInsensitive = () => html`
-  <p>Word list: ${accentItems.map(item => item.text).join(', ')}</p>
-  <p>
-    <fluent-combo-box
-      allowFreeform
-      autoComplete
-      multiple
-      label="ComboBox accent sensitive"
-      .options="${accentItems}"
-      @focus="${action('focus')}"
-      @blur="${action('blur')}"
-      @input="${action('input')}"
-      @change="${action('change')}"
-    ></fluent-combo-box>
-  </p>
-  <p>
-    <fluent-combo-box
-      allowFreeform
-      autoComplete
-      multiple
-      accentInsensitive
-      label="ComboBox accent insensitive"
-      .options="${accentItems}"
-      @focus="${action('focus')}"
-      @blur="${action('blur')}"
-      @input="${action('input')}"
-      @change="${action('change')}"
-    ></fluent-combo-box>
-  </p>
-`
+export const Placeholder = renderComboBox.bind({})
+Placeholder.args = {
+  options: iconOptions,
+  label: 'Multiple with allow freeform with placeholder',
+  placeholder: 'Select an element...',
+  multiple: true,
+  allowFreeform: true,
+  autoComplete: true
+}
 
-export const ReadOnly = () => html`
-  <fluent-combo-box
-    readOnly
-    label="Required"
-    .options="${fruitOptions}"
-    .value="${'banana'}"
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-combo-box>
-`
+export function AccentInsensitive (args) {
+  const accentItems = [
+    { text: 'menjàrem', value: 'menjarem' },
+    { text: 'bàscula', value: 'bascula' },
+    { text: 'vàlid', value: 'valid' },
+    { text: 'matalàs', value: 'matalas' },
+    { text: 'pàmfil', value: 'pamfil' },
+    { text: 'interès', value: 'interes' },
+    { text: 'bèstia', value: 'bestia' },
+    { text: 'mèrit', value: 'merit' },
+    { text: 'canapè', value: 'canape' },
+    { text: 'perquè', value: 'perque' },
+    { text: 'cèntim', value: 'centim' },
+    { text: 'mòdul', value: 'modul' },
+    { text: 'allò', value: 'allo' },
+    { text: 'òliba', value: 'oliba' },
+    { text: 'repòs', value: 'repos' },
+    { text: 'Sònia', value: 'Sonia' },
+    { text: 'arròsvindré', value: 'arrosvindre' },
+    { text: 'créixens', value: 'creixens' },
+    { text: 'haguéreu', value: 'haguereu' },
+    { text: 'accés', value: 'acces' },
+    { text: 'també', value: 'tambe' },
+    { text: 'Berlín', value: 'Berlin' },
+    { text: 'pastís', value: 'pastis' },
+    { text: 'legítima', value: 'legitima' },
+    { text: 'veí', value: 'vei' },
+    { text: 'rítmic', value: 'ritmic' },
+    { text: 'tísic', value: 'tisic' },
+    { text: 'pastós', value: 'pastos' },
+    { text: 'furóncol', value: 'furoncol' },
+    { text: 'tórtora', value: 'tortora' },
+    { text: 'cantó', value: 'canto' },
+    { text: 'institució', value: 'institucio' },
+    { text: 'cautxú', value: 'cautxu' },
+    { text: 'múscul', value: 'muscul' },
+    { text: 'fúcsia', value: 'fucsia' },
+    { text: 'brúixola', value: 'bruixola' },
+    { text: 'pallús', value: 'pallus' }
+  ]
+
+  const container = document.createElement('DIV')
+  const paragraph = document.createElement('P')
+  paragraph.textContent = `Word list: ${accentItems
+    .map(item => item.text)
+    .join(', ')}`
+
+  container.appendChild(paragraph)
+  container.appendChild(
+    renderComboBox({
+      ...args,
+      options: accentItems,
+      label: 'ComboBox accent sensitive',
+      accentInsensitive: false
+    })
+  )
+
+  container.appendChild(
+    renderComboBox({
+      ...args,
+      options: accentItems,
+      label: 'ComboBox accent insensitive',
+      accentInsensitive: true
+    })
+  )
+
+  return container
+}
+AccentInsensitive.args = {
+  allowFreeform: true,
+  autoComplete: true
+}
+
+export const ReadOnly = renderComboBox.bind({})
+ReadOnly.args = {
+  options: fruitOptions,
+  label: 'ReadOnly',
+  value: 'banana',
+  readonly: true
+}

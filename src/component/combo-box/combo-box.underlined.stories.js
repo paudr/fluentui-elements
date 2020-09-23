@@ -1,22 +1,41 @@
-import { html } from 'lit-html'
 import { action } from '@storybook/addon-actions'
-import './combo-box'
+import argTypes from './arg-types'
 import iconCode from '../icon/code'
 
-const container = story => html`
-  <div
-    tabindex="0"
-    @keydown="${event => event.stopPropagation()}"
-    style="outline: 0"
-  >
-    ${story()}
-  </div>
-`
+function renderComboBox (args) {
+  const comboBox = document.createElement('FLUENT-COMBO-BOX')
+  comboBox.addEventListener('keydown', event => event.stopPropagation())
 
-export default {
-  title: 'ComboBox/Underlined',
-  component: 'fluent-combo-box',
-  decorators: [container]
+  comboBox.addEventListener('focus', action('focus'))
+  comboBox.addEventListener('blur', action('blur'))
+  comboBox.addEventListener('input', action('input'))
+  comboBox.addEventListener('change', action('change'))
+
+  for (const prop in args) {
+    comboBox[prop] = args[prop]
+  }
+
+  const container = document.createElement('DIV')
+  const paragraph = document.createElement('P')
+  const textContent = [
+    'Keys:',
+    ' - ArrowDown: Highlight next option',
+    ' - ArrowUp: Highlight previous option',
+    ' - Enter: Select highlighted option',
+    ' - Esc: Close dropdown'
+  ]
+
+  textContent.forEach(phrase => {
+    const span = document.createElement('SPAN')
+    span.textContent = phrase
+    paragraph.appendChild(span)
+    paragraph.appendChild(document.createElement('BR'))
+  })
+
+  container.appendChild(comboBox)
+  container.appendChild(paragraph)
+
+  return container
 }
 
 const iconOptions = Object.keys(iconCode).map(name => ({
@@ -73,230 +92,160 @@ const accentItems = [
   { text: 'pallús', value: 'pallus' }
 ]
 
-export const Normal = () => html`
-  <fluent-combo-box
-    underlined
-    label="Standard"
-    .options="${fruitOptions}"
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-combo-box>
-`
+export default {
+  title: 'Basic Inputs/ComboBox/Underlined',
+  component: 'fluent-combo-box',
+  argTypes
+}
 
-export const WithDescription = () => html`
-  <fluent-combo-box
-    underlined
-    label="Standard"
-    description="A fancy description."
-    .options="${fruitOptions}"
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-combo-box>
-`
+export const Normal = renderComboBox.bind({})
+Normal.args = {
+  options: fruitOptions,
+  underlined: true,
+  label: 'Standard'
+}
 
-export const Invalid = () => html`
-  <fluent-combo-box
-    underlined
-    invalid
-    label="Invalid"
-    .options="${fruitOptions}"
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-combo-box>
-`
+export const WithDescription = renderComboBox.bind({})
+WithDescription.args = {
+  options: fruitOptions,
+  underlined: true,
+  label: 'Standard',
+  description: 'A fancy description.'
+}
 
-export const WithErrorMessage = () => html`
-  <fluent-combo-box
-    underlined
-    label="With error message"
-    errorMessage="Error message"
-    .options="${fruitOptions}"
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-combo-box>
-`
+export const Invalid = renderComboBox.bind({})
+Invalid.args = {
+  options: fruitOptions,
+  underlined: true,
+  label: 'Invalid',
+  invalid: true
+}
 
-export const Disabled = () => html`
-  <fluent-combo-box
-    underlined
-    disabled
-    label="Required"
-    .options="${fruitOptions}"
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-combo-box>
-`
+export const WithErrorMessage = renderComboBox.bind({})
+WithErrorMessage.args = {
+  options: fruitOptions,
+  underlined: true,
+  label: 'With error message',
+  errorMessage: 'Error message'
+}
 
-export const Required = () => html`
-  <style>
-    fluent-combo-box {
-      width: 250px;
-    }
-  </style>
-  <p>
-    <fluent-combo-box
-      underlined
-      required
-      label="Required"
-      .options="${fruitOptions}"
-      @focus="${action('focus')}"
-      @blur="${action('blur')}"
-      @input="${action('input')}"
-      @change="${action('change')}"
-    ></fluent-combo-box>
-  </p>
-  <p>
-    <fluent-combo-box
-      underlined
-      required
-      multiple
-      .options="${fruitOptions}"
-      @focus="${action('focus')}"
-      @blur="${action('blur')}"
-      @input="${action('input')}"
-      @change="${action('change')}"
-    ></fluent-combo-box>
-  </p>
-`
+export const Disabled = renderComboBox.bind({})
+Disabled.args = {
+  options: fruitOptions,
+  underlined: true,
+  label: 'Disabled',
+  value: 'I am disabled',
+  disabled: true
+}
 
-export const Multiple = () => html`
-  <fluent-combo-box
-    underlined
-    multiple
-    label="Multiple"
-    .options="${fruitOptions}"
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-combo-box>
-`
+export const Required = renderComboBox.bind({})
+Required.args = {
+  options: fruitOptions,
+  underlined: true,
+  label: 'Required',
+  required: true
+}
 
-export const NormalAllowFreedom = () => html`
-  <fluent-combo-box
-    underlined
-    allowFreeform
-    label="Standar with allow freedon"
-    .options="${fruitOptions}"
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-combo-box>
-`
+export const RequiredWithoutLabel = renderComboBox.bind({})
+RequiredWithoutLabel.args = {
+  options: fruitOptions,
+  underlined: true,
+  required: true
+}
 
-export const MultipleAllowFreedom = () => html`
-  <fluent-combo-box
-    underlined
-    allowFreeform
-    multiple
-    label="Multiple with allow freedon"
-    .options="${fruitOptions}"
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-combo-box>
-`
+export const Multiple = renderComboBox.bind({})
+Multiple.args = {
+  options: fruitOptions,
+  underlined: true,
+  label: 'Multiple',
+  multiple: true
+}
 
-export const NormalAutocomplete = () => html`
-  <fluent-combo-box
-    underlined
-    allowFreeform
-    autoComplete
-    label="Standar with allow freedon"
-    .options="${iconOptions}"
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-combo-box>
-`
+export const NormalAllowFreeform = renderComboBox.bind({})
+NormalAllowFreeform.args = {
+  options: fruitOptions,
+  underlined: true,
+  label: 'Standar with allow freeform',
+  allowFreeform: true
+}
 
-export const MultipleAutocomplete = () => html`
-  <fluent-combo-box
-    underlined
-    allowFreeform
-    autoComplete
-    multiple
-    label="Multiple with allow freedon"
-    .options="${iconOptions}"
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-combo-box>
-`
+export const MultipleAllowFreeform = renderComboBox.bind({})
+MultipleAllowFreeform.args = {
+  options: fruitOptions,
+  underlined: true,
+  label: 'Multiple with allow freeform',
+  multiple: true,
+  allowFreeform: true
+}
 
-export const Placeholder = () => html`
-  <fluent-combo-box
-    underlined
-    allowFreeform
-    autoComplete
-    multiple
-    label="Multiple with allow freedon"
-    placeholder="Select an element"
-    .options="${iconOptions}"
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-combo-box>
-`
+export const NormalAutoComplete = renderComboBox.bind({})
+NormalAutoComplete.args = {
+  options: fruitOptions,
+  underlined: true,
+  label: 'Standar with allow freeform and autoComplete',
+  allowFreeform: true,
+  autoComplete: true
+}
 
-export const AccentInsensitive = () => html`
-  <p>Word list: ${accentItems.map(item => item.text).join(', ')}</p>
-  <p>
-    <fluent-combo-box
-      underlined
-      allowFreeform
-      autoComplete
-      multiple
-      label="ComboBox accent sensitive"
-      .options="${accentItems}"
-      @focus="${action('focus')}"
-      @blur="${action('blur')}"
-      @input="${action('input')}"
-      @change="${action('change')}"
-    ></fluent-combo-box>
-  </p>
-  <p>
-    <fluent-combo-box
-      underlined
-      allowFreeform
-      autoComplete
-      multiple
-      accentInsensitive
-      label="ComboBox accent insensitive"
-      .options="${accentItems}"
-      @focus="${action('focus')}"
-      @blur="${action('blur')}"
-      @input="${action('input')}"
-      @change="${action('change')}"
-    ></fluent-combo-box>
-  </p>
-`
+export const MultipleAutoComplete = renderComboBox.bind({})
+MultipleAutoComplete.args = {
+  options: fruitOptions,
+  underlined: true,
+  label: 'Multiple with allow freeform and autoComplete',
+  multiple: true,
+  allowFreeform: true,
+  autoComplete: true
+}
 
-export const ReadOnly = () => html`
-  <fluent-combo-box
-    underlined
-    readOnly
-    label="Required"
-    .options="${fruitOptions}"
-    .value="${'banana'}"
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-combo-box>
-`
+export const Placeholder = renderComboBox.bind({})
+Placeholder.args = {
+  options: iconOptions,
+  underlined: true,
+  label: 'Multiple with allow freeform with placeholder',
+  placeholder: 'Select an element...',
+  multiple: true,
+  allowFreeform: true,
+  autoComplete: true
+}
+
+export function AccentInsensitive (args) {
+  const container = document.createElement('DIV')
+  const paragraph = document.createElement('P')
+  paragraph.textContent = `Word list: ${accentItems
+    .map(item => item.text)
+    .join(', ')}`
+
+  container.appendChild(paragraph)
+  container.appendChild(
+    renderComboBox({
+      ...args,
+      label: 'ComboBox accent sensitive',
+      accentInsensitive: false
+    })
+  )
+
+  container.appendChild(
+    renderComboBox({
+      ...args,
+      label: 'ComboBox accent insensitive',
+      accentInsensitive: true
+    })
+  )
+
+  return container
+}
+AccentInsensitive.args = {
+  options: accentItems,
+  underlined: true,
+  allowFreeform: true,
+  autoComplete: true
+}
+
+export const ReadOnly = renderComboBox.bind({})
+ReadOnly.args = {
+  options: fruitOptions,
+  underlined: true,
+  label: 'ReadOnly',
+  value: 'banana',
+  readonly: true
+}
