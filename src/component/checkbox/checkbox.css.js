@@ -50,7 +50,7 @@ export default css`
   }
 
   span {
-    ${fontStyle.medium};
+    ${fontStyle.medium}
     color: ${neutralPrimary};
     line-height: 20px;
     margin-left: 4px;
@@ -108,12 +108,12 @@ export default css`
     border-color: ${neutralTertiaryAlt};
   }
 
-  :host(:not([indeterminate]):not([disabled]) label:not(.checked):hover i {
+  :host(:not([indeterminate]):not([disabled])) label:not(.checked):hover i {
     color: ${neutralSecondary};
     opacity: 1;
   }
 
-  :host(:not([disabled]) label.checked:hover div {
+  :host(:not([disabled])) label.checked:hover div {
     background: ${themeDark};
     border-color: ${themeDark};
   }
@@ -121,5 +121,20 @@ export default css`
   :host([indeterminate]:not(.disabled)) label:hover div,
   :host([indeterminate]:not(.disabled)) label:hover div::after {
     border-color: ${themeDark};
+  }
+
+  :host([boxside='end']) label {
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+  }
+
+  :host([boxside='end']) div {
+    margin-left: 4px;
+    margin-right: 0px;
+  }
+
+  :host([boxside='end']) span {
+    margin-left: 0px;
+    margin-right: 4px;
   }
 `

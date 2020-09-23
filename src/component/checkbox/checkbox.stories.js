@@ -1,108 +1,82 @@
-import { html } from 'lit-html'
-import {
-  withKnobs,
-  text,
-  boolean,
-  select,
-  object
-} from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
-import './checkbox'
+import argTypes from './arg-types'
+
+function renderCheckBox (args) {
+  const checkbox = document.createElement('FLUENT-CHECKBOX')
+
+  checkbox.addEventListener('change', action('change'))
+
+  for (const prop in args) {
+    checkbox[prop] = args[prop]
+  }
+
+  const container = document.createElement('DIV')
+  const button = document.createElement('FLUENT-BUTTON')
+  button.text = 'Show checkbox value'
+  button.addEventListener('click', () => {
+    console.log(checkbox.value)
+    alert(checkbox.value)
+  })
+
+  container.appendChild(checkbox)
+  container.appendChild(document.createElement('BR'))
+  container.appendChild(button)
+
+  return container
+}
 
 export default {
-  title: 'Checkbox',
+  title: 'Basic Inputs/Checkbox',
   component: 'fluent-checkbox',
-  decorators: [withKnobs]
+  argTypes
 }
 
-export const Normal = () => html`
-  <fluent-checkbox
-    label="Checkbox"
-    @change="${action('change')}"
-  ></fluent-checkbox>
-`
-
-export const Checked = () => html`
-  <fluent-checkbox
-    checked
-    label="Checkbox"
-    @change="${action('change')}"
-  ></fluent-checkbox>
-`
-
-export const Disabled = () => html`
-  <fluent-checkbox
-    label="Disabled checkbox"
-    disabled
-    @change="${action('change')}"
-  ></fluent-checkbox>
-`
-
-export const DisabledChecked = () => html`
-  <fluent-checkbox
-    label="Disabled checkbox"
-    disabled
-    checked
-    @change="${action('change')}"
-  ></fluent-checkbox>
-`
-
-export const Indeterminate = () => html`
-  <fluent-checkbox
-    indeterminate
-    label="Indeterminate checkbox"
-    @change="${action('change')}"
-  ></fluent-checkbox>
-`
-
-export const IndeterminateDefaultChecked = () => html`
-  <fluent-checkbox
-    indeterminate
-    defaultChecked
-    label="Indeterminate checkbox which defaults to true when clicked"
-    @change="${action('change')}"
-  ></fluent-checkbox>
-`
-
-export const IndeterminateDisabled = () => html`
-  <fluent-checkbox
-    indeterminate
-    disabled
-    label="Indeterminate checkbox"
-    @change="${action('change')}"
-  ></fluent-checkbox>
-`
-
-function alertValue (event) {
-  const checkbox = event.target.ownerDocument.getElementById('sandbox')
-  alert(checkbox.value)
+export const Normal = renderCheckBox.bind({})
+Normal.args = {
+  label: 'Checkbox'
 }
 
-export const Sandbox = () => html`
-  <fluent-checkbox
-    id="sandbox"
-    .checked="${boolean('checked', false)}"
-    .label="${text('label', 'Checkbox')}"
-    .boxSide="${select('boxSide', ['start', 'end'], 'start')}"
-    .disabled="${boolean('disabled', false)}"
-    .indeterminate="${boolean('indeterminate', false)}"
-    .defaultChecked="${boolean('defaultChecked', false)}"
-    .valueTrue="${object('valueTrue', 1)}"
-    .valueFalse="${object('valueFalse', 0)}"
-    @change="${action('change')}"
-  ></fluent-checkbox>
-  <p>
-    <fluent-button
-      text="Alert value"
-      @click="${alertValue}"
-    ><fluent-button>
-  </p>
-`
-Sandbox.story = {
-  parameters: {
-    knobs: {
-      timestamps: true,
-      escapeHTML: false
-    }
-  }
+export const Checked = renderCheckBox.bind({})
+Checked.args = {
+  label: 'Checkbox',
+  checked: true
+}
+
+export const Disabled = renderCheckBox.bind({})
+Disabled.args = {
+  label: 'Disabled Checkbox',
+  disabled: true
+}
+
+export const DisabledChecked = renderCheckBox.bind({})
+DisabledChecked.args = {
+  label: 'Disabled Checkbox',
+  checked: true,
+  disabled: true
+}
+
+export const Indeterminate = renderCheckBox.bind({})
+Indeterminate.args = {
+  label: 'Indeterminate Checkbox',
+  indeterminate: true
+}
+
+export const IndeterminateDefaultChecked = renderCheckBox.bind({})
+IndeterminateDefaultChecked.args = {
+  label: 'Indeterminate checkbox which defaults to true when clicked',
+  indeterminate: true,
+  defaultChecked: true
+}
+
+export const IndeterminateDisabled = renderCheckBox.bind({})
+IndeterminateDisabled.args = {
+  label: 'Indeterminate Checkbox',
+  indeterminate: true,
+  disabled: true
+}
+
+export const BoxSideEnd = renderCheckBox.bind({})
+BoxSideEnd.args = {
+  label: 'Checkbox rendered with boxSide "end"',
+  boxSide: 'end'
 }
