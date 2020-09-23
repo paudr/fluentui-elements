@@ -5,9 +5,9 @@ const packageJson = require('../package.json')
 module.exports = {
   stories: ['../src/**/*.stories.js'],
   addons: [
-    '@storybook/addon-docs',
     '@storybook/addon-actions',
-    '@storybook/addon-knobs'
+    '@storybook/addon-knobs',
+    '@storybook/addon-storysource'
   ],
   webpackFinal: async (config, { configType }) => {
     config.plugins.push(
