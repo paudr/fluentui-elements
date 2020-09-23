@@ -108,8 +108,8 @@ Borderless.args = {
   borderless: true
 }
 
-export function Styled () {
-  const textField = renderTextFieldMultiline({ label: 'Standard' })
+export function Styled (args) {
+  const textField = renderTextFieldMultiline(args)
 
   const styles = new CSSStyleSheet()
   styles.replaceSync(`
@@ -125,6 +125,7 @@ export function Styled () {
   textField.styleSheet = styles
   return textField
 }
+Styled.args = { label: 'Styled' }
 
 export const NonResizable = renderTextFieldMultiline.bind({})
 NonResizable.args = {

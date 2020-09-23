@@ -122,8 +122,8 @@ WithPrefixAndSufix.args = {
   sufix: '.com'
 }
 
-export function Styled () {
-  const textField = renderTextFieldUnderlined.bind({})({ label: 'Standard' })
+export function Styled (args) {
+  const textField = renderTextFieldUnderlined(args)
 
   const styles = new CSSStyleSheet()
   styles.replaceSync(`
@@ -135,3 +135,4 @@ export function Styled () {
   textField.styleSheet = styles
   return textField
 }
+Styled.args = { label: 'Styled' }
