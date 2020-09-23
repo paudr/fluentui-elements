@@ -47,7 +47,7 @@ class Autofill extends LitElement {
       suggestedValue: { type: String, reflect: true },
       accentInsensitive: { type: Boolean, reflect: true },
       inline: { type: Boolean, reflect: true },
-      readOnly: { type: Boolean, reflect: true },
+      readonly: { type: Boolean, reflect: true },
       disabled: { type: Boolean, reflect: true }
     }
   }
@@ -58,7 +58,7 @@ class Autofill extends LitElement {
     this.autofill = false
     this.accentInsensitive = false
     this.inline = false
-    this.readOnly = false
+    this.readonly = false
     this.disabled = false
     _privateData.set(this, {
       value: '',
@@ -213,7 +213,7 @@ class Autofill extends LitElement {
         tabindex="0"
         .value="${live(data.value)}"
         .placeholder="${this.placeholder}"
-        .readOnly="${this.readOnly}"
+        ?readonly="${this.readonly}"
         @input="${this.handleInput}"
         @change="${this.handleChange}"
         @keydown="${this.handlekeydown}"
