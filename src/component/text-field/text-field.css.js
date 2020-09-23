@@ -39,7 +39,7 @@ export default css`
 
   i {
     ${iconCss};
-    pointer-events: none;
+    user-select: none;
     position: absolute;
     bottom: 6px;
     right: 8px;

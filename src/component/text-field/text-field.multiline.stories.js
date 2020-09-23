@@ -1,169 +1,139 @@
-import { html } from 'lit-html'
 import { action } from '@storybook/addon-actions'
-import './text-field'
+import argTypes from './arg-types'
 
-const container = story => html`
-  <div
-    tabindex="0"
-    style="outline: 0"
-    @keydown="${event => event.stopPropagation()}"
-  >
-    ${story()}
-  </div>
-`
+function renderTextFieldMultiline (args) {
+  const textField = document.createElement('FLUENT-TEXT-FIELD')
+  textField.addEventListener('keydown', event => event.stopPropagation())
 
-export default {
-  title: 'TextField/Multiline',
-  component: 'fluent-text-field',
-  decorators: [container]
+  textField.addEventListener('focus', action('focus'))
+  textField.addEventListener('blur', action('blur'))
+  textField.addEventListener('input', action('input'))
+  textField.addEventListener('change', action('change'))
+  textField.addEventListener('click', action('click'))
+  textField.addEventListener('click:icon', action('click:icon'))
+
+  for (const prop in args) {
+    textField[prop] = args[prop]
+  }
+
+  textField.multiline = true
+
+  return textField
 }
 
-export const Normal = () => html`
-  <fluent-text-field
-    multiline
-    label="Standard"
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-text-field>
-`
+export default {
+  title: 'Basic Inputs/TextField/Multiline',
+  component: 'fluent-text-field',
+  argTypes
+}
 
-export const WithDescription = () => html`
-  <fluent-text-field
-    multiline
-    label="Standard"
-    description="A fancy description."
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-text-field>
-`
+export const Normal = renderTextFieldMultiline.bind({})
+Normal.args = {
+  label: 'Standard'
+}
 
-export const Invalid = () => html`
-  <fluent-text-field
-    multiline
-    invalid
-    label="Invalid"
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-text-field>
-`
+export const WithDescription = renderTextFieldMultiline.bind({})
+WithDescription.args = {
+  label: 'Standard',
+  description: 'A fancy description.'
+}
 
-export const WithErrorMessage = () => html`
-  <fluent-text-field
-    multiline
-    label="With error message"
-    errorMessage="Error message"
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-text-field>
-`
+export const Invalid = renderTextFieldMultiline.bind({})
+Invalid.args = {
+  label: 'Invalid',
+  invalid: true
+}
 
-export const Disabled = () => html`
-  <fluent-text-field
-    multiline
-    label="Disabled"
-    value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut"
-    disabled
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-text-field>
-`
+export const WithErrorMessage = renderTextFieldMultiline.bind({})
+WithErrorMessage.args = {
+  label: 'With error message',
+  errorMessage: 'Error message'
+}
 
-export const Required = () => html`
-  <style>
-    fluent-text-field {
-      width: 250px;
+export const Disabled = renderTextFieldMultiline.bind({})
+Disabled.args = {
+  label: 'Disabled',
+  value:
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut',
+  disabled: true
+}
+
+export const Required = renderTextFieldMultiline.bind({})
+Required.args = {
+  label: 'Required',
+  required: true
+}
+
+export const RequiredWithoutLabel = renderTextFieldMultiline.bind({})
+RequiredWithoutLabel.args = {
+  required: true
+}
+
+export const ReadOnly = renderTextFieldMultiline.bind({})
+ReadOnly.args = {
+  label: 'Read-only',
+  value: 'I am read-only',
+  readonly: true
+}
+
+export const MaxLength = renderTextFieldMultiline.bind({})
+MaxLength.args = {
+  label: 'Max length (20)',
+  maxlength: 20
+}
+
+export const WithAnIcon = renderTextFieldMultiline.bind({})
+WithAnIcon.args = {
+  label: 'With an icon',
+  icon: 'Edit'
+}
+
+export const WithPlaceholder = renderTextFieldMultiline.bind({})
+WithPlaceholder.args = {
+  label: 'With placeholder',
+  placeholder: 'Please enter text here'
+}
+
+export const DisabledWithPlaceholder = renderTextFieldMultiline.bind({})
+DisabledWithPlaceholder.args = {
+  label: 'Disabled with placeholder',
+  placeholder: 'I am disabled',
+  disabled: true
+}
+
+export const Borderless = renderTextFieldMultiline.bind({})
+Borderless.args = {
+  label: 'Borderless single-line TextField',
+  placeholder: 'No borders here, forks.',
+  borderless: true
+}
+
+export function Styled () {
+  const textField = renderTextFieldMultiline({ label: 'Standard' })
+
+  const styles = new CSSStyleSheet()
+  styles.replaceSync(`
+    :host(:not([disabled]):not([underlined]):not([borderless])) #fieldGroup::after {
+      border-top-color: red;
     }
-  </style>
-  <p>
-    <fluent-text-field
-      multiline
-      label="Required"
-      required
-      @focus="${action('focus')}"
-      @blur="${action('blur')}"
-      @input="${action('input')}"
-      @change="${action('change')}"
-    ></fluent-text-field>
-  </p>
-  <p>
-    <fluent-text-field
-      multiline
-      required
-      @focus="${action('focus')}"
-      @blur="${action('blur')}"
-      @input="${action('input')}"
-      @change="${action('change')}"
-    ></fluent-text-field>
-  </p>
-`
 
-export const MaxLength = () => html`
-  <fluent-text-field
-    multiline
-    label="Max length (20)"
-    maxlength="20"
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-text-field>
-`
+    :host #label {
+      color: #0078d4;
+    }
+  `)
 
-export const NonResizable = () => html`
-  <fluent-text-field
-    multiline
-    label="Non-resizable"
-    unresizable
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-text-field>
-`
+  textField.styleSheet = styles
+  return textField
+}
 
-export const WithAutoAdjustingHeight = () => html`
-  <fluent-text-field
-    multiline
-    label="With auto adjusting height"
-    autoAdjustHeight
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-text-field>
-`
+export const NonResizable = renderTextFieldMultiline.bind({})
+NonResizable.args = {
+  label: 'Non-resizable',
+  unresizable: true
+}
 
-export const WithAnIcon = () => html`
-  <fluent-text-field
-    multiline
-    label="With an icon"
-    icon="Edit"
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-text-field>
-`
-
-export const BorderlessMultiline = () => html`
-  <fluent-text-field
-    borderless
-    multiline
-    label="Borderless multi-line TextField"
-    placeholder="No borders here, forks."
-    @focus="${action('focus')}"
-    @blur="${action('blur')}"
-    @input="${action('input')}"
-    @change="${action('change')}"
-  ></fluent-text-field>
-`
+export const WithAutoAdjustingHeight = renderTextFieldMultiline.bind({})
+WithAutoAdjustingHeight.args = {
+  label: 'With auto adjusting height',
+  autoAdjustHeight: true
+}
