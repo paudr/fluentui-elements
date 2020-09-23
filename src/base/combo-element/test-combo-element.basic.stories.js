@@ -1,55 +1,73 @@
-import { html } from 'lit-html'
 import './test-combo-element'
+import argTypes from './arg-types'
 
-export default {
-  title: 'Base/ComboElement/Basic',
-  component: 'test-combo-element'
+function renderComboElement (args) {
+  const comboElement = document.createElement('TEST-COMBO-ELEMENT')
+
+  for (const prop in args) {
+    comboElement[prop] = args[prop]
+  }
+
+  const container = document.createElement('DIV')
+  const paragraph = document.createElement('P')
+  paragraph.textContent =
+    'Press "Enter" key with element focused to toggle dropdown'
+
+  container.appendChild(comboElement)
+  container.appendChild(paragraph)
+
+  return container
 }
 
-export const Normal = () => html`
-  <test-combo-element label="Standard"></test-combo-element>
-  <p>
-    <span>Keys:</span><br />
-    <span> - Enter: Toggle content</span><br />
-  </p>
-`
+export default {
+  title: 'Base Types/ComboElement/Basic',
+  component: 'test-combo-element',
+  argTypes
+}
 
-export const WithDescription = () => html`
-  <test-combo-element
-    label="Standard"
-    description="A fancy description."
-  ></test-combo-element>
-`
+export const Normal = renderComboElement.bind({})
+Normal.args = {
+  label: 'Standard'
+}
 
-export const Invalid = () => html`
-  <test-combo-element invalid label="Invalid"></test-combo-element>
-`
+export const WithDescription = renderComboElement.bind({})
+WithDescription.args = {
+  label: 'Standard',
+  description: 'A fancy description.'
+}
 
-export const WithErrorMessage = () => html`
-  <test-combo-element
-    label="With error message"
-    errorMessage="Error message"
-  ></test-combo-element>
-`
+export const Invalid = renderComboElement.bind({})
+Invalid.args = {
+  label: 'Invalid',
+  invalid: true
+}
 
-export const Disabled = () => html`
-  <test-combo-element disabled label="Disabled"></test-combo-element>
-`
+export const WithErrorMessage = renderComboElement.bind({})
+WithErrorMessage.args = {
+  label: 'With error message',
+  errorMessage: 'Error message'
+}
 
-export const Required = () => html`
-  <style>
-    test-combo-element {
-      width: 250px;
-    }
-  </style>
-  <p>
-    <test-combo-element required label="Required"></test-combo-element>
-  </p>
-  <p>
-    <test-combo-element required multiple></test-combo-element>
-  </p>
-`
+export const Disabled = renderComboElement.bind({})
+Disabled.args = {
+  label: 'Disabled',
+  value: 'I am disabled',
+  disabled: true
+}
 
-export const Borderless = () => html`
-  <test-combo-element borderless label="Borderless"></test-combo-element>
-`
+export const Required = renderComboElement.bind({})
+Required.args = {
+  label: 'Required',
+  required: true
+}
+
+export const RequiredWithoutLabel = renderComboElement.bind({})
+RequiredWithoutLabel.args = {
+  required: true
+}
+
+export const Borderless = renderComboElement.bind({})
+Borderless.args = {
+  label: 'Borderless single-line TextField',
+  borderless: true
+}

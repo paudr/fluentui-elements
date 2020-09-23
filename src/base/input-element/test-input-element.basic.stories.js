@@ -1,51 +1,65 @@
-import { html } from 'lit-html'
 import './test-input-element'
+import argTypes from './arg-types'
 
-export default {
-  title: 'Base/InputElement/Basic',
-  component: 'test-input-element'
+function renderInputElement (args) {
+  const inputElement = document.createElement('TEST-INPUT-ELEMENT')
+
+  for (const prop in args) {
+    inputElement[prop] = args[prop]
+  }
+
+  return inputElement
 }
 
-export const Normal = () => html`
-  <test-input-element label="Standard"></test-input-element>
-`
+export default {
+  title: 'Base Types/InputElement/Basic',
+  component: 'test-input-element',
+  argTypes
+}
 
-export const WithDescription = () => html`
-  <test-input-element
-    label="Standard"
-    description="A fancy description."
-  ></test-input-element>
-`
+export const Normal = renderInputElement.bind({})
+Normal.args = {
+  label: 'Standard'
+}
 
-export const Invalid = () => html`
-  <test-input-element invalid label="Invalid"></test-input-element>
-`
+export const WithDescription = renderInputElement.bind({})
+WithDescription.args = {
+  label: 'Standard',
+  description: 'A fancy description.'
+}
 
-export const WithErrorMessage = () => html`
-  <test-input-element
-    label="With error message"
-    errorMessage="Error message"
-  ></test-input-element>
-`
+export const Invalid = renderInputElement.bind({})
+Invalid.args = {
+  label: 'Invalid',
+  invalid: true
+}
 
-export const Disabled = () => html`
-  <test-input-element disabled label="Disabled"></test-input-element>
-`
+export const WithErrorMessage = renderInputElement.bind({})
+WithErrorMessage.args = {
+  label: 'With error message',
+  errorMessage: 'Error message'
+}
 
-export const Required = () => html`
-  <style>
-    test-input-element {
-      width: 250px;
-    }
-  </style>
-  <p>
-    <test-input-element required label="Required"></test-input-element>
-  </p>
-  <p>
-    <test-input-element required multiple></test-input-element>
-  </p>
-`
+export const Disabled = renderInputElement.bind({})
+Disabled.args = {
+  label: 'Disabled',
+  value: 'I am disabled',
+  disabled: true
+}
 
-export const Borderless = () => html`
-  <test-input-element borderless label="Borderless"></test-input-element>
-`
+export const Required = renderInputElement.bind({})
+Required.args = {
+  label: 'Required',
+  required: true
+}
+
+export const RequiredWithoutLabel = renderInputElement.bind({})
+RequiredWithoutLabel.args = {
+  required: true
+}
+
+export const Borderless = renderInputElement.bind({})
+Borderless.args = {
+  label: 'Borderless single-line TextField',
+  borderless: true
+}
