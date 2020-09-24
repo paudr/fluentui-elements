@@ -1,107 +1,90 @@
-import { html } from 'lit-html'
-import { withKnobs, text, boolean } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
-import './toggle'
+import argTypes from './arg-types'
 
-export default {
-  title: 'Toggle',
-  component: 'fluent-toggle',
-  decorators: [withKnobs]
+function renderToggle (args) {
+  const toggle = document.createElement('FLUENT-TOGGLE')
+  toggle.addEventListener('keydown', event => event.stopPropagation())
+
+  toggle.addEventListener('change', action('change'))
+
+  for (const prop in args) {
+    toggle[prop] = args[prop]
+  }
+
+  return toggle
 }
 
-export const EnabledAndChecked = () => html`
-  <fluent-toggle
-    checked
-    label="Enabled and checked"
-    onText="On"
-    offText="Off"
-    @change="${action('change')}"
-  ></fluent-toggle>
-`
+export default {
+  title: 'Basic Inputs/Toggle',
+  component: 'fluent-toggle',
+  argTypes
+}
 
-export const EnabledAndUnchecked = () => html`
-  <fluent-toggle
-    label="Enabled and unchecked"
-    onText="On"
-    offText="Off"
-    @change="${action('change')}"
-  ></fluent-toggle>
-`
+export const EnabledAndChecked = renderToggle.bind({})
+EnabledAndChecked.args = {
+  checked: true,
+  label: 'Enabled and checked',
+  onText: 'On',
+  offText: 'Off'
+}
 
-export const DisabledAndChecked = () => html`
-  <fluent-toggle
-    disabled
-    checked
-    label="Disabled and checked"
-    onText="On"
-    offText="Off"
-    @change="${action('change')}"
-  ></fluent-toggle>
-`
+export const EnabledAndUnchecked = renderToggle.bind({})
+EnabledAndUnchecked.args = {
+  label: 'Enabled and unchecked',
+  onText: 'On',
+  offText: 'Off'
+}
 
-export const DisabledAndUnchecked = () => html`
-  <fluent-toggle
-    disabled
-    label="Disabled and unchecked"
-    onText="On"
-    offText="Off"
-    @change="${action('change')}"
-  ></fluent-toggle>
-`
+export const DisableAndChecked = renderToggle.bind({})
+DisableAndChecked.args = {
+  checked: true,
+  label: 'Disable and checked',
+  onText: 'On',
+  offText: 'Off',
+  disabled: true
+}
 
-export const WithoutText = () => html`
-  <fluent-toggle
-    label="With whitout text"
-    @change="${action('change')}"
-  ></fluent-toggle>
-`
+export const DisableAndUnchecked = renderToggle.bind({})
+DisableAndUnchecked.args = {
+  label: 'Disable and unchecked',
+  onText: 'On',
+  offText: 'Off',
+  disabled: true
+}
 
-export const WithInlineLabel = () => html`
-  <fluent-toggle
-    inline
-    label="With inline label"
-    onText="On"
-    offText="Off"
-    @change="${action('change')}"
-  ></fluent-toggle>
-`
+export const WithoutText = renderToggle.bind({})
+WithoutText.args = {
+  label: 'Without text'
+}
 
-export const DisabledWithInlineLabel = () => html`
-  <fluent-toggle
-    inline
-    disabled
-    label="Disabled With inline label"
-    onText="On"
-    offText="Off"
-    @change="${action('change')}"
-  ></fluent-toggle>
-`
+export const WithInlineLabel = renderToggle.bind({})
+WithInlineLabel.args = {
+  label: 'With inline label',
+  onText: 'On',
+  offText: 'Off',
+  inline: true
+}
 
-export const WithInlineLabelAndWithoutOnTextAndOffText = () => html`
-  <fluent-toggle
-    inline
-    label="With inline label and without onText and offText"
-    @change="${action('change')}"
-  ></fluent-toggle>
-`
+export const DisabledWithInlineLabel = renderToggle.bind({})
+DisabledWithInlineLabel.args = {
+  label: 'Disabled with inline label',
+  onText: 'On',
+  offText: 'Off',
+  inline: true,
+  disabled: true
+}
 
-export const DisabledWithInlineLabelAndWithoutOnTextAndOffText = () => html`
-  <fluent-toggle
-    inline
-    disabled
-    label="Disabled With inline label and without onText and offText"
-    @change="${action('change')}"
-  ></fluent-toggle>
-`
+export const WithInlineLabelAndWithoutOnTextAndOffText = renderToggle.bind({})
+WithInlineLabelAndWithoutOnTextAndOffText.args = {
+  label: 'With inline label and without onText and offText',
+  inline: true
+}
 
-export const Sandbox = () => html`
-  <fluent-toggle
-    .checked="${boolean('checked', false)}"
-    .label="${text('label', 'Label')}"
-    .onText="${text('onText', '')}"
-    .offText="${text('offText', '')}"
-    .inline="${boolean('inline', false)}"
-    .disabled="${boolean('disabled', false)}"
-    @change="${action('change')}"
-  ></fluent-toggle>
-`
+export const DisabledWithInlineLabelAndWithoutOnTextAndOffText = renderToggle.bind(
+  {}
+)
+DisabledWithInlineLabelAndWithoutOnTextAndOffText.args = {
+  label: 'With inline label and without onText and offText',
+  disabled: true,
+  inline: true
+}
