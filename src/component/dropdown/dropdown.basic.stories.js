@@ -1,10 +1,41 @@
-import { html } from 'lit-html'
 import { action } from '@storybook/addon-actions'
-import './dropdown'
+import argTypes from './arg-types'
 
-export default {
-  title: 'Dropdown/Basic',
-  component: 'fluent-dropdown'
+function renderDropdown (args) {
+  const dropdown = document.createElement('FLUENT-DROPDOWN')
+  dropdown.addEventListener('keydown', event => event.stopPropagation())
+
+  dropdown.addEventListener('focus', action('focus'))
+  dropdown.addEventListener('blur', action('blur'))
+  dropdown.addEventListener('input', action('input'))
+  dropdown.addEventListener('change', action('change'))
+
+  for (const prop in args) {
+    dropdown[prop] = args[prop]
+  }
+
+  const container = document.createElement('DIV')
+  const paragraph = document.createElement('P')
+  const textContent = [
+    'Keys:',
+    ' - ArrowDown: Highlight next option',
+    ' - ArrowUp: Highlight previous option',
+    ' - Enter: Select highlighted option',
+    ' - Esc: Close dropdown',
+    ' - [Letter]: Highlight first option with text starting with letter'
+  ]
+
+  textContent.forEach(phrase => {
+    const span = document.createElement('SPAN')
+    span.textContent = phrase
+    paragraph.appendChild(span)
+    paragraph.appendChild(document.createElement('BR'))
+  })
+
+  container.appendChild(dropdown)
+  container.appendChild(paragraph)
+
+  return container
 }
 
 const optionOptions = [
@@ -30,137 +61,100 @@ const fruitOptions = [
   { text: 'Lettuce', value: 'lettuce' }
 ]
 
-export const Normal = () => html`
-  <fluent-dropdown
-    label="Basic Dropdown"
-    .options="${optionOptions}"
-    @change="${action('change')}"
-  ></fluent-dropdown>
-  <p>
-    <span>Keys:</span><br />
-    <span> - ArrowDown: Highlight next option</span><br />
-    <span> - ArrowUp: Highlight previous option</span><br />
-    <span> - Space: Select highlighted option</span><br />
-    <span> - Enter: Select highlighted option</span><br />
-    <span>
-      - [Letter]: Highlight first option with text starting with letter</span
-    ><br />
-  </p>
-`
+export default {
+  title: 'Basic Inputs/Dropdown/Basic',
+  component: 'fluent-dropdown',
+  argTypes
+}
 
-export const WithDescription = () => html`
-  <fluent-dropdown
-    label="Standard"
-    description="A fancy description."
-    .options="${optionOptions}"
-    @change="${action('change')}"
-  ></fluent-dropdown>
-`
+export const Normal = renderDropdown.bind({})
+Normal.args = {
+  options: optionOptions,
+  label: 'Basic Dropdown'
+}
 
-export const Invalid = () => html`
-  <fluent-dropdown
-    invalid
-    label="Invalid"
-    .options="${optionOptions}"
-    @change="${action('change')}"
-  ></fluent-dropdown>
-`
+export const WithDescription = renderDropdown.bind({})
+WithDescription.args = {
+  options: optionOptions,
+  label: 'Basic Dropdown',
+  description: 'A fancy description.'
+}
 
-export const WithErrorMessage = () => html`
-  <fluent-dropdown
-    label="With error message"
-    errorMessage="Error message"
-    .options="${optionOptions}"
-    @change="${action('change')}"
-  ></fluent-dropdown>
-`
+export const Invalid = renderDropdown.bind({})
+Invalid.args = {
+  options: optionOptions,
+  label: 'Invalid',
+  invalid: true
+}
 
-export const Disabled = () => html`
-  <fluent-dropdown
-    disabled
-    label="Disabled"
-    .options="${fruitOptions}"
-    .value="${'orange'}"
-    @change="${action('change')}"
-  ></fluent-dropdown>
-`
+export const WithErrorMessage = renderDropdown.bind({})
+WithErrorMessage.args = {
+  options: optionOptions,
+  label: 'With error message',
+  errorMessage: 'Error message'
+}
 
-export const Required = () => html`
-  <style>
-    fluent-dropdown {
-      width: 250px;
-    }
-  </style>
-  <p>
-    <fluent-dropdown
-      required
-      label="Required"
-      .options="${fruitOptions}"
-      @change="${action('change')}"
-    ></fluent-dropdown>
-  </p>
-  <p>
-    <fluent-dropdown
-      required
-      multiple
-      .options="${fruitOptions}"
-      @change="${action('change')}"
-    ></fluent-dropdown>
-  </p>
-`
+export const Disabled = renderDropdown.bind({})
+Disabled.args = {
+  options: fruitOptions,
+  label: 'Disabled',
+  disabled: true,
+  value: 'orange'
+}
 
-export const Borderless = () => html`
-  <fluent-dropdown
-    borderless
-    label="Borderless"
-    .options="${fruitOptions}"
-    @change="${action('change')}"
-  ></fluent-dropdown>
-`
+export const Required = renderDropdown.bind({})
+Required.args = {
+  options: optionOptions,
+  label: 'Required',
+  required: true
+}
 
-export const WithGroups = () => html`
-  <fluent-dropdown
-    label="Basic Dropdown"
-    .value="${'grape'}"
-    .options="${fruitOptions}"
-    @change="${action('change')}"
-  ></fluent-dropdown>
-`
+export const RequiredWithoutLabel = renderDropdown.bind({})
+RequiredWithoutLabel.args = {
+  options: optionOptions,
+  required: true
+}
 
-export const Placeholder = () => html`
-  <fluent-dropdown
-    label="Basic Dropdown"
-    placeholder="Select an option"
-    .options="${fruitOptions}"
-    @change="${action('change')}"
-  ></fluent-dropdown>
-`
+export const Borderless = renderDropdown.bind({})
+Borderless.args = {
+  options: optionOptions,
+  label: 'Borderless',
+  borderless: true
+}
 
-export const MultiSelect = () => html`
-  <fluent-dropdown
-    multiple
-    label="Multi Select Dropdown"
-    .options="${fruitOptions}"
-    @change="${action('change')}"
-  ></fluent-dropdown>
-`
+export const WithGroups = renderDropdown.bind({})
+WithGroups.args = {
+  options: fruitOptions,
+  label: 'Basic Dropdown',
+  value: 'grape'
+}
 
-export const MultiSelectWithPlaceholder = () => html`
-  <fluent-dropdown
-    multiple
-    label="Multi Select Dropdown"
-    placeholder="Select an option"
-    .options="${optionOptions}"
-    @change="${action('change')}"
-  ></fluent-dropdown>
-`
+export const Placeholder = renderDropdown.bind({})
+Placeholder.args = {
+  options: fruitOptions,
+  label: 'Basic Dropdown',
+  placeholder: 'Select an option'
+}
 
-export const ReadOnly = () => html`
-  <fluent-dropdown
-    readonly
-    label="Read Only Dropdown"
-    .options="${fruitOptions}"
-    .value="${'grape'}"
-    @change="${action('change')}"
-  ></fluent-dropdown>
-`
+export const MultiSelect = renderDropdown.bind({})
+MultiSelect.args = {
+  options: fruitOptions,
+  label: 'Multi Select Dropdown',
+  multiple: true
+}
+
+export const MultiSelectWithPlaceholder = renderDropdown.bind({})
+MultiSelectWithPlaceholder.args = {
+  options: fruitOptions,
+  label: 'Multi Select Dropdown',
+  multiple: true,
+  placeholder: 'Select an option'
+}
+
+export const ReadOnly = renderDropdown.bind({})
+ReadOnly.args = {
+  options: fruitOptions,
+  label: 'Read Only Dropdown',
+  readonly: true,
+  value: 'grape'
+}
