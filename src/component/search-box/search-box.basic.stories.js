@@ -1,126 +1,78 @@
-import { html } from 'lit-html'
 import { action } from '@storybook/addon-actions'
-import './search-box'
+import argTypes from './arg-types'
 
-const container = story => html`
-  <div
-    tabindex="0"
-    @keydown="${event => event.stopPropagation()}"
-    style="outline: 0"
-  >
-    ${story()}
-  </div>
-`
+function renderSearchBox (args) {
+  const searchBox = document.createElement('FLUENT-SEARCH-BOX')
+  searchBox.addEventListener('keydown', event => event.stopPropagation())
 
-export default {
-  title: 'SearchBox/Basic',
-  component: 'fluent-search-box',
-  decorators: [container]
+  searchBox.addEventListener('change', action('change'))
+  searchBox.addEventListener('input', action('input'))
+  searchBox.addEventListener('search', action('search'))
+  searchBox.addEventListener('escape', action('escape'))
+
+  for (const prop in args) {
+    searchBox[prop] = args[prop]
+  }
+
+  return searchBox
 }
 
-export const Normal = () =>
-  html`<fluent-search-box
-    @change="${action('change')}"
-    @input="${action('input')}"
-    @search="${action('search')}"
-    @escape="${action('escape')}"
-  ></fluent-search-box>`
+export default {
+  title: 'Basic Inputs/SearchBox/Basic',
+  component: 'fluent-search-box',
+  argTypes
+}
 
-export const WithLabel = () =>
-  html`<fluent-search-box
-    label="Query string:"
-    @change="${action('change')}"
-    @input="${action('input')}"
-    @search="${action('search')}"
-    @escape="${action('escape')}"
-  ></fluent-search-box>`
+export const Normal = renderSearchBox.bind({})
 
-export const WithDescription = () =>
-  html`<fluent-search-box
-    description="A fancy description."
-    @change="${action('change')}"
-    @input="${action('input')}"
-    @search="${action('search')}"
-    @escape="${action('escape')}"
-  ></fluent-search-box>`
+export const WithLabel = renderSearchBox.bind({})
+WithLabel.args = {
+  label: 'Query string:'
+}
 
-export const Invalid = () =>
-  html`<fluent-search-box
-    invalid
-    @change="${action('change')}"
-    @input="${action('input')}"
-    @search="${action('search')}"
-    @escape="${action('escape')}"
-  ></fluent-search-box>`
+export const WithDescription = renderSearchBox.bind({})
+WithDescription.args = {
+  description: 'A fancy description.'
+}
 
-export const WithErrorMessage = () =>
-  html`<fluent-search-box
-    errorMessage="Error message"
-    @change="${action('change')}"
-    @input="${action('input')}"
-    @search="${action('search')}"
-    @escape="${action('escape')}"
-  ></fluent-search-box>`
+export const Invalid = renderSearchBox.bind({})
+Invalid.args = {
+  Invalid: true
+}
 
-export const Disabled = () =>
-  html`<fluent-search-box
-    disabled
-    @change="${action('change')}"
-    @input="${action('input')}"
-    @search="${action('search')}"
-    @escape="${action('escape')}"
-  ></fluent-search-box>`
+export const WithErrorMessage = renderSearchBox.bind({})
+WithErrorMessage.args = {
+  errorMessage: 'Error message'
+}
 
-export const Required = () => html`
-  <style>
-    fluent-search-box {
-      width: 250px;
-    }
-  </style>
-  <p>
-    <fluent-search-box
-      label="Required"
-      required
-      @change="${action('change')}"
-      @input="${action('input')}"
-      @search="${action('search')}"
-      @escape="${action('escape')}"
-    ></fluent-search-box>
-  </p>
-  <p>
-    <fluent-search-box
-      required
-      @change="${action('change')}"
-      @input="${action('input')}"
-      @search="${action('search')}"
-      @escape="${action('escape')}"
-    ></fluent-search-box>
-  </p>
-`
-export const NoAnimations = () =>
-  html`<fluent-search-box
-    disableAnimation
-    @change="${action('change')}"
-    @input="${action('input')}"
-    @search="${action('search')}"
-    @escape="${action('escape')}"
-  ></fluent-search-box>`
+export const Disabled = renderSearchBox.bind({})
+Disabled.args = {
+  disabled: true
+}
 
-export const CustomIcon = () =>
-  html`<fluent-search-box
-    icon="Filter"
-    placeholder="Filter"
-    @change="${action('change')}"
-    @input="${action('input')}"
-    @search="${action('search')}"
-    @escape="${action('escape')}"
-  ></fluent-search-box>`
+export const Required = renderSearchBox.bind({})
+Required.args = {
+  label: 'Required',
+  required: true
+}
 
-export const Borderless = () =>
-  html`<fluent-search-box
-    borderless
-    @change="${action('change')}"
-    @input="${action('input')}"
-    @search="${action('search')}"
-    @escape="${action('escape')}"
-  ></fluent-search-box>`
+export const RequiredWithoutLabel = renderSearchBox.bind({})
+RequiredWithoutLabel.args = {
+  required: true
+}
+
+export const NoAnimations = renderSearchBox.bind({})
+NoAnimations.args = {
+  disableAnimation: true
+}
+
+export const CustomIcon = renderSearchBox.bind({})
+CustomIcon.args = {
+  icon: 'Filter',
+  placeholder: 'Filter'
+}
+
+export const Borderless = renderSearchBox.bind({})
+Borderless.args = {
+  borderless: true
+}
