@@ -5,7 +5,6 @@ function renderIcon (args) {
   icon.style.fontSize = '50px'
   icon.style.height = '50px'
   icon.style.width = '50px'
-  icon.style.margin = '0 25px'
 
   for (const prop in args) {
     icon[prop] = args[prop]
