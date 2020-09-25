@@ -1,114 +1,94 @@
-import { html } from 'lit-html'
 import { action } from '@storybook/addon-actions'
-import './date-picker'
+import argTypes from './arg-types'
 
-const container = story => html`
-  <div
-    tabindex="0"
-    @keydown="${event => event.stopPropagation()}"
-    style="outline: 0"
-  >
-    ${story()}
-  </div>
-`
+function renderDatePicker (args) {
+  const dateProps = ['selected', 'today']
+  const datePicker = document.createElement('FLUENT-DATE-PICKER')
 
-export default {
-  title: 'DatePicker/Basic',
-  component: 'fluent-date-picker',
-  decorators: [container]
+  for (const prop in args) {
+    if (dateProps.includes(prop)) {
+      datePicker[prop] = new Date(args[prop])
+    } else {
+      datePicker[prop] = args[prop]
+    }
+  }
+
+  datePicker.addEventListener('change', action('change'))
+
+  return datePicker
 }
 
-export const Normal = () => html`
-  <fluent-date-picker
-    label="Date Picker"
-    goToday="Avui"
-    @change="${action('change')}"
-  ></fluent-date-picker>
-`
+export default {
+  title: 'Galleries & Pickers/DatePicker/Basic',
+  component: 'fluent-date-picker',
+  argTypes
+}
 
-export const WithDescription = () => html`
-  <fluent-date-picker
-    label="Standard"
-    goToday="Avui"
-    description="Dia de naixement"
-    @change="${action('change')}"
-  ></fluent-date-picker>
-`
+export const Normal = renderDatePicker.bind({})
+Normal.args = {
+  label: 'Date Picker',
+  goToday: 'Avui'
+}
 
-export const Invalid = () => html`
-  <fluent-date-picker
-    invalid
-    label="Invalid"
-    goToday="Avui"
-    @change="${action('change')}"
-  ></fluent-date-picker>
-`
+export const WithDescription = renderDatePicker.bind({})
+WithDescription.args = {
+  label: 'Date Picker',
+  goToday: 'Avui',
+  description: 'A fancy description.'
+}
 
-export const WithErrorMessage = () => html`
-  <fluent-date-picker
-    label="With error message"
-    goToday="Avui"
-    errorMessage="With error message"
-    @change="${action('change')}"
-  ></fluent-date-picker>
-`
+export const Invalid = renderDatePicker.bind({})
+Invalid.args = {
+  label: 'Invalid',
+  goToday: 'Avui',
+  invalid: true
+}
 
-export const Disabled = () => html`
-  <fluent-date-picker
-    disabled
-    label="Disabled"
-    goToday="Avui"
-    .value="${new Date(1642, 11, 25)}"
-    @change="${action('change')}"
-  ></fluent-date-picker>
-`
+export const WithErrorMessage = renderDatePicker.bind({})
+WithErrorMessage.args = {
+  label: 'With error message',
+  goToday: 'Avui',
+  errorMessage: 'Error message'
+}
 
-export const Required = () => html`
-  <style>
-    fluent-date-picker {
-      width: 250px;
-    }
-  </style>
-  <p>
-    <fluent-date-picker
-      required
-      label="Required"
-      goToday="Avui"
-      @change="${action('change')}"
-    ></fluent-date-picker>
-  </p>
-  <p>
-    <fluent-date-picker
-      required
-      goToday="Avui"
-      @change="${action('change')}"
-    ></fluent-date-picker>
-  </p>
-`
+export const Disabled = renderDatePicker.bind({})
+Disabled.args = {
+  label: 'Disabled',
+  goToday: 'Avui',
+  disabled: true,
+  value: new Date(1642, 11, 25)
+}
 
-export const Borderless = () => html`
-  <fluent-date-picker
-    borderless
-    label="Borderless"
-    goToday="Avui"
-    @change="${action('change')}"
-  ></fluent-date-picker>
-`
+export const Required = renderDatePicker.bind({})
+Required.args = {
+  label: 'Required',
+  goToday: 'Avui',
+  required: true
+}
 
-export const NotWritable = () => html`
-  <fluent-date-picker
-    label="Not Writable Date Picker"
-    goToday="Avui"
-    notWritable
-    @change="${action('change')}"
-  ></fluent-date-picker>
-`
+export const RequiredWithoutLabel = renderDatePicker.bind({})
+RequiredWithoutLabel.args = {
+  goToday: 'Avui',
+  required: true
+}
 
-export const WithPlaceholder = () => html`
-  <fluent-date-picker
-    label="Date Picker With Placeholder"
-    goToday="Avui"
-    placeholder="dia/mes/any"
-    @change="${action('change')}"
-  ></fluent-date-picker>
-`
+export const Borderless = renderDatePicker.bind({})
+Borderless.args = {
+  label: 'Borderless',
+  goToday: 'Avui',
+  borderless: true
+}
+
+export const NotWritable = renderDatePicker.bind({})
+NotWritable.args = {
+  label: 'Not Writable Date Picker',
+  goToday: 'Avui',
+  notWritable: true
+}
+
+export const WithPlaceholder = renderDatePicker.bind({})
+WithPlaceholder.args = {
+  label: 'Date Picker With Placeholder',
+  goToday: 'Avui',
+  placeholder: 'dia/mes/any'
+}
