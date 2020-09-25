@@ -14,18 +14,20 @@ export default {
   },
   step: {
     name: 'step',
-    type: { name: 'number', required: false, step: 1 },
+    type: { name: 'number', required: false },
     defaultValue: 1,
     control: {
-      type: 'number'
+      type: 'number',
+      step: 1
     }
   },
   value: {
     name: 'value',
-    type: { name: 'number', required: false, step: 1 },
+    type: { name: 'number', required: false },
     defaultValue: null,
     control: {
-      type: 'number'
+      type: 'number',
+      step: 1
     }
   }
 }

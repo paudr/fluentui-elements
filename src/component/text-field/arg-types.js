@@ -54,10 +54,12 @@ export default {
   },
   maxlength: {
     name: 'maxlength',
-    type: { name: 'number', required: false, step: 1 },
+    type: { name: 'number', required: false },
     defaultValue: null,
     control: {
-      type: 'number'
+      type: 'number',
+      min: 0,
+      step: 1
     }
   },
   unresizable: {
