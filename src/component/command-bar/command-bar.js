@@ -22,7 +22,7 @@ function getItems ({ items, overflowItems, overflowedItemsIndex }) {
     newItems.push({
       value: more,
       icon: 'More',
-      iconColor: '#333333',
+      iconColor: 'var(--neutral-primary)',
       childs: newOverflowItems
     })
   }
@@ -234,7 +234,7 @@ class CommandBar extends StyledElement {
           ${icon
             ? html`<i
                 class="icon"
-                .style="${iconColor ? `color: ${iconColor}` : ''}"
+                .style="${iconColor ? `color: ${iconColor};` : ''}"
               >
                 ${iconCode[icon]}
               </i>`

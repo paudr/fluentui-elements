@@ -1,12 +1,16 @@
-import { html } from 'lit-html'
-import { withKnobs, object, boolean, number } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
-import './command-bar'
+import argTypes from './arg-types'
 
-export default {
-  title: 'CommandBar',
-  component: 'fluent-command-bar',
-  decorators: [withKnobs]
+function renderCommandBar (args) {
+  const commandBar = document.createElement('FLUENT-COMMAND-BAR')
+
+  commandBar.addEventListener('click', action('click'))
+
+  for (const prop in args) {
+    commandBar[prop] = args[prop]
+  }
+
+  return commandBar
 }
 
 const items = [
@@ -122,46 +126,47 @@ const farItems = [
   { value: 'info', icon: 'Info' }
 ]
 
-export const Sandbox = () => html`<fluent-command-bar
-  .items="${object('items', items)}"
-  .overflowItems="${object('overflowItems', overflowItems)}"
-  .farItems="${object('farItems', farItems)}"
-  .autoUpdateOverflowIndex="${boolean('autoUpdateOverflowIndex', false)}"
-  .onResizeRate="${number('onResizeRate', 250)}"
-  @click="${action('click')}"
-></fluent-command-bar>`
+export default {
+  title: 'Commands, Menus & Navs/CommandBar',
+  component: 'fluent-command-bar',
+  argTypes
+}
 
-export const CalculateOverflowIndex = () => html`
-  <style>
-    #container {
-      position: relative;
-      border: 1px solid black;
-    }
-  </style>
-  <div id="container">
-    <fluent-command-bar
-      .items="${object('items', items)}"
-      .overflowItems="${object('overflowItems', overflowItems)}"
-      .farItems="${object('farItems', farItems)}"
-      .autoUpdateOverflowIndex="${boolean('autoUpdateOverflowIndex', false)}"
-      .onResizeRate="${number('onResizeRate', 250)}"
-      @click="${action('click')}"
-    ></fluent-command-bar>
-    <fluent-text-field
-      label="Container width"
-      value="100%"
-      @change="${event => {
-        document.getElementById('container').style.width = event.detail.value
-      }}"
-    ></fluent-text-field>
-    <fluent-button
-      text="Calculate overflow index"
-      @click="${() => {
-        const commandBar = document.querySelector(
-          '#container fluent-command-bar'
-        )
-        commandBar.updateOverflowIndex()
-      }}"
-    ></fluent-button>
-  </div>
-`
+export const Normal = renderCommandBar.bind({})
+Normal.args = {
+  items,
+  overflowItems,
+  farItems
+}
+
+export function CalculateOverflowIndex (args) {
+  const container = document.createElement('DIV')
+  container.style.position = 'relative'
+  container.style.border = '1px solid black'
+
+  const commandBar = renderCommandBar(args)
+
+  const textField = document.createElement('FLUENT-TEXT-FIELD')
+  textField.label = 'Container width'
+  textField.value = '100%'
+  textField.addEventListener(
+    'change',
+    event => (container.style.width = event.detail.value)
+  )
+
+  const button = document.createElement('FLUENT-BUTTON')
+  button.text = 'Calculate overflow index'
+  button.addEventListener('click', event => commandBar.updateOverflowIndex())
+
+  container.appendChild(commandBar)
+  container.appendChild(textField)
+  container.appendChild(button)
+
+  return container
+}
+CalculateOverflowIndex.args = {
+  items,
+  overflowItems,
+  farItems,
+  autoUpdateOverflowIndex: true
+}
