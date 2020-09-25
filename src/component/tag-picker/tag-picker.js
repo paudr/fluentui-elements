@@ -189,7 +189,7 @@ class TagPicker extends ComboElement {
           .placeholder="${placeholder}"
           .disabled="${this.disabled}"
           .accentInsensitive="${this.accentInsensitive}"
-          @input="${debounce(this.handleInput, this.getItemsRate)}"
+          @input="${debounce(this.handleInput, this.getItemsRate, this)}"
           @navigate="${this.handleNavigate}"
           @select="${this.handleSelect}"
           @remove="${this.handleRemove}"
