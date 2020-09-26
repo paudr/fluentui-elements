@@ -1,31 +1,16 @@
-import { html } from 'lit-html'
-import { withKnobs, object, boolean, number } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
-import './select'
+import argTypes from './arg-types'
 
-export default {
-  title: 'Select',
-  component: 'fluent-select',
-  decorators: [withKnobs]
-}
+function renderSelect (args) {
+  const select = document.createElement('FLUENT-SELECT')
 
-function toggleMultiple (id) {
-  const select = document.getElementById(id)
-  select.multiple = !select.multiple
-}
+  select.addEventListener('change', action('change'))
 
-function markNextOption (id, direction) {
-  const select = document.getElementById(id)
-  if (direction !== 0) {
-    select.markNextOption(direction)
-  } else {
-    select.markedIndex = -1
+  for (const prop in args) {
+    select[prop] = args[prop]
   }
-}
 
-function scrollToElement (id) {
-  const select = document.getElementById(id)
-  select.scrollToElement(select.markedIndex)
+  return select
 }
 
 const optionOptions = [
@@ -51,138 +36,118 @@ const fruitOptions = [
   { text: 'Lettuce', value: 'lettuce' }
 ]
 
-export const Normal = () => html`
-  <fluent-select
-    .options="${optionOptions}"
-    @change="${action('change')}"
-  ></fluent-select>
-`
-
-export const WithGroups = () => html`
-  <fluent-select
-    .options="${fruitOptions}"
-    @change="${action('change')}"
-  ></fluent-select>
-`
-
-export const WithMaxHeight = () => html`
-  <fluent-select
-    .options="${fruitOptions}"
-    maxHeight="200px"
-    @change="${action('change')}"
-  ></fluent-select>
-`
-
-export const Multiple = () => html`
-  <fluent-select
-    multiple
-    .options="${optionOptions}"
-    @change="${action('change')}"
-  ></fluent-select>
-`
-
-export const MultipleWithGroups = () => html`
-  <fluent-select
-    multiple
-    .options="${fruitOptions}"
-    @change="${action('change')}"
-  ></fluent-select>
-`
-
-export const MultipleWithMaxHeight = () => html`
-  <fluent-select
-    multiple
-    .options="${fruitOptions}"
-    maxHeight="200px"
-    @change="${action('change')}"
-  ></fluent-select>
-`
-
-export const MarkNextOption = () => html`
-  <p>
-    <fluent-button
-      text="Toggle multiple"
-      @click="${() => toggleMultiple('markNextOption')}"
-    ></fluent-button>
-  </p>
-  <p>
-    <fluent-button
-      text="Mark previous"
-      @click="${() => markNextOption('markNextOption', -1)}"
-    ></fluent-button>
-    <fluent-button
-      text="Mark none"
-      @click="${() => markNextOption('markNextOption', 0)}"
-    ></fluent-button>
-    <fluent-button
-      text="Mark next"
-      @click="${() => markNextOption('markNextOption', 1)}"
-    ></fluent-button>
-  </p>
-  <fluent-select
-    id="markNextOption"
-    multiple
-    .options="${fruitOptions}"
-    @change="${action('change')}"
-  ></fluent-select>
-`
-
-export const ScrollToElement = () => html`
-  <p>
-    <fluent-button
-      text="Toggle multiple"
-      @click="${() => toggleMultiple('scrollToElement')}"
-    ></fluent-button>
-  </p>
-  <p>
-    <fluent-button
-      text="Mark previous"
-      @click="${() => markNextOption('scrollToElement', -1)}"
-    ></fluent-button>
-    <fluent-button
-      text="Mark none"
-      @click="${() => markNextOption('scrollToElement', 0)}"
-    ></fluent-button>
-    <fluent-button
-      text="Mark next"
-      @click="${() => markNextOption('scrollToElement', 1)}"
-    ></fluent-button>
-  </p>
-  <p>
-    <fluent-button
-      text="Scroll to marked"
-      @click="${() => scrollToElement('scrollToElement')}"
-    ></fluent-button>
-  </p>
-  <fluent-select
-    id="scrollToElement"
-    multiple
-    .options="${fruitOptions}"
-    maxHeight="200px"
-    @change="${action('change')}"
-  ></fluent-select>
-`
-
-function alertValue (event) {
-  const checkbox = event.target.ownerDocument.getElementById('sandbox')
-  alert(checkbox.value)
+export default {
+  title: 'Basic Inputs/Select',
+  component: 'fluent-select',
+  argTypes
 }
 
-export const Sandbox = () => html`
-  <fluent-select
-    id="sandbox"
-    multiple
-    .options="${object('options', fruitOptions)}"
-    .value="${object('value', [])}"
-    .markedIndex="${number('markedIndex', -1)}"
-    .highlightedIndex="${number('highlightedIndex', -1)}"
-    .multiple="${boolean('multiple', false)}"
-    @change="${action('change')}"
-  ></fluent-select>
-  <p>
-    <fluent-button
-      text="Alert value"
-      @click="${alertValue}"
-    ><fluent-button>
-  </p>
-`
+export const Normal = renderSelect.bind({})
+Normal.args = {
+  options: optionOptions
+}
+
+export const WithGroups = renderSelect.bind({})
+WithGroups.args = {
+  options: fruitOptions
+}
+
+export const WithMaxHeight = renderSelect.bind({})
+WithMaxHeight.args = {
+  options: fruitOptions,
+  maxHeight: '200px'
+}
+
+export const Multiple = renderSelect.bind({})
+Multiple.args = {
+  options: optionOptions,
+  multiple: true
+}
+
+export const MultipleWithGroups = renderSelect.bind({})
+MultipleWithGroups.args = {
+  options: fruitOptions,
+  multiple: true
+}
+
+export const MultipleWithMaxHeight = renderSelect.bind({})
+MultipleWithMaxHeight.args = {
+  options: fruitOptions,
+  multiple: true,
+  maxHeight: '200px'
+}
+
+export function MarkNextOption (args) {
+  const select = renderSelect(args)
+  const container = document.createElement('DIV')
+
+  const row = document.createElement('DIV')
+
+  const markPrevious = document.createElement('FLUENT-BUTTON')
+  markPrevious.text = 'Mark previous'
+  markPrevious.addEventListener('click', () => select.markNextOption(-1))
+
+  const markNone = document.createElement('FLUENT-BUTTON')
+  markNone.text = 'Mark none'
+  markNone.addEventListener('click', () => (select.markedIndex = -1))
+
+  const markNext = document.createElement('FLUENT-BUTTON')
+  markNext.text = 'Mark next'
+  markNext.addEventListener('click', () => select.markNextOption(1))
+
+  row.appendChild(markPrevious)
+  row.appendChild(markNone)
+  row.appendChild(markNext)
+
+  container.appendChild(row)
+  container.appendChild(select)
+
+  return container
+}
+MarkNextOption.args = {
+  options: fruitOptions
+}
+
+export function ScrollToElement (args) {
+  const select = renderSelect(args)
+  const container = document.createElement('DIV')
+
+  const firstRow = document.createElement('DIV')
+
+  const markPrevious = document.createElement('FLUENT-BUTTON')
+  markPrevious.text = 'Mark previous'
+  markPrevious.addEventListener('click', () => select.markNextOption(-1))
+
+  const markNone = document.createElement('FLUENT-BUTTON')
+  markNone.text = 'Mark none'
+  markNone.addEventListener('click', () => (select.markedIndex = -1))
+
+  const markNext = document.createElement('FLUENT-BUTTON')
+  markNext.text = 'Mark next'
+  markNext.addEventListener('click', () => select.markNextOption(1))
+
+  const secondRow = document.createElement('DIV')
+
+  const scrollToMarked = document.createElement('FLUENT-BUTTON')
+  scrollToMarked.text = 'Scroll to marked'
+  scrollToMarked.addEventListener('click', () =>
+    select.scrollToElement(select.markedIndex)
+  )
+
+  firstRow.appendChild(markPrevious)
+  firstRow.appendChild(markNone)
+  firstRow.appendChild(markNext)
+
+  secondRow.appendChild(scrollToMarked)
+
+  container.appendChild(firstRow)
+  container.appendChild(secondRow)
+  container.appendChild(select)
+
+  return container
+}
+ScrollToElement.args = {
+  options: fruitOptions,
+  multiple: true,
+  maxHeight: '200px'
+}
