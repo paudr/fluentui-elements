@@ -1,176 +1,144 @@
-import { html } from 'lit-html'
-import { withKnobs, text, select, boolean } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
-import './dialog'
-import '../button'
+import argTypes from './arg-types'
 
-const container = story => html`
-  <style>
-    .okCancel {
-      display: flex;
-      justify-content: flex-end;
-    }
+function renderDialog (args) {
+  const dialog = document.createElement('FLUENT-DIALOG')
 
-    .okCancel fluent-button {
-      margin-left: 8px;
-    }
-  </style>
-  <div>${story()}</div>
-`
+  for (const prop in args) {
+    dialog[prop] = args[prop]
+  }
 
-export default {
-  title: 'Dialog',
-  component: 'fluent-dialog',
-  decorators: [container, withKnobs]
+  dialog.addEventListener('close', action('close'))
+
+  return dialog
 }
 
-export const Normal = () => html`
-  <fluent-dialog
-    title="Missing Subject"
-    text="Do you want to send this message without a subject?"
-    maxWidth="400px"
-  >
-    <div slot="footer" class="okCancel">
-      <fluent-button primary text="Ok"></fluent-button>
-      <fluent-button text="Cancel"></fluent-button>
-    </div>
-  </fluent-dialog>
-`
+function renderDialogWithFooter (args) {
+  const dialog = renderDialog(args)
 
-const choiceOptions = [
-  { value: 'A', text: 'Option A' },
-  { value: 'B', text: 'Option B' },
-  { value: 'C', text: 'Option C', disabled: true }
-]
+  const container = document.createElement('DIV')
+  container.setAttribute('slot', 'footer')
+  container.style.display = 'flex'
+  container.style.justifyContent = 'flex-end'
 
-export const LargeHeader = () => html`
-  <fluent-dialog
-    title="All emails together"
-    text="Your Inbox has changed. No longer does it include favorites, it is a singular destination for your emails."
-    type="largeHeader"
-    maxWidth="400px"
-    maxHeight="250px"
-  >
-    <fluent-choice-group
-      label="Pick one"
-      .options="${choiceOptions}"
-    ></fluent-choice-group>
-    <div slot="footer" class="okCancel">
-      <fluent-button primary text="Ok"></fluent-button>
-      <fluent-button text="Cancel"></fluent-button>
-    </div>
-  </fluent-dialog>
-`
+  const ok = document.createElement('FLUENT-BUTTON')
+  ok.primary = true
+  ok.text = 'Ok'
+  container.appendChild(ok)
 
-export const Close = () => html`
-  <fluent-dialog
-    title="Alert"
-    text="You have a notification."
-    type="close"
-    maxWidth="400px"
-    @close="${action('close')}"
-  ></fluent-dialog>
-`
+  const cancel = document.createElement('FLUENT-BUTTON')
+  cancel.text = 'Cancel'
+  cancel.style.marginLeft = '8px'
+  container.appendChild(cancel)
 
-export const AutoClose = () => html`
-  <fluent-dialog
-    title="Alert"
-    text="You have a notification."
-    type="close"
-    autoClose
-    maxWidth="400px"
-    @close="${action('close')}"
-  ></fluent-dialog>
-`
+  dialog.appendChild(container)
 
-export const Overlay = () => html`
-  <fluent-dialog
-    title="Alert"
-    text="You have a notification."
-    type="close"
-    maxWidth="400px"
-    overlay
-    @close="${action('close')}"
-  ></fluent-dialog>
-`
+  return dialog
+}
 
-export const OverlayDark = () => html`
-  <fluent-dialog
-    title="Alert"
-    text="You have a notification."
-    type="close"
-    maxWidth="400px"
-    overlay
-    dark
-    @close="${action('close')}"
-  ></fluent-dialog>
-`
+export default {
+  title: 'Surfaces/Dialog',
+  component: 'fluent-dialog',
+  argTypes
+}
 
-export const OverlayAutoClose = () => html`
-  <fluent-dialog
-    title="Alert"
-    text="You have a notification."
-    type="close"
-    maxWidth="400px"
-    overlay
-    dark
-    autoClose
-    @close="${action('close')}"
-  ></fluent-dialog>
-`
+export const Normal = renderDialogWithFooter.bind({})
+Normal.args = {
+  title: 'Missing Subject',
+  text: 'Do you want to send this message without a subject?',
+  maxWidth: '400px'
+}
 
-export const OverlayLightDismiss = () => html`
-  <fluent-dialog
-    title="Alert"
-    text="You have a notification."
-    type="close"
-    maxWidth="400px"
-    overlay
-    dark
-    isLightDismiss
-    @close="${action('close')}"
-  ></fluent-dialog>
-`
+export function LargeHeader (args) {
+  const dialog = renderDialogWithFooter(args)
 
-export const OverlayLightDismissAutoClose = () => html`
-  <fluent-dialog
-    title="Alert"
-    text="You have a notification."
-    type="close"
-    maxWidth="400px"
-    overlay
-    dark
-    autoClose
-    isLightDismiss
-    @close="${action('close')}"
-  ></fluent-dialog>
-`
+  const choiceGroup = document.createElement('FLUENT-CHOICE-GROUP')
+  choiceGroup.label = 'Pick one'
+  choiceGroup.options = [
+    { value: 'A', text: 'Option A' },
+    { value: 'B', text: 'Option B' },
+    { value: 'C', text: 'Option C', disabled: true }
+  ]
 
-export const Sandbox = () => html`
-  <fluent-dialog
-    title="${text('title', 'All emails together')}"
-    text="${text(
-      'text',
-      'Your Inbox has changed. No longer does it include favorites, it is a singular destination for your emails.'
-    )}"
-    type="${select('type', ['normal', 'largeHeader', 'close'], 'normal')}"
-    minWidth="${text('minWidth', '')}"
-    maxWidth="${text('maxWidth', '')}"
-    minHeight="${text('minHeight', '')}"
-    maxHeight="${text('maxHeight', '')}"
-    ?overlay="${boolean('overlay', false)}"
-    ?dark="${boolean('dark', false)}"
-    ?autoClose="${boolean('autoClose', false)}"
-    ?isLightDismiss="${boolean('isLightDismiss', false)}"
-    @close="${action('close')}"
-  >
-    <fluent-choice-group
-      label="Pick one"
-      .options="${choiceOptions}"
-    ></fluent-choice-group>
-    <div slot="footer" class="okCancel">
-      <fluent-button primary text="Ok"></fluent-button>
-      <fluent-button text="Cancel"></fluent-button>
-    </div>
-  </fluent-dialog>
-`
+  dialog.appendChild(choiceGroup)
+
+  return dialog
+}
+LargeHeader.args = {
+  title: 'All emails together',
+  text:
+    'Your Inbox has changed. No longer does it include favorites, it is a singular destination for your emails.',
+  type: 'largeHeader',
+  maxWidth: '400px',
+  maxHeight: '250px'
+}
+
+export const Close = renderDialog.bind({})
+Close.args = {
+  title: 'Alert',
+  text: 'You have a notification.',
+  type: 'close',
+  maxWidth: '400px'
+}
+
+export const AutoClose = renderDialog.bind({})
+AutoClose.args = {
+  title: 'Alert',
+  text: 'You have a notification.',
+  type: 'close',
+  maxWidth: '400px',
+  autoClose: true
+}
+
+export const Overlay = renderDialog.bind({})
+Overlay.args = {
+  title: 'Alert',
+  text: 'You have a notification.',
+  type: 'close',
+  maxWidth: '400px',
+  overlay: true
+}
+
+export const OverlayDark = renderDialog.bind({})
+OverlayDark.args = {
+  title: 'Alert',
+  text: 'You have a notification.',
+  type: 'close',
+  maxWidth: '400px',
+  overlay: true,
+  dark: true
+}
+
+export const OverlayAutoClose = renderDialog.bind({})
+OverlayAutoClose.args = {
+  title: 'Alert',
+  text: 'You have a notification.',
+  type: 'close',
+  maxWidth: '400px',
+  overlay: true,
+  autoClose: true,
+  dark: true
+}
+
+export const OverlayLightDismiss = renderDialog.bind({})
+OverlayLightDismiss.args = {
+  title: 'Alert',
+  text: 'You have a notification.',
+  type: 'close',
+  maxWidth: '400px',
+  overlay: true,
+  isLightDismiss: true,
+  dark: true
+}
+
+export const OverlayLightDismissAutoClose = renderDialog.bind({})
+OverlayLightDismissAutoClose.args = {
+  title: 'Alert',
+  text: 'You have a notification.',
+  type: 'close',
+  maxWidth: '400px',
+  overlay: true,
+  autoClose: true,
+  isLightDismiss: true,
+  dark: true
+}
