@@ -1,18 +1,16 @@
-import { html } from 'lit-html'
-import {
-  withKnobs,
-  boolean,
-  number,
-  object,
-  text
-} from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
-import './pivot'
+import argTypes from './arg-types'
 
-export default {
-  title: 'Pivot',
-  component: 'fluent-pivot',
-  decorators: [withKnobs]
+function renderPivot (args) {
+  const pivot = document.createElement('FLUENT-PIVOT')
+
+  for (const prop in args) {
+    pivot[prop] = args[prop]
+  }
+
+  pivot.addEventListener('change', action('change'))
+
+  return pivot
 }
 
 const fullTabs = [
@@ -32,59 +30,42 @@ const withIconsTabs = fullTabs.map(tab => ({
   icon: tab.icon
 }))
 
-export const OnlyText = () => html`
-  <fluent-pivot
-    .tabs="${onlyTextTabs}"
-    @change="${action('change')}"
-  ></fluent-pivot>
-`
+export default {
+  title: 'Commands, Menus & Navs/Pivot',
+  component: 'fluent-pivot',
+  argTypes
+}
 
-export const WithIcons = () => html`
-  <fluent-pivot
-    .tabs="${withIconsTabs}"
-    @change="${action('change')}"
-  ></fluent-pivot>
-`
+export const OnlyText = renderPivot.bind({})
+OnlyText.args = {
+  tabs: onlyTextTabs
+}
 
-export const FullTabs = () => html`
-  <fluent-pivot
-    .tabs="${fullTabs}"
-    @change="${action('change')}"
-  ></fluent-pivot>
-`
+export const WithIcons = renderPivot.bind({})
+WithIcons.args = {
+  tabs: withIconsTabs
+}
 
-export const Large = () => html`
-  <fluent-pivot
-    .tabs="${onlyTextTabs}"
-    large
-    @change="${action('change')}"
-  ></fluent-pivot>
-`
+export const FullTabs = renderPivot.bind({})
+FullTabs.args = {
+  tabs: fullTabs
+}
 
-export const TabStyle = () => html`
-  <fluent-pivot
-    .tabs="${onlyTextTabs}"
-    tabStyle
-    @change="${action('change')}"
-  ></fluent-pivot>
-`
+export const Large = renderPivot.bind({})
+Large.args = {
+  tabs: onlyTextTabs,
+  large: true
+}
 
-export const LargeTabStyle = () => html`
-  <fluent-pivot
-    .tabs="${onlyTextTabs}"
-    large
-    tabStyle
-    @change="${action('change')}"
-  ></fluent-pivot>
-`
+export const TabStyle = renderPivot.bind({})
+TabStyle.args = {
+  tabs: onlyTextTabs,
+  tabStyle: true
+}
 
-export const Sandbox = () => html`
-  <fluent-pivot
-    .tabs="${object('tabs', fullTabs)}"
-    .large="${boolean('large', false)}"
-    .tabStyle="${boolean('tabStyle', false)}"
-    .selectedTab="${number('selectedTab', -1)}"
-    .value="${text('value', '')}"
-    @change="${action('change')}"
-  ></fluent-pivot>
-`
+export const LargeTabStyle = renderPivot.bind({})
+LargeTabStyle.args = {
+  tabs: onlyTextTabs,
+  large: true,
+  tabStyle: true
+}
