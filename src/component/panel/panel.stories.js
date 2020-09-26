@@ -1,234 +1,157 @@
-import { html } from 'lit-html'
-import { withKnobs, text, select, boolean } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
-import './panel'
-import '../button'
+import argTypes from './arg-types'
 
-const container = story => html`
-  <style>
-    .okCancel fluent-button {
-      margin-right: 8px;
-    }
-  </style>
-  <div>${story()}</div>
-`
+function renderPanel (args) {
+  const panel = document.createElement('FLUENT-PANEL')
 
-export default {
-  title: 'Panel',
-  component: 'fluent-panel',
-  decorators: [container, withKnobs]
+  for (const prop in args) {
+    panel[prop] = args[prop]
+  }
+
+  panel.addEventListener('close', action('close'))
+
+  const content = document.createElement('P')
+  content.textContent = 'Content goes here.'
+  panel.appendChild(content)
+
+  return panel
 }
 
-const types = [
-  'custom',
-  'extraSmall',
-  'small',
-  'medium',
-  'large',
-  'extraLarge',
-  'fluid'
-]
+export default {
+  title: 'Surfaces/Panel',
+  component: 'fluent-panel',
+  argTypes
+}
 
-export const CustomWidth = () => html`
-  <fluent-panel
-    type="custom"
-    width="500px"
-    headerText="Missing Subject"
-    @close="${action('close')}"
-  >
-    <p>Content goes here.</p>
-  </fluent-panel>
-`
+export const CustomWidth = renderPanel.bind({})
+CustomWidth.args = {
+  width: '500px',
+  headerText: 'Missing Subject'
+}
 
-export const ExtraSmall = () => html`
-  <fluent-panel
-    type="extraSmall"
-    headerText="Missing Subject"
-    @close="${action('close')}"
-  >
-    <p>Content goes here.</p>
-  </fluent-panel>
-`
+export const ExtraSmall = renderPanel.bind({})
+ExtraSmall.args = {
+  type: 'extraSmall',
+  headerText: 'Missing Subject'
+}
 
-export const Small = () => html`
-  <fluent-panel
-    type="small"
-    headerText="Missing Subject"
-    @close="${action('close')}"
-  >
-    <p>Content goes here.</p>
-  </fluent-panel>
-`
+export const Small = renderPanel.bind({})
+Small.args = {
+  type: 'small',
+  headerText: 'Missing Subject'
+}
 
-export const Medium = () => html`
-  <fluent-panel
-    type="medium"
-    headerText="Missing Subject"
-    @close="${action('close')}"
-  >
-    <p>Content goes here.</p>
-  </fluent-panel>
-`
+export const Medium = renderPanel.bind({})
+Medium.args = {
+  type: 'medium',
+  headerText: 'Missing Subject'
+}
 
-export const Large = () => html`
-  <fluent-panel
-    type="large"
-    headerText="Missing Subject"
-    @close="${action('close')}"
-  >
-    <p>Content goes here.</p>
-  </fluent-panel>
-`
+export const Large = renderPanel.bind({})
+Large.args = {
+  type: 'large',
+  headerText: 'Missing Subject'
+}
 
-export const ExtraLarge = () => html`
-  <fluent-panel
-    type="extraLarge"
-    headerText="Missing Subject"
-    @close="${action('close')}"
-  >
-    <p>Content goes here.</p>
-  </fluent-panel>
-`
+export const ExtraLarge = renderPanel.bind({})
+ExtraLarge.args = {
+  type: 'extraLarge',
+  headerText: 'Missing Subject'
+}
 
-export const Fluid = () => html`
-  <fluent-panel
-    type="fluid"
-    headerText="Missing Subject"
-    @close="${action('close')}"
-  >
-    <p>Content goes here.</p>
-  </fluent-panel>
-`
+export const Fluid = renderPanel.bind({})
+Fluid.args = {
+  type: 'fluid',
+  headerText: 'Missing Subject'
+}
 
-export const Left = () => html`
-  <fluent-panel
-    type="small"
-    headerText="Missing Subject"
-    left
-    @close="${action('close')}"
-  >
-    <p>Content goes here.</p>
-  </fluent-panel>
-`
+export const Left = renderPanel.bind({})
+Left.args = {
+  type: 'small',
+  headerText: 'Missing Subject',
+  left: true
+}
 
-export const Footer = () => html`
-  <fluent-panel
-    type="small"
-    headerText="Panel with footer at bottom"
-    @close="${action('close')}"
-  >
-    <p>Content goes here.</p>
-    <div slot="footer" class="okCancel">
-      <fluent-button primary text="Ok"></fluent-button>
-      <fluent-button text="Cancel"></fluent-button>
-    </div>
-  </fluent-panel>
-`
+export function Footer (args) {
+  const panel = renderPanel(args)
 
-export const WithoutCloseButton = () => html`
-  <fluent-panel
-    type="small"
-    headerText="Missing Subject"
-    withoutCloseButton
-    @close="${action('close')}"
-  >
-    <p>Content goes here.</p>
-  </fluent-panel>
-`
+  const container = document.createElement('DIV')
+  container.setAttribute('slot', 'footer')
+  container.style.display = 'flex'
+  container.style.justifyContent = 'flex-end'
 
-export const AutoClose = () => html`
-  <fluent-panel
-    type="small"
-    headerText="Missing Subject"
-    autoClose
-    @close="${action('close')}"
-  >
-    <p>Content goes here.</p>
-  </fluent-panel>
-`
+  const ok = document.createElement('FLUENT-BUTTON')
+  ok.primary = true
+  ok.text = 'Ok'
+  container.appendChild(ok)
 
-export const Overlay = () => html`
-  <fluent-panel
-    type="small"
-    headerText="Missing Subject"
-    overlay
-    @close="${action('close')}"
-  >
-    <p>Content goes here.</p>
-  </fluent-panel>
-`
+  const cancel = document.createElement('FLUENT-BUTTON')
+  cancel.text = 'Cancel'
+  cancel.style.marginLeft = '8px'
+  container.appendChild(cancel)
 
-export const OverlayDark = () => html`
-  <fluent-panel
-    type="small"
-    headerText="Missing Subject"
-    overlay
-    dark
-    @close="${action('close')}"
-  >
-    <p>Content goes here.</p>
-  </fluent-panel>
-`
+  panel.appendChild(container)
 
-export const OverlayAutoClose = () => html`
-  <fluent-panel
-    type="small"
-    headerText="Missing Subject"
-    overlay
-    dark
-    autoClose
-    @close="${action('close')}"
-  >
-    <p>Content goes here.</p>
-  </fluent-panel>
-`
+  return panel
+}
+Footer.args = {
+  type: 'small',
+  headerText: 'Panel with footer at bottom'
+}
 
-export const OverlayLightDismiss = () => html`
-  <fluent-panel
-    type="small"
-    headerText="Missing Subject"
-    overlay
-    dark
-    isLightDismiss
-    @close="${action('close')}"
-  >
-    <p>Content goes here.</p>
-  </fluent-panel>
-`
+export const WithoutCloseButton = renderPanel.bind({})
+WithoutCloseButton.args = {
+  type: 'small',
+  headerText: 'Missing Subject',
+  withoutCloseButton: true
+}
 
-export const OverlayLightDismissAutoClose = () => html`
-  <fluent-panel
-    type="small"
-    headerText="Missing Subject"
-    overlay
-    dark
-    autoClose
-    isLightDismiss
-    @close="${action('close')}"
-  >
-    <p>Content goes here.</p>
-  </fluent-panel>
-`
+export const AutoClose = renderPanel.bind({})
+AutoClose.args = {
+  type: 'small',
+  headerText: 'Missing Subject',
+  autoClose: true
+}
 
-export const Sandbox = () => html`
-  <fluent-panel
-    type="${select('type', types, 'small')}"
-    width="${text('width', '')}"
-    minWidth="${text('minWidth', '')}"
-    maxWidth="${text('maxWidth', '')}"
-    headerText="${text('headerText', 'Missing Subject')}"
-    ?withoutCloseButton="${boolean('withoutCloseButton', false)}"
-    ?left="${boolean('left', false)}"
-    ?overlay="${boolean('overlay', false)}"
-    ?dark="${boolean('dark', false)}"
-    ?autoClose="${boolean('autoClose', false)}"
-    ?isLightDismiss="${boolean('isLightDismiss', false)}"
-    @close="${action('close')}"
-  >
-    <p>Content goes here.</p>
-    <div slot="footer" class="okCancel">
-      <fluent-button type="primary">Ok</fluent-button>
-      <fluent-button>Cancel</fluent-button>
-    </div>
-  </fluent-panel>
-`
+export const Overlay = renderPanel.bind({})
+Overlay.args = {
+  type: 'small',
+  headerText: 'Missing Subject',
+  overlay: true
+}
+
+export const OverlayDark = renderPanel.bind({})
+OverlayDark.args = {
+  type: 'small',
+  headerText: 'Missing Subject',
+  overlay: true,
+  dark: true
+}
+
+export const OverlayAutoClose = renderPanel.bind({})
+OverlayAutoClose.args = {
+  type: 'small',
+  headerText: 'Missing Subject',
+  overlay: true,
+  autoClose: true,
+  dark: true
+}
+
+export const OverlayLightDismiss = renderPanel.bind({})
+OverlayLightDismiss.args = {
+  type: 'small',
+  headerText: 'Missing Subject',
+  overlay: true,
+  isLightDismiss: true,
+  dark: true
+}
+
+export const OverlayLightDismissAutoClose = renderPanel.bind({})
+OverlayLightDismissAutoClose.args = {
+  type: 'small',
+  headerText: 'Missing Subject',
+  overlay: true,
+  autoClose: true,
+  isLightDismiss: true,
+  dark: true
+}

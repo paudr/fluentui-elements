@@ -30,6 +30,8 @@ class Panel extends StyledElement {
     super()
     this.type = 'custom'
     this.width = ''
+    this.minWidth = ''
+    this.maxWidth = ''
     this.left = false
     this.headerText = ''
     this.withoutCloseButton = false
