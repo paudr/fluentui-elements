@@ -1,87 +1,70 @@
-import { html } from 'lit-html'
-import { withKnobs, text, boolean } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
-import './autofill'
+import argTypes from './arg-types'
+
+function renderAutofill (args) {
+  const autofill = document.createElement('FLUENT-AUTOFILL')
+
+  for (const prop in args) {
+    autofill[prop] = args[prop]
+  }
+
+  autofill.addEventListener('input', action('input'))
+  autofill.addEventListener('change', action('change'))
+  autofill.addEventListener('keydown', event => {
+    event.stopPropagation()
+    action('keydown')
+  })
+
+  return autofill
+}
 
 export default {
-  title: 'Autofill',
+  title: 'Utilities/Autofill',
   component: 'fluent-autofill',
-  decorators: [withKnobs]
+  argTypes
 }
 
-function makeSuggestion () {
-  const autofill = document.getElementById('suggest')
-  const textField = document.getElementById('suggestion')
-  autofill.suggest(textField.value)
+export function Suggest (args) {
+  const autofill = renderAutofill(args)
+  autofill.style.border = '1px solid black'
+  autofill.style.gridArea = 'autofill'
+
+  const container = document.createElement('DIV')
+  container.tabIndex = 0
+  container.style.outline = '0'
+  container.style.display = 'grid'
+  container.style.gridTemplateAreas = '"autofill autofill" "textField button"'
+  container.addEventListener('keydown', event => event.stopPropagation())
+
+  const textField = document.createElement('FLUENT-TEXT-FIELD')
+  textField.style.gridArea = 'textField'
+
+  const button = document.createElement('FLUENT-BUTTON')
+  button.text = 'suggest'
+  button.style.gridArea = 'button'
+  button.addEventListener('click', () => autofill.suggest(textField.value))
+
+  container.appendChild(autofill)
+  container.appendChild(textField)
+  container.appendChild(button)
+
+  return container
 }
 
-export const Suggest = () =>
-  html`
-    <style>
-      div {
-        display: grid;
-        grid-template-areas: 'autofill autofill' 'textField button';
-        outline: 0;
-      }
+export function Sandbox (args) {
+  const autofill = renderAutofill(args)
+  autofill.style.backgroundColor = 'rgba(255, 146, 178, 0.4)'
 
-      #suggest {
-        border: 1px solid black;
-        grid-area: autofill;
-      }
+  const container = document.createElement('DIV')
+  container.style.border = '1px solid black'
+  container.style.padding = '0'
 
-      #suggestion {
-        grid-area: textField;
-      }
-      fluent-button[text='suggest'] {
-        grid-area: button;
-      }
-    </style>
-    <div tabindex="0" @keydown="${event => event.stopPropagation()}">
-      <fluent-autofill
-        id="suggest"
-        autofill
-        accentInsensitive
-      ></fluent-autofill>
-      <fluent-text-field id="suggestion"></fluent-text-field>
-      <fluent-button text="suggest" @click="${makeSuggestion}"></fluent-button>
-    </div>
-  `
+  const span = document.createElement('SPAN')
+  span.textContent = 'Text: '
+  span.style.backgroundColor = 'rgba(146, 255, 178, 0.4)'
 
-export const Sandbox = () =>
-  html`
-    <style>
-      .container {
-        border: 1px solid black;
-        padding: 0px;
-      }
+  container.appendChild(span)
+  container.appendChild(autofill)
 
-      .container span {
-        background-color: rgba(146, 255, 178, 0.4);
-      }
-
-      .container fluent-autofill {
-        background-color: rgba(255, 146, 178, 0.4);
-      }
-    </style>
-    <div
-      class="container"
-      tabindex="0"
-      @keydown="${event => event.stopPropagation()}"
-      style="outline: 0"
-    >
-      <span>Text: </span>
-      <fluent-autofill
-        .autofill="${boolean('autofill', false)}"
-        .value="${text('value', '')}"
-        .placeholder="${text('placeholder', '')}"
-        .suggestedValue="${text('suggestedValue', '')}"
-        .accentInsensitive="${boolean('accentInsensitive', false)}"
-        .inline="${boolean('inline', false)}"
-        .readOnly="${boolean('readOnly', false)}"
-        .disabled="${boolean('disabled', false)}"
-        @input="${action('input')}"
-        @change="${action('change')}"
-        @keydown="${action('keydown')}"
-      ></fluent-autofill>
-    </div>
-  `
+  return container
+}
