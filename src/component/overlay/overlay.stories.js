@@ -1,52 +1,53 @@
-import { html } from 'lit-html'
 import { action } from '@storybook/addon-actions'
-import './overlay'
+import argTypes from './arg-types'
 
-const container = story => html`
-  <style>
-    .overlayContent {
-      position: absolute;
-      background: blue;
-      left: 0px;
-      right: 0px;
-      bottom: 0px;
-      padding: 10px;
-      color: white;
-    }
+function renderOverlay (args) {
+  const overlay = document.createElement('FLUENT-OVERLAY')
 
-    .okCancel fluent-button {
-      margin-left: 8px;
-    }
-  </style>
-  <div>${story()}</div>
-`
+  for (const prop in args) {
+    overlay[prop] = args[prop]
+  }
 
-export default {
-  title: 'Overlay',
-  component: 'fluent-overlay',
-  decorators: [container]
+  overlay.addEventListener('click', action('click'))
+
+  const content = document.createElement('D')
+  content.style.position = 'absolute'
+  content.style.right = '0px'
+  content.style.bottom = '0px'
+  content.style.left = '0px'
+  content.style.padding = '10px'
+  content.style.background = 'blue'
+  content.style.color = 'white'
+
+  const paragraph = document.createElement('P')
+  paragraph.textContent = 'I am content within the overlay.'
+
+  content.appendChild(paragraph)
+  overlay.appendChild(content)
+
+  return overlay
 }
 
-export const Normal = () => html`
-  <fluent-overlay @click="${action('click')}">
-    <div class="overlayContent">
-      <p>I am content within the overlay.</p>
-    </div>
-  </fluent-overlay>
-`
+export default {
+  title: 'Utilities/Overlay',
+  component: 'fluent-overlay',
+  argTypes
+}
 
-export const Dark = () => html`
-  <fluent-overlay @click="${action('click')}" dark>
-    <div class="overlayContent">
-      <p>I am content within the overlay.</p>
-    </div>
-  </fluent-overlay>
-`
+export const Normal = renderOverlay.bind({})
 
-export const AutoClose = () => html`
-  <fluent-overlay @click="${action('close')}" autoClose>
-    <div class="overlayContent">
-      <p>I am content within the overlay.</p>
-    </div>
-  </fluent-overlay>
-`
+export const Dark = renderOverlay.bind({})
+Dark.args = {
+  dark: true
+}
+
+export const AutoClose = renderOverlay.bind({})
+AutoClose.args = {
+  autoClose: true
+}
+
+export const DarkAutoClose = renderOverlay.bind({})
+DarkAutoClose.args = {
+  dark: true,
+  autoClose: true
+}
