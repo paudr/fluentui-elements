@@ -1,5 +1,6 @@
 import { action } from '@storybook/addon-actions'
 import argTypes from './arg-types'
+import './pivot'
 
 function renderPivot (args) {
   const pivot = document.createElement('FLUENT-PIVOT')

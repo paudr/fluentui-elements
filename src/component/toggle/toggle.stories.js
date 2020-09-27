@@ -1,5 +1,6 @@
 import { action } from '@storybook/addon-actions'
 import argTypes from './arg-types'
+import './toggle'
 
 function renderToggle (args) {
   const toggle = document.createElement('FLUENT-TOGGLE')

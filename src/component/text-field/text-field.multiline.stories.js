@@ -1,5 +1,6 @@
 import { action } from '@storybook/addon-actions'
 import argTypes from './arg-types'
+import './text-field'
 
 function renderTextFieldMultiline (args) {
   const textField = document.createElement('FLUENT-TEXT-FIELD')

@@ -1,5 +1,6 @@
 import { action } from '@storybook/addon-actions'
 import argTypes from './arg-types'
+import './number-field'
 
 function renderNumberField (args) {
   const numberField = document.createElement('FLUENT-NUMBER-FIELD')

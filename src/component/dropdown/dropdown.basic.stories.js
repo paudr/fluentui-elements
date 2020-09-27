@@ -1,5 +1,6 @@
 import { action } from '@storybook/addon-actions'
 import argTypes from './arg-types'
+import './dropdown'
 
 function renderDropdown (args) {
   const dropdown = document.createElement('FLUENT-DROPDOWN')

@@ -1,5 +1,6 @@
 import { action } from '@storybook/addon-actions'
 import argTypes from './arg-types'
+import './command-bar'
 
 function renderCommandBar (args) {
   const commandBar = document.createElement('FLUENT-COMMAND-BAR')

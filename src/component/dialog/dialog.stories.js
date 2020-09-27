@@ -1,5 +1,6 @@
 import { action } from '@storybook/addon-actions'
 import argTypes from './arg-types'
+import './dialog'
 
 function renderDialog (args) {
   const dialog = document.createElement('FLUENT-DIALOG')

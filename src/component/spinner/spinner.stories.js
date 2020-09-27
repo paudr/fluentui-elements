@@ -1,4 +1,5 @@
 import argTypes from './arg-types'
+import './spinner'
 
 function renderSpinner (args) {
   const spinner = document.createElement('FLUENT-SPINNER')

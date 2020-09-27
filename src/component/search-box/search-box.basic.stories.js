@@ -1,5 +1,6 @@
 import { action } from '@storybook/addon-actions'
 import argTypes from './arg-types'
+import './search-box'
 
 function renderSearchBox (args) {
   const searchBox = document.createElement('FLUENT-SEARCH-BOX')

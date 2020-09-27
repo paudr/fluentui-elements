@@ -1,4 +1,5 @@
 import argTypes from './arg-types'
+import './icon'
 
 function renderIcon (args) {
   const icon = document.createElement('FLUENT-ICON')

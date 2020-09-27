@@ -1,5 +1,6 @@
 import { action } from '@storybook/addon-actions'
 import argTypes from './arg-types'
+import './button'
 
 function renderButton (args) {
   const button = document.createElement('FLUENT-BUTTON')

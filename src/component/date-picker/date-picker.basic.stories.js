@@ -1,5 +1,6 @@
 import { action } from '@storybook/addon-actions'
 import argTypes from './arg-types'
+import './date-picker'
 
 function renderDatePicker (args) {
   const dateProps = ['selected', 'today']

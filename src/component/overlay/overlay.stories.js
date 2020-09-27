@@ -1,5 +1,6 @@
 import { action } from '@storybook/addon-actions'
 import argTypes from './arg-types'
+import './overlay'
 
 function renderOverlay (args) {
   const overlay = document.createElement('FLUENT-OVERLAY')

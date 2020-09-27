@@ -1,4 +1,5 @@
 import argTypes from './arg-types'
+import './label'
 
 function renderLabel (args) {
   const label = document.createElement('FLUENT-LABEL')

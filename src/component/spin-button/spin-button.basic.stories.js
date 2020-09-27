@@ -1,5 +1,6 @@
 import { action } from '@storybook/addon-actions'
 import argTypes from './arg-types'
+import './spin-button'
 
 function renderSpinButton (args) {
   const spinButton = document.createElement('FLUENT-SPIN-BUTTON')

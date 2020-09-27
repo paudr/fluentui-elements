@@ -1,5 +1,6 @@
 import { action } from '@storybook/addon-actions'
 import argTypes from './arg-types'
+import './checkbox'
 
 function renderCheckBox (args) {
   const checkbox = document.createElement('FLUENT-CHECKBOX')

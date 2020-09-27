@@ -1,5 +1,6 @@
 import { action } from '@storybook/addon-actions'
 import argTypes from './arg-types'
+import './autofill'
 
 function renderAutofill (args) {
   const autofill = document.createElement('FLUENT-AUTOFILL')

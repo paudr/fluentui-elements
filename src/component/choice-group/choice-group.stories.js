@@ -1,5 +1,6 @@
 import { action } from '@storybook/addon-actions'
 import argTypes from './arg-types'
+import './choice-group'
 
 function renderChoiceGroup (args) {
   const choiceGroup = document.createElement('FLUENT-CHOICE-GROUP')

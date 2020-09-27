@@ -1,5 +1,6 @@
 import { action } from '@storybook/addon-actions'
 import argTypes from './arg-types'
+import './details-list'
 
 function renderDetailsList (args) {
   const detailsList = document.createElement('FLUENT-DETAILS-LIST')

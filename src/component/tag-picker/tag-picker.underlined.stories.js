@@ -1,6 +1,7 @@
 import { action } from '@storybook/addon-actions'
 import argTypes from './arg-types'
 import iconCode from '../icon/code'
+import './tag-picker'
 
 function renderTagPicker (args) {
   const tagPicker = document.createElement('FLUENT-TAG-PICKER')

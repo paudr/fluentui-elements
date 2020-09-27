@@ -1,6 +1,7 @@
 import { action } from '@storybook/addon-actions'
 import argTypes from './arg-types'
 import iconCode from '../icon/code'
+import './combo-box'
 
 function renderComboBox (args) {
   const comboBox = document.createElement('FLUENT-COMBO-BOX')
