@@ -51,12 +51,7 @@ class DetailsList extends StyledElement {
   }
 
   get selectedIndices () {
-    const entries = _privateData.get(this).selected.entries()
-    const indices = []
-    for (const entry of entries) {
-      indices.push(entry[0])
-    }
-    return indices
+    return [..._privateData.get(this).selected.values()]
   }
 
   set selectedIndices (value) {
@@ -103,44 +98,57 @@ class DetailsList extends StyledElement {
 
   toggleSelectedRow (rowIndex) {
     if (this.selection) {
+      const oldValue = this.selectedIndices
       const { selected } = _privateData.get(this)
 
       if (selected.has(rowIndex)) {
         selected.delete(rowIndex)
       } else {
-        if (
-          this.selection === 'multiple' ||
-          (this.selection === 'safe' && selected.size === 0)
-        ) {
+        if (this.selection === 'multiple') {
           selected.add(rowIndex)
         } else if (this.selection === 'simple') {
           selected.clear()
+          selected.add(rowIndex)
+        } else if (this.selection === 'safe') {
+          if (selected.size > 0) return
           selected.add(rowIndex)
         }
       }
 
       this.requestUpdate()
+      const value = this.selectedIndices
+      this.dispatchEvent(
+        new CustomEvent('change', { detail: { value, oldValue } })
+      )
     }
   }
 
   toggleSelectedGroup (groupIndex) {
-    const { selected } = _privateData.get(this)
-    const group = this.groups[groupIndex]
-    const endIndex = group.startIndex + group.count
-    const operation = this.isGroupSelected(groupIndex)
-      ? index => selected.delete(index)
-      : index => selected.add(index)
-    for (let index = group.startIndex; index < endIndex; index += 1) {
-      operation(index)
+    if (this.selection) {
+      const oldValue = this.selectedIndices
+      const { selected } = _privateData.get(this)
+      const group = this.groups[groupIndex]
+      const endIndex = group.startIndex + group.count
+      const operation = this.isGroupSelected(groupIndex)
+        ? index => selected.delete(index)
+        : index => selected.add(index)
+      for (let index = group.startIndex; index < endIndex; index += 1) {
+        operation(index)
+      }
+      this.getChildGroupIndices(groupIndex)
+        .flatMap(groupIndex => this.getGroupRowIndices(groupIndex))
+        .forEach(operation)
+      this.requestUpdate()
+      const value = this.selectedIndices
+      this.dispatchEvent(
+        new CustomEvent('change', { detail: { value, oldValue } })
+      )
     }
-    this.getChildGroupIndices(groupIndex)
-      .flatMap(groupIndex => this.getGroupRowIndices(groupIndex))
-      .forEach(operation)
-    this.requestUpdate()
   }
 
   toggleSelectedAll () {
     if (this.selection) {
+      const oldValue = this.selectedIndices
       const { selected } = _privateData.get(this)
 
       if (this.data.length === selected.size) {
@@ -153,6 +161,10 @@ class DetailsList extends StyledElement {
       }
 
       this.requestUpdate()
+      const value = this.selectedIndices
+      this.dispatchEvent(
+        new CustomEvent('change', { detail: { value, oldValue } })
+      )
     }
   }
 
