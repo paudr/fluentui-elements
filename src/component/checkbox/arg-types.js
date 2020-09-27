@@ -50,8 +50,8 @@ export default {
   },
   valueTrue: {
     name: 'valueTrue',
-    type: { name: 'boolean', required: false },
-    defaultValue: 1,
+    type: { name: 'object', required: false },
+    defaultValue: '1',
     control: {
       type: 'object'
     }
@@ -59,7 +59,7 @@ export default {
   valueFalse: {
     name: 'valueFalse',
     type: { name: 'object', required: false },
-    defaultValue: 0,
+    defaultValue: '0',
     control: {
       type: 'object'
     }
