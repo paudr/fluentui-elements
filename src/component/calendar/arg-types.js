@@ -9,7 +9,7 @@ export default {
     },
     table: {
       type: { summary: 'date' },
-      defaultValue: { summary: '' }
+      defaultValue: { summary: null }
     }
   },
   today: {
