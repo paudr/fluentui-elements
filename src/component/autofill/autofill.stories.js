@@ -2,8 +2,15 @@ import { action } from '@storybook/addon-actions'
 import argTypes from './arg-types'
 import './autofill'
 
-function renderAutofill (args) {
+export default {
+  title: 'Utilities/Autofill',
+  component: 'fluent-autofill',
+  argTypes
+}
+
+export function Standard (args) {
   const autofill = document.createElement('FLUENT-AUTOFILL')
+  autofill.style.border = '1px solid black'
 
   for (const prop in args) {
     autofill[prop] = args[prop]
@@ -19,15 +26,8 @@ function renderAutofill (args) {
   return autofill
 }
 
-export default {
-  title: 'Utilities/Autofill',
-  component: 'fluent-autofill',
-  argTypes
-}
-
-export function Suggest (args) {
-  const autofill = renderAutofill(args)
-  autofill.style.border = '1px solid black'
+export function SuggestMethod (args) {
+  const autofill = Standard(args)
   autofill.style.gridArea = 'autofill'
 
   const container = document.createElement('DIV')
@@ -52,8 +52,9 @@ export function Suggest (args) {
   return container
 }
 
-export function Sandbox (args) {
-  const autofill = renderAutofill(args)
+export function InlineViewer (args) {
+  const autofill = Standard(args)
+  autofill.style.border = ''
   autofill.style.backgroundColor = 'rgba(255, 146, 178, 0.4)'
 
   const container = document.createElement('DIV')
