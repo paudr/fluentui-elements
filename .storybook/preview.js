@@ -13,7 +13,6 @@ if (module.hot) {
 }
 
 export const parameters = {
-  layout: 'centered',
   options: {
     storySort: {
       order: [
