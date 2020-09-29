@@ -2,7 +2,13 @@ import { action } from '@storybook/addon-actions'
 import argTypes from './arg-types'
 import './calendar'
 
-function renderCalendar (args) {
+export default {
+  title: 'Galleries & Pickers/Calendar',
+  component: 'fluent-calendar',
+  argTypes
+}
+
+export function Standard (args) {
   const dateProps = ['selected', 'today']
   const calendar = document.createElement('FLUENT-CALENDAR')
 
@@ -23,11 +29,3 @@ function renderCalendar (args) {
 
   return calendar
 }
-
-export default {
-  title: 'Galleries & Pickers/Calendar',
-  component: 'fluent-calendar',
-  argTypes
-}
-
-export const Normal = renderCalendar.bind({})
