@@ -32,7 +32,6 @@ class SpinButton extends InputElement {
   static get properties () {
     return {
       ...InputElement.properties,
-      icon: { type: String, reflect: true },
       step: { type: Number, reflect: true },
       stringify: { type: Function },
       parse: { type: Function },
@@ -49,7 +48,6 @@ class SpinButton extends InputElement {
   constructor () {
     super()
 
-    this.icon = ''
     this.step = 1
     this.stringify = defaultStringify
     this.parse = defaultParser
