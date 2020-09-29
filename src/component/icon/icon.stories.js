@@ -3,7 +3,7 @@ import iconCode from './code'
 import './icon'
 
 export default {
-  title: 'Basic Inputs/Icon',
+  title: 'Utilities/Icon',
   component: 'fluent-icon',
   argTypes
 }
