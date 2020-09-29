@@ -64,8 +64,7 @@ export default {
     name: 'icon',
     type: { name: 'enum', required: false },
     defaultValue: '',
-    description:
-      'The name of the icon to use from the icon font. If string is empty, a placeholder icon will be rendered the same width as an icon.',
+    description: 'The name of the icon to use from the icon font.',
     control: {
       type: 'select',
       options: Object.keys(iconCode)
