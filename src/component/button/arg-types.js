@@ -67,7 +67,7 @@ export default {
     description: 'The name of the icon to use from the icon font.',
     control: {
       type: 'select',
-      options: Object.keys(iconCode)
+      options: ['', ...Object.keys(iconCode)]
     },
     table: {
       type: { summary: 'string (iconName)' },

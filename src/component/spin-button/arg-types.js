@@ -9,7 +9,7 @@ export default {
     defaultValue: '',
     control: {
       type: 'select',
-      options: Object.keys(iconCode)
+      options: ['', ...Object.keys(iconCode)]
     }
   },
   step: {
