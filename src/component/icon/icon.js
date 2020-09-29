@@ -6,7 +6,9 @@ class Icon extends LitElement {
   static get styles () {
     return css`
       :host {
-        ${iconCss};
+        ${iconCss}
+        width: 1em;
+        height: 1em;
       }
     `
   }
