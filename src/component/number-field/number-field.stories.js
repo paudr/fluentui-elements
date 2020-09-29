@@ -2,7 +2,13 @@ import { action } from '@storybook/addon-actions'
 import argTypes from './arg-types'
 import './number-field'
 
-function renderNumberField (args) {
+export default {
+  title: 'Basic Inputs/NumberField',
+  component: 'fluent-number-field',
+  argTypes
+}
+
+export function Standard (args) {
   const numberField = document.createElement('FLUENT-NUMBER-FIELD')
   numberField.addEventListener('keydown', event => event.stopPropagation())
 
@@ -19,14 +25,6 @@ function renderNumberField (args) {
 
   return numberField
 }
-
-export default {
-  title: 'Basic Inputs/NumberField',
-  component: 'fluent-number-field',
-  argTypes
-}
-
-export const Normal = renderNumberField.bind({})
-Normal.args = {
+Standard.args = {
   label: 'NumberField'
 }
