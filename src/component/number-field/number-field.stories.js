@@ -26,5 +26,29 @@ export function Standard (args) {
   return numberField
 }
 Standard.args = {
-  label: 'NumberField'
+  label: 'Standard'
+}
+
+export function CustomTransform (args) {
+  const numberField = Standard(args)
+  numberField.style.marginBottom = '25px'
+  numberField.stringify = value => (value == null ? '' : value.toString(16))
+  numberField.parse = value => {
+    const parsed = parseInt(value, 16)
+    return value.toLowerCase() === numberField.stringify(parsed) ? parsed : NaN
+  }
+
+  const container = document.createElement('FLUENT-DIV')
+
+  const button = document.createElement('FLUENT-BUTTON')
+  button.text = 'Alert value'
+  button.addEventListener('click', () => alert(numberField.value))
+
+  container.appendChild(numberField)
+  container.appendChild(button)
+
+  return container
+}
+CustomTransform.args = {
+  label: 'Hexadecimal field'
 }

@@ -169,5 +169,23 @@ export default {
       type: { summary: 'string' },
       defaultValue: { summary: '' }
     }
+  },
+  stringify: {
+    name: 'stringify',
+    type: { name: 'function', required: false },
+    description: 'Function for convert numeric value to a string value',
+    table: {
+      type: { summary: 'function' },
+      defaultValue: { summary: 'value => String(value)' }
+    }
+  },
+  parse: {
+    name: 'parse',
+    type: { name: 'function', required: false },
+    description: 'Function for convert string value to a numeric value',
+    table: {
+      type: { summary: 'function' },
+      defaultValue: { summary: 'value => Number(value)' }
+    }
   }
 }
