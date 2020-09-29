@@ -2,7 +2,13 @@ import { action } from '@storybook/addon-actions'
 import argTypes from './arg-types'
 import './overlay'
 
-function renderOverlay (args) {
+export default {
+  title: 'Utilities/Overlay',
+  component: 'fluent-overlay',
+  argTypes
+}
+
+export function Standard (args) {
   const overlay = document.createElement('FLUENT-OVERLAY')
 
   for (const prop in args) {
@@ -27,28 +33,4 @@ function renderOverlay (args) {
   overlay.appendChild(content)
 
   return overlay
-}
-
-export default {
-  title: 'Utilities/Overlay',
-  component: 'fluent-overlay',
-  argTypes
-}
-
-export const Normal = renderOverlay.bind({})
-
-export const Dark = renderOverlay.bind({})
-Dark.args = {
-  dark: true
-}
-
-export const AutoClose = renderOverlay.bind({})
-AutoClose.args = {
-  autoClose: true
-}
-
-export const DarkAutoClose = renderOverlay.bind({})
-DarkAutoClose.args = {
-  dark: true,
-  autoClose: true
 }
