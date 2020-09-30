@@ -2,7 +2,13 @@ import { action } from '@storybook/addon-actions'
 import argTypes from './arg-types'
 import './details-list'
 
-function renderDetailsList (args) {
+export default {
+  title: 'Items & Lists/DetailsList',
+  component: 'fluent-details-list',
+  argTypes
+}
+
+export function Standard (args) {
   const detailsList = document.createElement('FLUENT-DETAILS-LIST')
 
   detailsList.addEventListener('change', action('change'))
@@ -13,151 +19,73 @@ function renderDetailsList (args) {
 
   return detailsList
 }
-
-const items20 = Array(20)
-  .fill(0)
-  .map((_, i) => [`Item ${i}`, i])
-const items20Columns = [{ title: 'Name' }, { title: 'Value' }]
-
-const colors = [
-  { name: 'a', color: 'red' },
-  { name: 'b', color: 'red' },
-  { name: 'c', color: 'blue' },
-  { name: 'd', color: 'blue' },
-  { name: 'e', color: 'blue' }
-]
-const colorsColumns = [
-  { title: 'Name', key: 'name' },
-  { title: 'Color', key: 'color' }
-]
-const colorsGroups = [
-  { name: 'Color: "red"', startIndex: 0, count: 2, level: 0 },
-  { name: 'Color: "green"', startIndex: 2, count: 0, level: 0 },
-  { name: 'Color: "blue"', startIndex: 2, count: 3, level: 0 }
-]
-
-const items1000 = Array(1000)
-  .fill(0)
-  .map((_, i) => [`Item ${i}`, i])
-const items1000Groups = Array(100)
-  .fill(0)
-  .map((_, i) => i * 10)
-  .flatMap(i =>
-    i % 100 === 0
-      ? [
-        {
-          name: `Hundreds ${i.toString().padStart(3, '0')}`,
-          startIndex: i,
-          count: 0,
-          level: 0
-        },
-        {
-          name: `Tens: ${i.toString().padStart(3, '0')}`,
-          startIndex: i,
-          count: 10,
-          level: 1
-        }
-      ]
-      : [
-        {
-          name: `Tens: ${i.toString().padStart(3, '0')}`,
-          startIndex: i,
-          count: 10,
-          level: 1
-        }
-      ]
-  )
-
-export default {
-  title: 'Items & Lists/DetailsList',
-  component: 'fluent-details-list',
-  argTypes
+Standard.args = {
+  columns: [{ title: 'Name' }, { title: 'Value' }],
+  data: Array(20)
+    .fill(0)
+    .map((_, i) => [`Item ${i}`, i])
 }
 
-export const Normal = renderDetailsList.bind({})
-Normal.args = {
-  columns: items20Columns,
-  data: items20
+export const WithGroups = Standard.bind({})
+WithGroups.args = {
+  collapsible: true,
+  columns: [
+    { title: 'Name', key: 'name' },
+    { title: 'Color', key: 'color' }
+  ],
+  groups: [
+    { name: 'Color: "red"', startIndex: 0, count: 2, level: 0 },
+    { name: 'Color: "green"', startIndex: 2, count: 0, level: 0 },
+    { name: 'Color: "blue"', startIndex: 2, count: 3, level: 0 }
+  ],
+  data: [
+    { name: 'a', color: 'red' },
+    { name: 'b', color: 'red' },
+    { name: 'c', color: 'blue' },
+    { name: 'd', color: 'blue' },
+    { name: 'e', color: 'blue' }
+  ]
 }
 
-export const SelectionMultiple = renderDetailsList.bind({})
-SelectionMultiple.args = {
-  columns: items20Columns,
-  data: items20,
-  selection: 'multiple'
-}
-
-export const SelectionSimple = renderDetailsList.bind({})
-SelectionSimple.args = {
-  columns: items20Columns,
-  data: items20,
-  selection: 'simple'
-}
-
-export const SelectionSafe = renderDetailsList.bind({})
-SelectionSafe.args = {
-  columns: items20Columns,
-  data: items20,
-  selection: 'safe'
-}
-
-export const Compact = renderDetailsList.bind({})
-Compact.args = {
-  columns: items20Columns,
-  data: items20,
-  compact: true
-}
-
-export const CompactWithSelection = renderDetailsList.bind({})
-CompactWithSelection.args = {
-  columns: items20Columns,
-  data: items20,
-  selection: 'multiple',
-  compact: true
-}
-
-export const Grouped = renderDetailsList.bind({})
-Grouped.args = {
-  columns: colorsColumns,
-  data: colors,
-  groups: colorsGroups
-}
-
-export const GroupedWithLevels = renderDetailsList.bind({})
-GroupedWithLevels.args = {
-  columns: items20Columns,
-  data: items1000,
-  groups: items1000Groups,
-  compact: true
-}
-
-export const GroupedSelectionMultiple = renderDetailsList.bind({})
-GroupedSelectionMultiple.args = {
-  columns: colorsColumns,
-  data: colors,
-  groups: colorsGroups,
-  selection: 'multiple'
-}
-
-export const GroupedCollapsible = renderDetailsList.bind({})
-GroupedCollapsible.args = {
-  columns: colorsColumns,
-  data: colors,
-  groups: colorsGroups,
-  collapsible: true
-}
-
-export const GroupedWithLevelsCollapsible = renderDetailsList.bind({})
-GroupedWithLevelsCollapsible.args = {
-  columns: items20Columns,
-  data: items1000,
-  groups: items1000Groups,
-  selection: 'multiple',
-  collapsible: true
+export const WithSubGroups = Standard.bind({})
+WithSubGroups.args = {
+  collapsible: true,
+  columns: [{ title: 'Name' }, { title: 'Value' }],
+  groups: Array(100)
+    .fill(0)
+    .map((_, i) => i * 10)
+    .flatMap(i =>
+      i % 100 === 0
+        ? [
+          {
+            name: `Hundreds ${i.toString().padStart(3, '0')}`,
+            startIndex: i,
+            count: 0,
+            level: 0
+          },
+          {
+            name: `Tens: ${i.toString().padStart(3, '0')}`,
+            startIndex: i,
+            count: 10,
+            level: 1
+          }
+        ]
+        : [
+          {
+            name: `Tens: ${i.toString().padStart(3, '0')}`,
+            startIndex: i,
+            count: 10,
+            level: 1
+          }
+        ]
+    ),
+  data: Array(1000)
+    .fill(0)
+    .map((_, i) => [`Item ${i}`, i])
 }
 
 export function Alignment (args) {
-  const detailsList = renderDetailsList(args)
+  const detailsList = Standard(args)
 
   const alignOptions = ['left', 'center', 'right'].map(option => ({
     text: option,
@@ -198,10 +126,4 @@ export function Alignment (args) {
 
   return container
 }
-Alignment.args = {
-  columns: colorsColumns,
-  data: colors,
-  groups: colorsGroups,
-  selection: 'multiple',
-  collapsible: true
-}
+Alignment.args = { ...WithGroups.args }
