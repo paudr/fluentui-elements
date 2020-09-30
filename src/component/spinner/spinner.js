@@ -30,17 +30,17 @@ class Spinner extends StyledElement {
         height: 20px;
       }
 
-      :host([type='large']) #circle {
+      :host([size='large']) #circle {
         width: 28px;
         height: 28px;
       }
 
-      :host([type='small']) #circle {
+      :host([size='small']) #circle {
         width: 16px;
         height: 16px;
       }
 
-      :host([type='xSmall']) #circle {
+      :host([size='xSmall']) #circle {
         width: 12px;
         height: 12px;
       }
@@ -56,14 +56,14 @@ class Spinner extends StyledElement {
 
   static get properties () {
     return {
-      type: { type: String, reflect: true },
+      size: { type: String, reflect: true },
       label: { type: String, reflect: true }
     }
   }
 
   constructor () {
     super()
-    this.type = ''
+    this.size = ''
     this.label = ''
   }
 
