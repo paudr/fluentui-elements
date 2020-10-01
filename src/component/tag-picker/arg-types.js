@@ -95,5 +95,13 @@ export default {
       type: { summary: 'string' },
       defaultValue: { summary: 'Carregant' }
     }
+  },
+  getItems: {
+    name: 'getItems',
+    type: { name: 'function', required: false },
+    description: 'Request for suggested items.',
+    table: {
+      type: { summary: 'function -> Promise()' }
+    }
   }
 }
