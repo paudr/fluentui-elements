@@ -34,8 +34,6 @@ class ComboBox extends ComboElement {
     this.allowFreeform = false
     this.autoComplete = false
     this.accentInsensitive = false
-    this.selectedIndex = null
-    this.suggestedIndex = null
     _optionsManager.set(this, new OptionsManager())
     this.addEventListener('blur', () => {
       this.closeOptions()
