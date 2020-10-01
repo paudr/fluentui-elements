@@ -2,7 +2,13 @@ import { action } from '@storybook/addon-actions'
 import argTypes from './arg-types'
 import './dialog'
 
-function renderDialog (args) {
+export default {
+  title: 'Surfaces/Dialog',
+  component: 'fluent-dialog',
+  argTypes
+}
+
+export function Standard (args) {
   const dialog = document.createElement('FLUENT-DIALOG')
 
   for (const prop in args) {
@@ -13,45 +19,14 @@ function renderDialog (args) {
 
   return dialog
 }
-
-function renderDialogWithFooter (args) {
-  const dialog = renderDialog(args)
-
-  const container = document.createElement('DIV')
-  container.setAttribute('slot', 'footer')
-  container.style.display = 'flex'
-  container.style.justifyContent = 'flex-end'
-
-  const ok = document.createElement('FLUENT-BUTTON')
-  ok.primary = true
-  ok.text = 'Ok'
-  container.appendChild(ok)
-
-  const cancel = document.createElement('FLUENT-BUTTON')
-  cancel.text = 'Cancel'
-  cancel.style.marginLeft = '8px'
-  container.appendChild(cancel)
-
-  dialog.appendChild(container)
-
-  return dialog
-}
-
-export default {
-  title: 'Surfaces/Dialog',
-  component: 'fluent-dialog',
-  argTypes
-}
-
-export const Normal = renderDialogWithFooter.bind({})
-Normal.args = {
+Standard.args = {
   title: 'Missing Subject',
   text: 'Do you want to send this message without a subject?',
   maxWidth: '400px'
 }
 
-export function LargeHeader (args) {
-  const dialog = renderDialogWithFooter(args)
+export function WithContent (args) {
+  const dialog = Standard(args)
 
   const choiceGroup = document.createElement('FLUENT-CHOICE-GROUP')
   choiceGroup.label = 'Pick one'
@@ -61,85 +36,31 @@ export function LargeHeader (args) {
     { value: 'C', text: 'Option C', disabled: true }
   ]
 
+  const footer = document.createElement('DIV')
+  footer.setAttribute('slot', 'footer')
+  footer.style.display = 'flex'
+  footer.style.justifyContent = 'flex-end'
+
+  const ok = document.createElement('FLUENT-BUTTON')
+  ok.primary = true
+  ok.text = 'Ok'
+  footer.appendChild(ok)
+
+  const cancel = document.createElement('FLUENT-BUTTON')
+  cancel.text = 'Cancel'
+  cancel.style.marginLeft = '8px'
+  footer.appendChild(cancel)
+
   dialog.appendChild(choiceGroup)
+  dialog.appendChild(footer)
 
   return dialog
 }
-LargeHeader.args = {
+WithContent.args = {
   title: 'All emails together',
   text:
     'Your Inbox has changed. No longer does it include favorites, it is a singular destination for your emails.',
   type: 'largeHeader',
   maxWidth: '400px',
   maxHeight: '250px'
-}
-
-export const Close = renderDialog.bind({})
-Close.args = {
-  title: 'Alert',
-  text: 'You have a notification.',
-  type: 'close',
-  maxWidth: '400px'
-}
-
-export const AutoClose = renderDialog.bind({})
-AutoClose.args = {
-  title: 'Alert',
-  text: 'You have a notification.',
-  type: 'close',
-  maxWidth: '400px',
-  autoClose: true
-}
-
-export const Overlay = renderDialog.bind({})
-Overlay.args = {
-  title: 'Alert',
-  text: 'You have a notification.',
-  type: 'close',
-  maxWidth: '400px',
-  overlay: true
-}
-
-export const OverlayDark = renderDialog.bind({})
-OverlayDark.args = {
-  title: 'Alert',
-  text: 'You have a notification.',
-  type: 'close',
-  maxWidth: '400px',
-  overlay: true,
-  dark: true
-}
-
-export const OverlayAutoClose = renderDialog.bind({})
-OverlayAutoClose.args = {
-  title: 'Alert',
-  text: 'You have a notification.',
-  type: 'close',
-  maxWidth: '400px',
-  overlay: true,
-  autoClose: true,
-  dark: true
-}
-
-export const OverlayLightDismiss = renderDialog.bind({})
-OverlayLightDismiss.args = {
-  title: 'Alert',
-  text: 'You have a notification.',
-  type: 'close',
-  maxWidth: '400px',
-  overlay: true,
-  isLightDismiss: true,
-  dark: true
-}
-
-export const OverlayLightDismissAutoClose = renderDialog.bind({})
-OverlayLightDismissAutoClose.args = {
-  title: 'Alert',
-  text: 'You have a notification.',
-  type: 'close',
-  maxWidth: '400px',
-  overlay: true,
-  autoClose: true,
-  isLightDismiss: true,
-  dark: true
 }
