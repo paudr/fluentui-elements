@@ -8,8 +8,7 @@ export default {
       type: 'date'
     },
     table: {
-      type: { summary: 'date' },
-      defaultValue: { summary: null }
+      type: { summary: 'date' }
     }
   },
   today: {

@@ -26,8 +26,7 @@ export default {
       step: 1
     },
     table: {
-      type: { summary: 'number' },
-      defaultValue: { summary: null }
+      type: { summary: 'number' }
     }
   },
   inc: {

@@ -52,8 +52,7 @@ export default {
       type: 'text'
     },
     table: {
-      type: { summary: 'string' },
-      defaultValue: { summary: null }
+      type: { summary: 'string' }
     }
   },
   maxWidth: {
@@ -80,8 +79,7 @@ export default {
       type: 'text'
     },
     table: {
-      type: { summary: 'string' },
-      defaultValue: { summary: null }
+      type: { summary: 'string' }
     }
   },
   maxHeight: {
@@ -94,8 +92,7 @@ export default {
       type: 'text'
     },
     table: {
-      type: { summary: 'string' },
-      defaultValue: { summary: null }
+      type: { summary: 'string' }
     }
   },
   overlay: {

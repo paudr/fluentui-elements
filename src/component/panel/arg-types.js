@@ -49,8 +49,7 @@ export default {
       type: 'text'
     },
     table: {
-      type: { summary: 'string' },
-      defaultValue: { summary: null }
+      type: { summary: 'string' }
     }
   },
   maxWidth: {
@@ -63,8 +62,7 @@ export default {
       type: 'text'
     },
     table: {
-      type: { summary: 'string' },
-      defaultValue: { summary: null }
+      type: { summary: 'string' }
     }
   },
   left: {
@@ -89,8 +87,7 @@ export default {
       type: 'text'
     },
     table: {
-      type: { summary: 'string' },
-      defaultValue: { summary: null }
+      type: { summary: 'string' }
     }
   },
   withoutCloseButton: {

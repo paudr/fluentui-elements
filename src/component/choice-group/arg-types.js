@@ -8,8 +8,7 @@ export default {
       type: 'text'
     },
     table: {
-      type: { summary: 'string' },
-      defaultValue: { summary: '' }
+      type: { summary: 'string' }
     }
   },
   label: {

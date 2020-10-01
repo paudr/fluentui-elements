@@ -125,8 +125,7 @@ export default {
       step: 1
     },
     table: {
-      type: { summary: 'number' },
-      defaultValue: { summary: null }
+      type: { summary: 'number' }
     }
   },
   min: {
@@ -140,8 +139,7 @@ export default {
       step: 1
     },
     table: {
-      type: { summary: 'number' },
-      defaultValue: { summary: null }
+      type: { summary: 'number' }
     }
   },
   value: {
@@ -153,8 +151,7 @@ export default {
       type: 'number'
     },
     table: {
-      type: { summary: 'number' },
-      defaultValue: { summary: null }
+      type: { summary: 'number' }
     }
   },
   text: {
