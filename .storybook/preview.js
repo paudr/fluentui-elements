@@ -1,4 +1,11 @@
+import React from 'react'
 import { configure } from '@storybook/web-components'
+import {
+  Title,
+  Primary,
+  ArgsTable,
+  PRIMARY_STORY,
+} from '@storybook/addon-docs/blocks'
 import './assets/fonts.css'
 
 const storiesModule = require.context('../src/', true, /\.stories\.js$/)
@@ -25,6 +32,17 @@ export const parameters = {
         'Utilities',
         'Base Types'
       ]
+    }
+  },
+  docs: {
+    page() {
+      return React.createElement(
+        'div',
+        null,
+        React.createElement(Title),
+        React.createElement(Primary),
+        React.createElement(ArgsTable, { story: PRIMARY_STORY })
+      )
     }
   }
 }
