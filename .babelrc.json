@@ -1,3 +1,22 @@
 {
-  "plugins": ["@babel/plugin-proposal-nullish-coalescing-operator"]
+  "plugins": [
+    "@babel/plugin-proposal-nullish-coalescing-operator",
+    [
+      "template-html-minifier",
+      {
+        "modules": {
+          "lit-html": ["html"],
+          "lit-element": ["html", "css"]
+        },
+        "strictCSS": true,
+        "htmlMinifier": {
+          "collapseWhitespace": true,
+          "conservativeCollapse": true,
+          "removeComments": true,
+          "caseSensitive": true,
+          "minifyCSS": true
+        }
+      }
+    ]
+  ]
 }
