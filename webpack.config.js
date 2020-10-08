@@ -7,8 +7,8 @@ module.exports = {
   entry: path.resolve('src', 'index.js'),
   output: {
     path: path.resolve('dist'),
-    library: 'fluentuiWC',
-    filename: 'fluentui-wc.js'
+    library: 'fluentuiElements',
+    filename: 'fluentui-elements.js'
   },
   plugins: [
     new webpack.DefinePlugin({
