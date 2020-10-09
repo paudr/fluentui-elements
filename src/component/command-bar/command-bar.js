@@ -1,5 +1,6 @@
-import { html, nothing } from 'lit-html'
-import StyledElement from '../../base/styled-element'
+import { LitElement, html } from 'lit-element'
+import { nothing } from 'lit-html'
+import defineStyleSheetProperty from '../../utils/style-sheet-property'
 import debounce from '../../utils/debounce'
 import styles from './command-bar.css'
 import iconCode from '../icon/code'
@@ -43,7 +44,7 @@ function copyItem (item) {
 const _privateData = new WeakMap()
 const more = Symbol('more')
 
-class CommandBar extends StyledElement {
+class CommandBar extends LitElement {
   static get styles () {
     return styles
   }
@@ -415,6 +416,8 @@ class CommandBar extends StyledElement {
     `
   }
 }
+
+defineStyleSheetProperty(CommandBar)
 
 customElements.define('fluent-command-bar', CommandBar)
 

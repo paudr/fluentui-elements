@@ -1,9 +1,10 @@
-import { html, nothing } from 'lit-html'
+import { LitElement, html } from 'lit-element'
+import { nothing } from 'lit-html'
 import { classMap } from 'lit-html/directives/class-map'
-import StyledElement from '../styled-element'
+import defineStyleSheetProperty from '../../utils/style-sheet-property'
 import styles from './combo-element.css'
 
-export default class ComboElement extends StyledElement {
+export default class ComboElement extends LitElement {
   static get styles () {
     return styles
   }
@@ -93,3 +94,5 @@ export default class ComboElement extends StyledElement {
     `
   }
 }
+
+defineStyleSheetProperty(ComboElement)

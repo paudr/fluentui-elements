@@ -1,5 +1,6 @@
-import { html, nothing } from 'lit-html'
-import StyledElement from '../../base/styled-element'
+import { LitElement, html } from 'lit-element'
+import { nothing } from 'lit-html'
+import defineStyleSheetProperty from '../../utils/style-sheet-property'
 import styles from './calendar.css'
 import CalendarDay from './calendar-day'
 import CalendarMonth from './calendar-month'
@@ -8,7 +9,7 @@ import iconCode from '../icon/code'
 
 const _privateData = new WeakMap()
 
-class Calendar extends StyledElement {
+class Calendar extends LitElement {
   static get styles () {
     return styles
   }
@@ -168,6 +169,8 @@ class Calendar extends StyledElement {
     `
   }
 }
+
+defineStyleSheetProperty(Calendar)
 
 customElements.define('fluent-calendar', Calendar)
 

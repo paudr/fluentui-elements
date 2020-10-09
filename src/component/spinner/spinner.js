@@ -1,10 +1,10 @@
-import { html, css } from 'lit-element'
+import { LitElement, html, css } from 'lit-element'
 import { nothing } from 'lit-html'
-import StyledElement from '../../base/styled-element'
+import defineStyleSheetProperty from '../../utils/style-sheet-property'
 import { themeLight, themePrimary } from '../../theme/color.css'
 import { fontStyle } from '../../theme/typografy.css'
 
-class Spinner extends StyledElement {
+class Spinner extends LitElement {
   static get styles () {
     return css`
       @keyframes Spinner-spin {
@@ -74,6 +74,8 @@ class Spinner extends StyledElement {
     `
   }
 }
+
+defineStyleSheetProperty(Spinner)
 
 customElements.define('fluent-spinner', Spinner)
 

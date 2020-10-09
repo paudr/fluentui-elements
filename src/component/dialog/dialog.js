@@ -1,11 +1,12 @@
-import { html, nothing } from 'lit-html'
-import StyledElement from '../../base/styled-element'
+import { LitElement, html } from 'lit-element'
+import { nothing } from 'lit-html'
 import { styleMap } from 'lit-html/directives/style-map'
+import defineStyleSheetProperty from '../../utils/style-sheet-property'
 import styles, { overlay } from './dialog.css'
 import iconCode from '../icon/code'
 import '../overlay'
 
-class Dialog extends StyledElement {
+class Dialog extends LitElement {
   static get styles () {
     return styles
   }
@@ -116,6 +117,8 @@ class Dialog extends StyledElement {
       : this.renderContent()
   }
 }
+
+defineStyleSheetProperty(Dialog)
 
 customElements.define('fluent-dialog', Dialog)
 

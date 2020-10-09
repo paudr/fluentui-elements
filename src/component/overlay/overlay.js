@@ -1,8 +1,8 @@
-import { html, css } from 'lit-element'
-import StyledElement from '../../base/styled-element'
+import { LitElement, html, css } from 'lit-element'
+import defineStyleSheetProperty from '../../utils/style-sheet-property'
 import { blackTranslucent40, whiteTranslucent40 } from '../../theme/color.css'
 
-class Overlay extends StyledElement {
+class Overlay extends LitElement {
   static get styles () {
     return css`
       :host {
@@ -69,6 +69,8 @@ class Overlay extends StyledElement {
     return html`<div id="root" @click="${this.handleClick}"><slot></slot></div>`
   }
 }
+
+defineStyleSheetProperty(Overlay)
 
 customElements.define('fluent-overlay', Overlay)
 

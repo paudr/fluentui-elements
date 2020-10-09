@@ -1,9 +1,10 @@
-import { html, nothing } from 'lit-html'
+import { LitElement, html } from 'lit-element'
+import { nothing } from 'lit-html'
 import { classMap } from 'lit-html/directives/class-map'
-import StyledElement from '../../base/styled-element'
+import defineStyleSheetProperty from '../../utils/style-sheet-property'
 import styles from './toggle.css'
 
-class Toggle extends StyledElement {
+class Toggle extends LitElement {
   static get styles () {
     return styles
   }
@@ -61,6 +62,8 @@ class Toggle extends StyledElement {
     `
   }
 }
+
+defineStyleSheetProperty(Toggle)
 
 customElements.define('fluent-toggle', Toggle)
 

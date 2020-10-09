@@ -1,9 +1,10 @@
-import { html, nothing } from 'lit-html'
-import StyledElement from '../../base/styled-element'
+import { LitElement, html } from 'lit-element'
+import { nothing } from 'lit-html'
+import defineStyleSheetProperty from '../../utils/style-sheet-property'
 import styles from './button.css'
 import iconCode from '../icon/code'
 
-class Button extends StyledElement {
+class Button extends LitElement {
   static get styles () {
     return styles
   }
@@ -91,6 +92,8 @@ class Button extends StyledElement {
     return html`${this.href ? this.renderAnchor() : this.renderButton()}`
   }
 }
+
+defineStyleSheetProperty(Button)
 
 customElements.define('fluent-button', Button)
 

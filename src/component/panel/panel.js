@@ -1,11 +1,12 @@
-import { html, nothing } from 'lit-html'
+import { LitElement, html } from 'lit-element'
+import { nothing } from 'lit-html'
 import { styleMap } from 'lit-html/directives/style-map'
-import StyledElement from '../../base/styled-element'
+import defineStyleSheetProperty from '../../utils/style-sheet-property'
 import styles from './panel.css'
 import iconCode from '../icon/code'
 import '../overlay'
 
-class Panel extends StyledElement {
+class Panel extends LitElement {
   static get styles () {
     return styles
   }
@@ -119,6 +120,8 @@ class Panel extends StyledElement {
       : this.renderContent()
   }
 }
+
+defineStyleSheetProperty(Panel)
 
 customElements.define('fluent-panel', Panel)
 

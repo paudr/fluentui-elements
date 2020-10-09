@@ -1,9 +1,10 @@
-import { html, nothing } from 'lit-html'
+import { LitElement, html } from 'lit-element'
+import { nothing } from 'lit-html'
 import { classMap } from 'lit-html/directives/class-map'
-import StyledElement from '../styled-element'
+import defineStyleSheetProperty from '../../utils/style-sheet-property'
 import styles from './input-element.css'
 
-export default class InputElement extends StyledElement {
+export default class InputElement extends LitElement {
   static get styles () {
     return styles
   }
@@ -85,3 +86,5 @@ export default class InputElement extends StyledElement {
     `
   }
 }
+
+defineStyleSheetProperty(InputElement)

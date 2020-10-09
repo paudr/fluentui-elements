@@ -1,5 +1,6 @@
-import { html, nothing } from 'lit-html'
-import StyledElement from '../../base/styled-element'
+import { LitElement, html } from 'lit-element'
+import { nothing } from 'lit-html'
+import defineStyleSheetProperty from '../../utils/style-sheet-property'
 import styles, { expanderWidth } from './details-list.css'
 import iconCode from '../icon/code'
 
@@ -15,7 +16,7 @@ function getJustifyContent (align) {
 
 const _privateData = new WeakMap()
 
-class DetailsList extends StyledElement {
+class DetailsList extends LitElement {
   static get styles () {
     return styles
   }
@@ -344,6 +345,8 @@ class DetailsList extends StyledElement {
     `
   }
 }
+
+defineStyleSheetProperty(DetailsList)
 
 customElements.define('fluent-details-list', DetailsList)
 

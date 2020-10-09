@@ -1,14 +1,14 @@
-import { html } from 'lit-element'
+import { LitElement, html } from 'lit-element'
 import { classMap } from 'lit-html/directives/class-map'
 import { styleMap } from 'lit-html/directives/style-map'
-import StyledElement from '../../base/styled-element'
+import defineStyleSheetProperty from '../../utils/style-sheet-property'
 import styles from './select.css'
 import OptionsManager from '../../utils/options-manager'
 import iconCode from '../icon/code'
 
 const _optionsManager = new WeakMap()
 
-class Select extends StyledElement {
+class Select extends LitElement {
   static get styles () {
     return styles
   }
@@ -270,6 +270,8 @@ class Select extends StyledElement {
     </div>`
   }
 }
+
+defineStyleSheetProperty(Select)
 
 customElements.define('fluent-select', Select)
 

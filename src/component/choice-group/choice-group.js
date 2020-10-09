@@ -1,9 +1,10 @@
-import { html, nothing } from 'lit-html'
+import { LitElement, html } from 'lit-element'
+import { nothing } from 'lit-html'
 import { classMap } from 'lit-html/directives/class-map'
-import StyledElement from '../../base/styled-element'
+import defineStyleSheetProperty from '../../utils/style-sheet-property'
 import styles from './choice-group.css'
 
-class ChoiceGroup extends StyledElement {
+class ChoiceGroup extends LitElement {
   static get styles () {
     return styles
   }
@@ -68,6 +69,8 @@ class ChoiceGroup extends StyledElement {
     `
   }
 }
+
+defineStyleSheetProperty(ChoiceGroup)
 
 customElements.define('fluent-choice-group', ChoiceGroup)
 
