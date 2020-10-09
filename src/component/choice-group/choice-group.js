@@ -1,5 +1,4 @@
 import { LitElement, html } from 'lit-element'
-import { nothing } from 'lit-html'
 import { classMap } from 'lit-html/directives/class-map'
 import defineStyleSheetProperty from '../../utils/style-sheet-property'
 import styles from './choice-group.css'
@@ -45,7 +44,7 @@ class ChoiceGroup extends LitElement {
 
   render () {
     return html`
-      ${this.label ? html`<label id="label">${this.label}</label>` : nothing}
+      ${this.label ? html`<label id="label">${this.label}</label>` : undefined}
       <div id="container">
         ${this.options.map(
           option => html`

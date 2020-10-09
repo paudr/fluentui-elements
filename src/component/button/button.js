@@ -1,5 +1,4 @@
 import { LitElement, html } from 'lit-element'
-import { nothing } from 'lit-html'
 import defineStyleSheetProperty from '../../utils/style-sheet-property'
 import styles from './button.css'
 import iconCode from '../icon/code'
@@ -50,19 +49,19 @@ class Button extends LitElement {
   renderContent () {
     return html`
       <span id="container">
-        ${this.icon ? html`<i>${iconCode[this.icon]}</i>` : nothing}
+        ${this.icon ? html`<i>${iconCode[this.icon]}</i>` : undefined}
         ${this.text || this.secondaryText
           ? html`
               <span id="textContainer">
                 ${this.text
                   ? html`<span id="label">${this.text}</span>`
-                  : nothing}
+                  : undefined}
                 ${this.secondaryText
                   ? html`<span id="description">${this.secondaryText}</span>`
-                  : nothing}
+                  : undefined}
               </span>
             `
-          : nothing}
+          : undefined}
       </span>
     `
   }

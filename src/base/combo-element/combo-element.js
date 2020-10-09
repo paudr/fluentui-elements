@@ -1,5 +1,4 @@
 import { LitElement, html } from 'lit-element'
-import { nothing } from 'lit-html'
 import { classMap } from 'lit-html/directives/class-map'
 import defineStyleSheetProperty from '../../utils/style-sheet-property'
 import styles from './combo-element.css'
@@ -40,7 +39,7 @@ export default class ComboElement extends LitElement {
 
   renderLabel () {
     return !this.label
-      ? nothing
+      ? undefined
       : this.constructor.fieldId
         ? html`<label id="label" for="${this.constructor.fieldId}">
           ${this.label}
@@ -51,11 +50,11 @@ export default class ComboElement extends LitElement {
   }
 
   renderInputField () {
-    return nothing
+    return undefined
   }
 
   renderDropdown () {
-    return nothing
+    return undefined
   }
 
   render () {
@@ -79,17 +78,17 @@ export default class ComboElement extends LitElement {
               <span>
                 ${this.description
                   ? html`<span id="description">${this.description}</span>`
-                  : nothing}
+                  : undefined}
                 ${this.errorMessage
                   ? html`
                       <p id="errorMessage" class="slideDownIn20">
                         <span>${this.errorMessage}</span>
                       </p>
                     `
-                  : nothing}
+                  : undefined}
               </span>
             `
-          : nothing}
+          : undefined}
       </div>
     `
   }

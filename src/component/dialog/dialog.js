@@ -1,5 +1,4 @@
 import { LitElement, html } from 'lit-element'
-import { nothing } from 'lit-html'
 import { styleMap } from 'lit-html/directives/style-map'
 import defineStyleSheetProperty from '../../utils/style-sheet-property'
 import styles, { overlay } from './dialog.css'
@@ -91,11 +90,11 @@ class Dialog extends LitElement {
                   <i>${iconCode.Cancel}</i>
                 </button>
               </div>`
-            : nothing}
+            : undefined}
         </div>
         <div id="inner">
           <div id="content">
-            ${this.text ? html`<p id="subText">${this.text}</p>` : nothing}
+            ${this.text ? html`<p id="subText">${this.text}</p>` : undefined}
             <slot></slot>
           </div>
           <slot name="footer"></slot>

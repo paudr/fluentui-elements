@@ -1,4 +1,4 @@
-import { html, nothing } from 'lit-html'
+import { html } from 'lit-element'
 import { classMap } from 'lit-html/directives/class-map'
 import { live } from 'lit-html/directives/live'
 import InputElement from '../../base/input-element'
@@ -151,18 +151,18 @@ class TextField extends InputElement {
               <span style="padding-bottom: 1px;">${this.prefix}</span>
             </div>
           `
-        : nothing}
+        : undefined}
       ${this.multiline ? this.renderTextarea() : this.renderInput()}
       ${this.icon
         ? html`<i @click="${this.handleClick}">${iconCode[this.icon]}</i>`
-        : nothing}
+        : undefined}
       ${this.sufix
         ? html`
             <div id="sufix">
               <span style="padding-bottom: 1px;">${this.sufix}</span>
             </div>
           `
-        : nothing}
+        : undefined}
     `
   }
 }

@@ -1,5 +1,4 @@
 import { LitElement, html } from 'lit-element'
-import { nothing } from 'lit-html'
 import { classMap } from 'lit-html/directives/class-map'
 import defineStyleSheetProperty from '../../utils/style-sheet-property'
 import styles from './pivot.css'
@@ -65,11 +64,11 @@ class Pivot extends LitElement {
                     ? html`<span class="icon"
                         ><i>${iconCode[tab.icon]}</i></span
                       >`
-                    : nothing}
+                    : undefined}
                   <span class="label"> ${tab.text} </span>
                   ${tab.count != null
                     ? html`<span class="count">(${tab.count.toString()})</span>`
-                    : nothing}
+                    : undefined}
                 </span>
               </span>
             </button>

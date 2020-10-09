@@ -1,4 +1,4 @@
-import { html, nothing } from 'lit-html'
+import { html } from 'lit-element'
 import { classMap } from 'lit-html/directives/class-map'
 import ComboElement from '../../base/combo-element'
 import debounce from '../../utils/debounce'
@@ -183,7 +183,7 @@ class TagPicker extends ComboElement {
                 )}
               </span>
             `
-          : nothing}
+          : undefined}
         <fluent-autofill
           autofill
           .placeholder="${placeholder}"
@@ -208,7 +208,7 @@ class TagPicker extends ComboElement {
           <div id="circle"></div>
           ${this.loadingText
             ? html`<div id="loadingText">${this.loadingText}</div>`
-            : nothing}
+            : undefined}
         </div>
         <fluent-select
           maxHeight="200px"

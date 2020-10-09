@@ -1,5 +1,4 @@
 import { LitElement, html } from 'lit-element'
-import { nothing } from 'lit-html'
 import defineStyleSheetProperty from '../../utils/style-sheet-property'
 import styles from './calendar.css'
 import CalendarDay from './calendar-day'
@@ -164,7 +163,7 @@ class Calendar extends LitElement {
                 ${this.goToday}
               </button>
             `
-          : nothing}
+          : undefined}
       </div>
     `
   }

@@ -1,4 +1,4 @@
-import { html, nothing } from 'lit-html'
+import { html } from 'lit-element'
 import InputElement from '../../base/input-element'
 import styles from './search-box.css'
 import iconCode from '../icon/code'
@@ -96,7 +96,7 @@ class SearchBox extends InputElement {
               </span>
             </button>
           </div>`
-        : nothing}
+        : undefined}
     `
   }
 }

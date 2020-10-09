@@ -1,5 +1,4 @@
 import { LitElement, html } from 'lit-element'
-import { nothing } from 'lit-html'
 import defineStyleSheetProperty from '../../utils/style-sheet-property'
 import styles, { expanderWidth } from './details-list.css'
 import iconCode from '../icon/code'
@@ -202,7 +201,7 @@ class DetailsList extends LitElement {
     return html`
       <td class="checkCell">
         ${empty
-          ? nothing
+          ? undefined
           : html`
               <div @click="${click}">
                 <div>
@@ -222,7 +221,7 @@ class DetailsList extends LitElement {
             <i>${iconCode.ChevronRightMed}</i>
           </div>
         `
-      : nothing
+      : undefined
   }
 
   renderData ({ startIndex = 0, count = this.data.length } = {}) {
@@ -240,10 +239,10 @@ class DetailsList extends LitElement {
                 this.toggleSelectedRow(index + startIndex)
               }}"
             >
-              ${this.selection ? this.renderCheckbox() : nothing}
+              ${this.selection ? this.renderCheckbox() : undefined}
               ${this.isCollapsible
                 ? html`<td class="expanderCell"></td>`
-                : nothing}
+                : undefined}
               ${this.columns.map((column, index) => {
                 const key = column.key == null ? index : column.key
                 return html`<td data-column-key="${key}">
@@ -282,7 +281,7 @@ class DetailsList extends LitElement {
                     this.toggleSelectedGroup(index)
                   }
                 })
-              : nothing}
+              : undefined}
             <th
               style="padding-left: ${(group.level || 0) * expanderWidth}px"
               colspan="${this.columns.length + (this.isCollapsible ? 1 : 0)}"
@@ -294,7 +293,7 @@ class DetailsList extends LitElement {
             </th>
           </tr>
         </thead>
-        ${expanded ? this.renderData(group) : nothing}
+        ${expanded ? this.renderData(group) : undefined}
       `
     })
   }
@@ -314,7 +313,7 @@ class DetailsList extends LitElement {
                     this.toggleSelectedAll()
                   }
                 })
-              : nothing}
+              : undefined}
             ${this.isCollapsible
               ? html`<td class="expanderCell">
                   ${this.renderExpander({
@@ -326,7 +325,7 @@ class DetailsList extends LitElement {
                     }
                   })}
                 </td>`
-              : nothing}
+              : undefined}
             ${this.columns.map(
               column => html`
                 <th style="${column.width ? `width: ${column.width}` : ''}">

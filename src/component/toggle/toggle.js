@@ -1,5 +1,4 @@
 import { LitElement, html } from 'lit-element'
-import { nothing } from 'lit-html'
 import { classMap } from 'lit-html/directives/class-map'
 import defineStyleSheetProperty from '../../utils/style-sheet-property'
 import styles from './toggle.css'
@@ -43,11 +42,11 @@ class Toggle extends LitElement {
       <div id="root" class="${classMap({ withoutText: !withText })}">
         ${this.label
           ? html`<label id="fieldLabel">${this.label}</label>`
-          : nothing}
+          : undefined}
         <div id="container">
           <button
             id="toggle"
-            class="${this.checked ? 'checked' : nothing}"
+            class="${this.checked ? 'checked' : undefined}"
             @click="${this.handleClick}"
           >
             <span></span>
@@ -56,7 +55,7 @@ class Toggle extends LitElement {
             ? html`<label for="toggle" id="stateText">
                 ${this.checked ? this.onText : this.offText}
               </label>`
-            : nothing}
+            : undefined}
         </div>
       </div>
     `

@@ -1,5 +1,4 @@
 import { LitElement, html } from 'lit-element'
-import { nothing } from 'lit-html'
 import { classMap } from 'lit-html/directives/class-map'
 import defineStyleSheetProperty from '../../utils/style-sheet-property'
 import styles from './checkbox.css'
@@ -71,7 +70,7 @@ class Checkbox extends LitElement {
         <div>
           <i>${iconCode.CheckMark}</i>
         </div>
-        ${this.label ? html`<span>${this.label}</span>` : nothing}
+        ${this.label ? html`<span>${this.label}</span>` : undefined}
       </label>
     `
   }

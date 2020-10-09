@@ -1,5 +1,4 @@
 import { LitElement, html } from 'lit-element'
-import { nothing } from 'lit-html'
 import defineStyleSheetProperty from '../../utils/style-sheet-property'
 import debounce from '../../utils/debounce'
 import styles from './command-bar.css'
@@ -239,16 +238,16 @@ class CommandBar extends LitElement {
               >
                 ${iconCode[icon]}
               </i>`
-            : nothing}
-          ${!icon && emptyIcon ? html`<i class="empty"></i>` : nothing}
+            : undefined}
+          ${!icon && emptyIcon ? html`<i class="empty"></i>` : undefined}
           ${text
             ? html`<span class="text">
                 <span> ${text} </span>
               </span>`
-            : nothing}
+            : undefined}
           ${expandIcon
             ? html`<i class="expand">${iconCode[expandIcon]}</i>`
-            : nothing}
+            : undefined}
         </span>
       </button>
     `
@@ -323,7 +322,7 @@ class CommandBar extends LitElement {
             })}
         ${hasChilds && showChilds
           ? this.renderContextualPanel(item.childs, 1)
-          : nothing}
+          : undefined}
       </div>
     `
   }
@@ -366,7 +365,7 @@ class CommandBar extends LitElement {
             })}
         ${hasChilds && showChilds
           ? this.renderContextualPanel(item.childs, level + 1)
-          : nothing}
+          : undefined}
       </li>
     `
   }

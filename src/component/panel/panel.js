@@ -1,5 +1,4 @@
 import { LitElement, html } from 'lit-element'
-import { nothing } from 'lit-html'
 import { styleMap } from 'lit-html/directives/style-map'
 import defineStyleSheetProperty from '../../utils/style-sheet-property'
 import styles from './panel.css'
@@ -89,10 +88,10 @@ class Panel extends LitElement {
                   </button>
                 </div>
               `
-            : nothing}
+            : undefined}
         </div>
         <div id="contentInner">
-          ${this.withoutCloseButton ? this.renderHeader() : nothing}
+          ${this.withoutCloseButton ? this.renderHeader() : undefined}
           <div id="scrollableContent">
             <div id="content">
               <slot></slot>
