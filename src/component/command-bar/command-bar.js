@@ -31,6 +31,7 @@ function getItems ({ items, overflowItems, overflowedItemsIndex }) {
 
 function copyItem (item) {
   return {
+    type: item.type,
     value: item.value,
     text: item.text,
     icon: item.icon,
