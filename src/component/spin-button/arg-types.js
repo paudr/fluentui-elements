@@ -1,4 +1,4 @@
-import baseArgTypes from '../../base/input-element/arg-types'
+import baseArgTypes from '../../part/input-element/arg-types'
 
 export default {
   ...baseArgTypes,

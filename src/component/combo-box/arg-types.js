@@ -1,4 +1,4 @@
-import baseArgTypes from '../../base/combo-element/arg-types'
+import baseArgTypes from '../../part/combo-element/arg-types'
 
 export default {
   ...baseArgTypes,

@@ -1,5 +1,5 @@
 import { html } from 'lit-element'
-import InputElement from '../../base/input-element'
+import InputElement from '../../part/input-element'
 import styles from './search-box.css'
 import iconCode from '../icon/code'
 

@@ -1,7 +1,7 @@
 import { html } from 'lit-element'
 import { classMap } from 'lit-html/directives/class-map'
 import { live } from 'lit-html/directives/live'
-import InputElement from '../../base/input-element'
+import InputElement from '../../part/input-element'
 import styles from './text-field.css'
 import iconCode from '../icon/code'
 

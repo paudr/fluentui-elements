@@ -1,6 +1,6 @@
 import { html } from 'lit-html'
 import { live } from 'lit-html/directives/live'
-import ComboElement from '../../base/combo-element'
+import ComboElement from '../../part/combo-element'
 import styles from './date-picker.css'
 import iconCode from '../icon/code'
 import '../calendar'

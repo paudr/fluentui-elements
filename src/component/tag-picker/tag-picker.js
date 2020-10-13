@@ -1,6 +1,6 @@
 import { html } from 'lit-element'
 import { classMap } from 'lit-html/directives/class-map'
-import ComboElement from '../../base/combo-element'
+import ComboElement from '../../part/combo-element'
 import debounce from '../../utils/debounce'
 import styles from './tag-picker.css'
 import itemStyles from './item.css'

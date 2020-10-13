@@ -1,6 +1,6 @@
 import { html } from 'lit-html'
 import { live } from 'lit-html/directives/live'
-import InputElement from '../../base/input-element'
+import InputElement from '../../part/input-element'
 import styles from './spin-button.css'
 import iconCode from '../icon/code'
 import '../icon'

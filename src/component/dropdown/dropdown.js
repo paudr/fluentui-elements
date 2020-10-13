@@ -1,5 +1,5 @@
 import { html } from 'lit-html'
-import ComboElement from '../../base/combo-element'
+import ComboElement from '../../part/combo-element'
 import OptionsManager from '../../utils/options-manager'
 import { equalInsensitive } from '../../utils/text'
 import '../select'
