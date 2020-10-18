@@ -13,7 +13,7 @@ class Dialog extends LitElement {
   static get properties () {
     return {
       type: { type: String, reflect: true },
-      title: { type: String, reflect: true },
+      header: { type: String, reflect: true },
       text: { type: String, reflect: true },
       minWidth: { type: String, reflect: true },
       maxWidth: { type: String, reflect: true },
@@ -29,7 +29,7 @@ class Dialog extends LitElement {
   constructor () {
     super()
     this.type = 'normal'
-    this.title = ''
+    this.header = ''
     this.text = ''
     this.minWidth = null
     this.maxWidth = null
@@ -81,9 +81,10 @@ class Dialog extends LitElement {
           minHeight: this.minHeight,
           maxHeight: this.maxHeight
         })}"
+        alt=""
       >
         <div id="header">
-          <div id="title">${this.title}</div>
+          <div id="title">${this.header}</div>
           ${this.type === 'close'
             ? html`<div id="topButton">
                 <button @click="${this.handleClose}">

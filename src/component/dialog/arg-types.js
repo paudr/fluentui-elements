@@ -16,8 +16,8 @@ export default {
       defaultValue: { summary: 'normal' }
     }
   },
-  title: {
-    name: 'title',
+  header: {
+    name: 'header',
     type: { name: 'string', required: false },
     defaultValue: '',
     description: 'The title text to display at the top of the dialog.',

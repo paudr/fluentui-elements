@@ -20,7 +20,7 @@ export function Standard (args) {
   return dialog
 }
 Standard.args = {
-  title: 'Missing Subject',
+  header: 'Missing Subject',
   text: 'Do you want to send this message without a subject?',
   maxWidth: '400px'
 }
