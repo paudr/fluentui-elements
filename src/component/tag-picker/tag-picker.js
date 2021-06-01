@@ -110,6 +110,17 @@ class TagPicker extends ComboElement {
     this.renderRoot.querySelector('fluent-autofill').focus()
   }
 
+  dispatchChange (oldSelectedItems) {
+    this.dispatchEvent(
+      new CustomEvent('change', {
+        detail: {
+          selectedItems: [..._privateData.get(this).selectedItems],
+          oldSelectedItems
+        }
+      })
+    )
+  }
+
   handleInput (event) {
     event.stopPropagation()
     const value = event.detail
@@ -134,23 +145,33 @@ class TagPicker extends ComboElement {
   }
 
   handleSelect () {
+    const oldSelectedItems = [..._privateData.get(this).selectedItems]
     const select = this.renderRoot.querySelector('fluent-select')
     this.selectItem(select.highlightedIndex)
+    this.dispatchChange(oldSelectedItems)
   }
 
   handleRemove () {
-    _privateData.get(this).selectedItems.pop()
+    const { selectedItems } = _privateData.get(this)
+    const oldSelectedItems = [...selectedItems]
+    selectedItems.pop()
+    this.dispatchChange(oldSelectedItems)
     this.requestUpdate()
   }
 
   handleRemoveItem (index) {
-    _privateData.get(this).selectedItems.splice(index, 1)
+    const { selectedItems } = _privateData.get(this)
+    const oldSelectedItems = [...selectedItems]
+    selectedItems.splice(index, 1)
     this.renderRoot.querySelector('fluent-autofill').focus()
+    this.dispatchChange(oldSelectedItems)
     this.requestUpdate()
   }
 
   handleSelectChange (event) {
+    const oldSelectedItems = [..._privateData.get(this).selectedItems]
     this.selectItem(event.detail.selectedIndices[0])
+    this.dispatchChange(oldSelectedItems)
     this.renderRoot.querySelector('fluent-autofill').focus()
   }
 
