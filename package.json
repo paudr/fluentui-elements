@@ -2,7 +2,7 @@
   "private": true,
   "name": "fluentui-elements",
   "description": "Web components inspired in Microsoft's Fluent UI.",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "dependencies": {
     "lit-element": "^2.5.1",
     "lit-html": "^1.4.1"
