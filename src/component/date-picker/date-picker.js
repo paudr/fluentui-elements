@@ -72,11 +72,11 @@ class DatePicker extends ComboElement {
   }
 
   get currentYear () {
-    return (this.value ?? new Date()).getFullYear()
+    return (this.value || new Date()).getFullYear()
   }
 
   get currentMonth () {
-    return (this.value ?? new Date()).getMonth()
+    return (this.value || new Date()).getMonth()
   }
 
   get textValue () {
@@ -144,7 +144,7 @@ class DatePicker extends ComboElement {
 
   handleCalendarChange (event) {
     const date = event.detail.value
-    const textField = this.renderRoot.querySelector('fluent-text-field')
+    const textField = this.renderRoot.querySelector('input')
     this.updateValue(date, true)
     this.open = false
     textField.value = this.textValue
